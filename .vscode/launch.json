@@ -7,10 +7,10 @@
             "type": "al",
             "environmentType": "OnPrem",
             // "server": "http://41.67.135.12:8080/BC180",
-            "server": "http://41.67.135.12:8080/BC180",
+            "server": "http://localhost:8080/BC180",
             "serverInstance": "BC180",
             "authentication": "Windows",
-            "port": 7049,
+            "port": 6049,
             "startupObjectId": 50059, //50073, //201, //50062,// 201,//  1007,// 
             "startupObjectType": "Page", // "Page", //  
             "breakOnError": true,
@@ -18,7 +18,6 @@
             "enableLongRunningSqlStatements": true,
             "enableSqlInformationDebugger": true,
             "tenant": "default"
-            
         }
         // ,
         // {

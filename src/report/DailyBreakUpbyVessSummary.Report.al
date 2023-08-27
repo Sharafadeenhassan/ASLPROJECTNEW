@@ -664,102 +664,205 @@ report 50012 "Daily BreakUp by Vess Summary"
 
             trigger OnAfterGetRecord()
             begin
+                /* level := TotLoc;
+                 //IF Caterec = Category THEN CurrReport.SKIP;
+                 while level > 0 do begin
+                     SetFilter("Location Filter", SeaRange[level]);
+                     CalcFields(Inventory1, Inventory2);
+                     //Inventory2 := InventoryTwo(Code,SeaRange[level],DateFilter);
+                     if ReportBy = 0 then
+                         SeaRangeC[level] := Inventory2
+                     else
+                         SeaRangeC[level] := Inventory1;
+                     level := level - 1;
+                 end;
+                 //Show Inventory for all location by releasing location filter
+                 // SETFILTER("Location Filter",'<>CRM-ASL');  //16122020 shod
+                 SetFilter("Location Filter", '');
+                 CalcFields(Inventory1, Inventory2);
+
+                 // Inventory2 := InventoryTotal2(Code,DateFilter);
+                 if ReportBy = 0 then
+                     InvtTot := Inventory2
+                 else
+                     InvtTot := Inventory1;
+
+                 //CurrReport.CREATETOTALS(InvtTot);
+                 if "Statistics Group" = 4 then
+                     T002 := 'LOCAL PRODUCTS';*/
                 level := TotLoc;
                 //IF Caterec = Category THEN CurrReport.SKIP;
-                while level > 0 do begin
-                    SetFilter("Location Filter", SeaRange[level]);
-                    CalcFields(Inventory1, Inventory2);
+                WHILE level > 0 DO BEGIN
+                    SETFILTER("Location Filter", SeaRange[level]);
+                    CALCFIELDS(Inventory1, Inventory2);
                     //Inventory2 := InventoryTwo(Code,SeaRange[level],DateFilter);
-                    if ReportBy = 0 then
+                    IF ReportBy = 0 THEN
                         SeaRangeC[level] := Inventory2
-                    else
+                    ELSE
                         SeaRangeC[level] := Inventory1;
                     level := level - 1;
-                end;
+                END;
                 //Show Inventory for all location by releasing location filter
                 // SETFILTER("Location Filter",'<>CRM-ASL');  //16122020 shod
-                SetFilter("Location Filter", '');
-                CalcFields(Inventory1, Inventory2);
+                SETFILTER("Location Filter", '');
+                CALCFIELDS(Inventory1, Inventory2);
 
                 // Inventory2 := InventoryTotal2(Code,DateFilter);
-                if ReportBy = 0 then
+                IF ReportBy = 0 THEN
                     InvtTot := Inventory2
-                else
+                ELSE
                     InvtTot := Inventory1;
 
                 //CurrReport.CREATETOTALS(InvtTot);
-                if "Statistics Group" = 4 then
+                IF "Statistics Group" = 4 THEN
                     T002 := 'LOCAL PRODUCTS';
+
+
             end;
 
             trigger OnPreDataItem()
             var
                 LastRepOptNo: Code[10];
             begin
+                /* TotLoc := 0;
+                 VesselCounter := 0;
+                 DateFilter := "Inventory Posting G Cat Tot".GetFilter("Date Filter");
+
+                 if DateFilter = '' then begin
+                     SetRange("Date Filter", WorkDate());
+                     DateFilter := GetFilter("Date Filter");
+                 end;
+                 locate2.Reset();
+                 locate2.SetRange("Location Type", 1);
+                 locate2.SetFilter("date filter", '%1', GetRangeMax("Date Filter"));
+                 if locate2.FindFirst() then
+                     repeat
+                         locate2."Last Rep Operation No. Val" := locate2.LastRepOpNo(locate2.Code, locate2.GetFilter("date filter"));
+                         locate2.VSDVal := locate2.VoySeaAnyTime(LastRepOptNo, locate2.Code, locate2.GetFilter("date filter"));
+                         if Operatn.Get(locate2."Last Rep Operation No. Val") then
+                             Operatn.SetFilter(Operatn."Date Filter", '%1', GetRangeMax("Date Filter"));
+
+                         locate2."Last Reportd Vessel Pts" := Operatn.PointZ(Operatn."No.", locate2.Code, locate2.GetFilter("date filter"), '', '', '', Operatn.Vessel);
+                         Operatn.SetFilter(Operatn."Task Filter", 'SHR');
+                         locate2."Last Reportd Shrimps Pts" := Operatn.PointZ(Operatn."No.", locate2.Code, locate2.GetFilter("date filter"), '', 'SHR', '', Operatn.Vessel);
+                         locate2."Fishing Area" := Operatn.FishingArea(Operatn."No.", locate2.Code, locate2.GetFilter("date filter"), '', '', '', Operatn.Vessel);
+                         Operatn.SetRange(Operatn."Task Filter");
+                         locate2.Modify();
+                     until locate2.Next() = 0;
+
+                 locate.Reset();
+                 locate.SetRange("Location Type", 1);
+                 TotLoc := locate.Count;
+                 if ArrangeBy = 0 then
+                     locate.SetCurrentKey(locate."Last Reportd Vessel Pts")
+                 else
+                     locate.SetCurrentKey(locate.VSDVal);
+                 locate.Ascending(false);
+
+                 Countx := 1;
+
+                 //locate.SETFILTER(locate."Catch Date",DateFilter);
+
+                 TotLoc := locate.Count;
+                 if locate.FindFirst() then
+                     repeat
+                         if locate.VSDVal <> 0 then begin
+                             SeaRange[Countx] := locate.Code;
+                             SeaRangeD[Countx] := locate.VSDVal;
+                             VesselPoint[Countx] := locate."Last Reportd Vessel Pts";   //Vessel Points Assigned
+                             ShrimpPoint[Countx] := locate."Last Reportd Shrimps Pts"; //Shrimp Points Assigned
+                             FishPoint[Countx] := VesselPoint[Countx] - ShrimpPoint[Countx];
+                             //Fishg Area
+                             locate.SetFilter(locate."date filter", '%1', GetRangeMax("Date Filter"));
+                             FishgArea[Countx] := locate."Fishing Area";
+
+                             //Totals
+                             SeaRangeDTot := SeaRangeDTot + SeaRangeD[Countx];
+                             VesselPointTot := VesselPointTot + VesselPoint[Countx];
+                             ShrimpPointTot := ShrimpPointTot + ShrimpPoint[Countx];
+                             FishPointTot := FishPointTot + FishPoint[Countx];
+                             if VesselPoint[Countx] = 0 then
+                                 PntLess := PntLess + 1
+                             else
+                                 VesselCounter += 1;
+                             Countx := Countx + 1;
+                         end
+                     until locate.Next() = 0; */
                 TotLoc := 0;
                 VesselCounter := 0;
-                DateFilter := "Inventory Posting G Cat Tot".GetFilter("Date Filter");
+                DateFilter := "Inventory Posting G Cat Tot".GETFILTER("Date Filter");
 
-                if DateFilter = '' then begin
-                    SetRange("Date Filter", WorkDate());
-                    DateFilter := GetFilter("Date Filter");
-                end;
-                locate2.Reset();
-                locate2.SetRange("Location Type", 1);
-                locate2.SetFilter("date filter", '%1', GetRangeMax("Date Filter"));
-                if locate2.FindFirst() then
-                    repeat
-                        locate2."Last Rep Operation No. Val" := locate2.LastRepOpNo(locate2.Code, locate2.GetFilter("date filter"));
-                        locate2.VSDVal := locate2.VoySeaAnyTime(LastRepOptNo, locate2.Code, locate2.GetFilter("date filter"));
-                        if Operatn.Get(locate2."Last Rep Operation No. Val") then
-                            Operatn.SetFilter(Operatn."Date Filter", '%1', GetRangeMax("Date Filter"));
+                IF DateFilter = '' THEN BEGIN
+                    SETRANGE("Date Filter", WORKDATE);
+                    DateFilter := GETFILTER("Date Filter");
+                END;
+                locate2.RESET;
+                locate2.SETRANGE("Location Type", 1);
+                locate2.SETFILTER("date filter", '%1', GETRANGEMAX("Date Filter"));
+                IF locate2.FINDFIRST THEN
+                    REPEAT
+                        locate2."Last Rep Operation No. Val" := locate2.LastRepOpNo(locate2.Code, locate2.GETFILTER("date filter"));
+                        locate2.VSDVal := locate2.VoySeaAnyTime(LastRepOptNo, locate2.Code, locate2.GETFILTER("date filter"));
+                        IF Operatn.GET(locate2."Last Rep Operation No. Val") THEN
+                            Operatn.SETFILTER(Operatn."Date Filter", '%1', GETRANGEMAX("Date Filter"));
 
-                        locate2."Last Reportd Vessel Pts" := Operatn.PointZ(Operatn."No.", locate2.Code, locate2.GetFilter("date filter"), '', '', '', Operatn.Vessel);
-                        Operatn.SetFilter(Operatn."Task Filter", 'SHR');
-                        locate2."Last Reportd Shrimps Pts" := Operatn.PointZ(Operatn."No.", locate2.Code, locate2.GetFilter("date filter"), '', 'SHR', '', Operatn.Vessel);
-                        locate2."Fishing Area" := Operatn.FishingArea(Operatn."No.", locate2.Code, locate2.GetFilter("date filter"), '', '', '', Operatn.Vessel);
-                        Operatn.SetRange(Operatn."Task Filter");
-                        locate2.Modify();
-                    until locate2.Next() = 0;
+                        locate2."Last Reportd Vessel Pts" := Operatn.PointZ(Operatn."No.", locate2.Code, locate2.GETFILTER("date filter"), '', '', '', Operatn.Vessel);
+                        Operatn.SETFILTER(Operatn."Task Filter", 'SHR');
+                        locate2."Last Reportd Shrimps Pts" := Operatn.PointZ(Operatn."No.", locate2.Code, locate2.GETFILTER("date filter"), '', 'SHR', '', Operatn.Vessel);
+                        locate2."Fishing Area" := Operatn.FishingArea(Operatn."No.", locate2.Code, locate2.GETFILTER("date filter"), '', '', '', Operatn.Vessel);
+                        Operatn.SETRANGE(Operatn."Task Filter");
+                        locate2.MODIFY();
+                    UNTIL locate2.NEXT = 0;
 
-                locate.Reset();
-                locate.SetRange("Location Type", 1);
-                TotLoc := locate.Count;
-                if ArrangeBy = 0 then
-                    locate.SetCurrentKey(locate."Last Reportd Vessel Pts")
-                else
-                    locate.SetCurrentKey(locate.VSDVal);
-                locate.Ascending(false);
+                locate.RESET;
+                locate.SETRANGE("Location Type", 1);
+                TotLoc := locate.COUNT;
+                IF ArrangeBy = 0 THEN
+                    locate.SETCURRENTKEY(locate."Last Reportd Vessel Pts")
+                ELSE
+                    locate.SETCURRENTKEY(locate.VSDVal);
+                locate.ASCENDING(FALSE);
 
                 Countx := 1;
 
                 //locate.SETFILTER(locate."Catch Date",DateFilter);
 
-                TotLoc := locate.Count;
-                if locate.FindFirst() then
-                    repeat
-                        if locate.VSDVal <> 0 then begin
+
+                TotLoc := locate.COUNT;
+                IF locate.FINDFIRST THEN
+                    REPEAT
+                        IF locate.VSDVal <> 0 THEN BEGIN
                             SeaRange[Countx] := locate.Code;
                             SeaRangeD[Countx] := locate.VSDVal;
                             VesselPoint[Countx] := locate."Last Reportd Vessel Pts";   //Vessel Points Assigned
                             ShrimpPoint[Countx] := locate."Last Reportd Shrimps Pts"; //Shrimp Points Assigned
                             FishPoint[Countx] := VesselPoint[Countx] - ShrimpPoint[Countx];
                             //Fishg Area
-                            locate.SetFilter(locate."date filter", '%1', GetRangeMax("Date Filter"));
+                            locate.SETFILTER(locate."date filter", '%1', GETRANGEMAX("Date Filter"));
                             FishgArea[Countx] := locate."Fishing Area";
+                            //locate.CALCFIELDS(locate."Fishing Area");
+
+                            /*{IF locate."Fishing Area" <> '' THEN
+                                                        IF (Phase.GET(locate."Fishing Area")) AND (Phase."Area Code" <> '') THEN
+                                                            FishgArea[Countx] := Phase."Area Code"
+                                                        ELSE
+                                                            FishgArea[Countx] := COPYSTR(locate."Fishing Area", 1, 4);
+                                                    IF SeaRange[Countx] = '' THEN FishgArea[Countx] := '';}*/
 
                             //Totals
                             SeaRangeDTot := SeaRangeDTot + SeaRangeD[Countx];
                             VesselPointTot := VesselPointTot + VesselPoint[Countx];
                             ShrimpPointTot := ShrimpPointTot + ShrimpPoint[Countx];
                             FishPointTot := FishPointTot + FishPoint[Countx];
-                            if VesselPoint[Countx] = 0 then
+                            IF VesselPoint[Countx] = 0 THEN
                                 PntLess := PntLess + 1
-                            else
+                            ELSE
                                 VesselCounter += 1;
                             Countx := Countx + 1;
-                        end
-                    until locate.Next() = 0;
+                        END
+                    UNTIL locate.NEXT = 0;
+
+
             end;
         }
         dataitem("Inventory Posting Group"; "Inventory Posting Group")
@@ -1599,7 +1702,7 @@ report 50012 "Daily BreakUp by Vess Summary"
             trigger OnAfterGetRecord()
             begin
 
-                level := TotLoc;
+                /*level := TotLoc;
                 //IF Caterec = Category THEN CurrReport.SKIP;
                 while level > 0 do begin
                     SetFilter("Location Filter", SeaRange[level]);
@@ -1616,49 +1719,131 @@ report 50012 "Daily BreakUp by Vess Summary"
                 if ReportBy = 0 then
                     InvtTot := Inventory2
                 else
+                    InvtTot := Inventory1;*/
+
+                level := TotLoc;
+                //IF Caterec = Category THEN CurrReport.SKIP;
+                WHILE level > 0 DO BEGIN
+                    SETFILTER("Location Filter", SeaRange[level]);
+                    CALCFIELDS(Inventory1, Inventory2);
+                    IF ReportBy = 0 THEN
+                        SeaRangeC[level] := Inventory2
+                    ELSE
+                        SeaRangeC[level] := Inventory1;
+                    level := level - 1;
+                END;
+                //Show Inventory for all location by releasing location filter
+                SETFILTER("Location Filter", '');
+                CALCFIELDS(Inventory1, Inventory2);
+                IF ReportBy = 0 THEN
+                    InvtTot := Inventory2
+                ELSE
                     InvtTot := Inventory1;
+
             end;
 
             trigger OnPreDataItem()
             begin
 
+                /* TotLoc := 0;
+                 VesselCounter := 0;
+                 CopyFilters("Inventory Posting G Cat Tot");
+
+                 locate2.SetRange(locate2."Location Type", 1);
+                 locate2.SetFilter(locate2."date filter", '%1', GetRangeMax("Date Filter"));
+                 if locate2.Find('-') then
+                     repeat
+                         locate2."Last Rep Operation No. Val" :=
+                           locate2.LastRepOpNo(locate2.Code, locate2.GetFilter("date filter"));//locate2."Last Rep Operation No.";
+                         locate2.VSDVal :=
+                           locate2.VoySeaAnyTime(locate2."Last Rep Operation No. Val", locate2.Code, locate2.GetFilter("date filter"));
+                         if Operatn.Get(locate2."Last Rep Operation No. Val") then
+                             Operatn.SetFilter(Operatn."Date Filter", '%1', GetRangeMax("Date Filter"));
+                         locate2."Last Reportd Vessel Pts" := Operatn.PointZ(Operatn."No.", locate2.Code,
+                           locate2.GetFilter("date filter"), '', '', '', Operatn.Vessel);//Operatn.Points;
+                         Operatn.SetFilter(Operatn."Task Filter", 'SHR');
+                         //Operatn.CALCFIELDS(Operatn.Points);
+                         locate2."Last Reportd Shrimps Pts" := Operatn.PointZ(Operatn."No.", locate2.Code,
+                           locate2.GetFilter("date filter"), '', 'SHR', '', Operatn.Vessel); //Operatn.Points;
+                         Operatn.SetRange(Operatn."Task Filter");
+                         locate2.Modify();
+                     until locate2.Next() = 0;
+
+                 //AAA - June 2002 Sort Entries accordg to SeaDays
+                 locate.SetRange(locate."Location Type", 1);
+                 TotLoc := locate.Count;
+                 if ArrangeBy = 0 then
+                     locate.SetCurrentKey(locate."Last Reportd Vessel Pts")
+                 else
+                     locate.SetCurrentKey(locate.VSDVal);
+                 locate.Ascending(false);
+
+                 Countx := 1;
+                 if locate.Find('-') then
+                     repeat
+                         if locate.VSDVal <> 0 then begin
+                             SeaRange[Countx] := locate.Code;
+                             SeaRangeD[Countx] := locate.VSDVal;     //Sea Day Assigned
+                             VesselPoint[Countx] := locate."Last Reportd Vessel Pts";   //Vessel Points Assigned
+                             ShrimpPoint[Countx] := locate."Last Reportd Shrimps Pts"; //Shrimp Points Assigned
+                             FishPoint[Countx] := VesselPoint[Countx] - ShrimpPoint[Countx];
+
+                             //Fishg Area
+                             locate.SetFilter(locate."date filter", '%1', GetRangeMax("Date Filter"));
+                             locate."Fishing Area" := locate.FishingArea(locate."Current Operation",
+                                locate.Code, locate.GetFilter("date filter"));
+                             if locate."Fishing Area" <> '' then
+                                 if (Phase.Get(locate."Fishing Area")) and (Phase."Area Code" <> '') then
+                                     FishgArea[Countx] := Phase."Area Code"
+                                 else
+                                     FishgArea[Countx] := CopyStr(locate."Fishing Area", 1, 4);
+                             if SeaRange[Countx] = '' then FishgArea[Countx] := '';
+
+                             Countx := Countx + 1;
+                         end;
+                     until locate.Next() = 0;
+                 TotLoc := Countx - 1;
+
+                 if locate.VSDVal = 0 then
+                     CurrReport.Skip();*/
+
                 TotLoc := 0;
                 VesselCounter := 0;
-                CopyFilters("Inventory Posting G Cat Tot");
+                COPYFILTERS("Inventory Posting G Cat Tot");
 
-                locate2.SetRange(locate2."Location Type", 1);
-                locate2.SetFilter(locate2."date filter", '%1', GetRangeMax("Date Filter"));
-                if locate2.Find('-') then
-                    repeat
+                locate2.SETRANGE(locate2."Location Type", 1);
+                locate2.SETFILTER(locate2."date filter", '%1', GETRANGEMAX("Date Filter"));
+                IF locate2.FIND('-') THEN
+                    REPEAT
                         locate2."Last Rep Operation No. Val" :=
-                          locate2.LastRepOpNo(locate2.Code, locate2.GetFilter("date filter"));//locate2."Last Rep Operation No.";
+                          locate2.LastRepOpNo(locate2.Code, locate2.GETFILTER("date filter"));//locate2."Last Rep Operation No.";
                         locate2.VSDVal :=
-                          locate2.VoySeaAnyTime(locate2."Last Rep Operation No. Val", locate2.Code, locate2.GetFilter("date filter"));
-                        if Operatn.Get(locate2."Last Rep Operation No. Val") then
-                            Operatn.SetFilter(Operatn."Date Filter", '%1', GetRangeMax("Date Filter"));
+                          locate2.VoySeaAnyTime(locate2."Last Rep Operation No. Val", locate2.Code, locate2.GETFILTER("date filter"));
+                        IF Operatn.GET(locate2."Last Rep Operation No. Val") THEN
+                            Operatn.SETFILTER(Operatn."Date Filter", '%1', GETRANGEMAX("Date Filter"));
                         locate2."Last Reportd Vessel Pts" := Operatn.PointZ(Operatn."No.", locate2.Code,
-                          locate2.GetFilter("date filter"), '', '', '', Operatn.Vessel);//Operatn.Points;
-                        Operatn.SetFilter(Operatn."Task Filter", 'SHR');
+                          locate2.GETFILTER("date filter"), '', '', '', Operatn.Vessel);//Operatn.Points;
+                        Operatn.SETFILTER(Operatn."Task Filter", 'SHR');
                         //Operatn.CALCFIELDS(Operatn.Points);
                         locate2."Last Reportd Shrimps Pts" := Operatn.PointZ(Operatn."No.", locate2.Code,
-                          locate2.GetFilter("date filter"), '', 'SHR', '', Operatn.Vessel); //Operatn.Points;
-                        Operatn.SetRange(Operatn."Task Filter");
-                        locate2.Modify();
-                    until locate2.Next() = 0;
+                          locate2.GETFILTER("date filter"), '', 'SHR', '', Operatn.Vessel); //Operatn.Points;
+                        Operatn.SETRANGE(Operatn."Task Filter");
+                        locate2.MODIFY();
+                    UNTIL locate2.NEXT = 0;
 
                 //AAA - June 2002 Sort Entries accordg to SeaDays
-                locate.SetRange(locate."Location Type", 1);
-                TotLoc := locate.Count;
-                if ArrangeBy = 0 then
-                    locate.SetCurrentKey(locate."Last Reportd Vessel Pts")
-                else
-                    locate.SetCurrentKey(locate.VSDVal);
-                locate.Ascending(false);
+                locate.SETRANGE(locate."Location Type", 1);
+                TotLoc := locate.COUNT;
+                IF ArrangeBy = 0 THEN
+                    locate.SETCURRENTKEY(locate."Last Reportd Vessel Pts")
+                ELSE
+                    locate.SETCURRENTKEY(locate.VSDVal);
+                locate.ASCENDING(FALSE);
 
                 Countx := 1;
-                if locate.Find('-') then
-                    repeat
-                        if locate.VSDVal <> 0 then begin
+                IF locate.FIND('-') THEN
+                    REPEAT
+                        IF locate.VSDVal <> 0 THEN BEGIN
                             SeaRange[Countx] := locate.Code;
                             SeaRangeD[Countx] := locate.VSDVal;     //Sea Day Assigned
                             VesselPoint[Countx] := locate."Last Reportd Vessel Pts";   //Vessel Points Assigned
@@ -1666,23 +1851,24 @@ report 50012 "Daily BreakUp by Vess Summary"
                             FishPoint[Countx] := VesselPoint[Countx] - ShrimpPoint[Countx];
 
                             //Fishg Area
-                            locate.SetFilter(locate."date filter", '%1', GetRangeMax("Date Filter"));
+                            locate.SETFILTER(locate."date filter", '%1', GETRANGEMAX("Date Filter"));
                             locate."Fishing Area" := locate.FishingArea(locate."Current Operation",
-                               locate.Code, locate.GetFilter("date filter"));
-                            if locate."Fishing Area" <> '' then
-                                if (Phase.Get(locate."Fishing Area")) and (Phase."Area Code" <> '') then
+                               locate.Code, locate.GETFILTER("date filter"));
+                            IF locate."Fishing Area" <> '' THEN
+                                IF (Phase.GET(locate."Fishing Area")) AND (Phase."Area Code" <> '') THEN
                                     FishgArea[Countx] := Phase."Area Code"
-                                else
-                                    FishgArea[Countx] := CopyStr(locate."Fishing Area", 1, 4);
-                            if SeaRange[Countx] = '' then FishgArea[Countx] := '';
+                                ELSE
+                                    FishgArea[Countx] := COPYSTR(locate."Fishing Area", 1, 4);
+                            IF SeaRange[Countx] = '' THEN FishgArea[Countx] := '';
 
                             Countx := Countx + 1;
-                        end;
-                    until locate.Next() = 0;
+                        END;
+                    UNTIL locate.NEXT = 0;
                 TotLoc := Countx - 1;
 
-                if locate.VSDVal = 0 then
-                    CurrReport.Skip();
+                IF locate.VSDVal = 0 THEN
+                    CurrReport.SKIP;
+
             end;
         }
         dataitem("Inventory Posting Group 2"; "Inventory Posting Group")
@@ -2639,7 +2825,7 @@ report 50012 "Daily BreakUp by Vess Summary"
 
             trigger OnAfterGetRecord()
             begin
-                level := TotLoc;
+                /*level := TotLoc;
                 //IF Caterec = Category THEN CurrReport.SKIP;
                 Clear(TestC);
 
@@ -2686,6 +2872,56 @@ report 50012 "Daily BreakUp by Vess Summary"
                     TESTING123 += Round(InvtTot, 2);
 
                 Caterec := Category;
+                */
+                level := TotLoc;
+                //IF Caterec = Category THEN CurrReport.SKIP;
+                CLEAR(TestC);
+
+                IF Category IN ['B08.SNB', 'B09.CROAKER', 'B10.SOLE', 'B11.MIX', 'B12.OTHER FISH'] THEN BEGIN
+                    CALCFIELDS(Inventory1, Inventory2);
+                    level := TotLoc;
+                    WHILE level > 0 DO BEGIN
+                        SETFILTER("Location Filter", SeaRange[level]);
+                        CALCFIELDS(Inventory1, Inventory2);
+                        IF ReportBy = 0 THEN
+                            TestC[level] := Inventory2
+                        ELSE
+                            TestC[level] := Inventory1;
+                        TestCVal := TestC[level];
+                        level := level - 1;
+                    END;
+                END;
+
+
+                WHILE level > 0 DO BEGIN
+                    SETFILTER("Location Filter", SeaRange[level]);
+                    CALCFIELDS(Inventory1, Inventory2);
+                    IF ReportBy = 0 THEN
+                        SeaRangeC[level] := Inventory2
+                    ELSE
+                        SeaRangeC[level] := Inventory1;
+                    SearangeVal := SeaRangeC[level];
+                    level := level - 1;
+                END;
+                //Show Inventory for all location by releasing location filter
+                // SETFILTER("Location Filter",'<>CRM-ASL');  //16122020
+
+                SETFILTER("Location Filter", '');
+                CALCFIELDS(Inventory1, Inventory2);
+
+                // Inventory2 := InventoryTotal2(Code,DateFilter);
+                IF ReportBy = 0 THEN
+                    InvtTot := Inventory2
+                ELSE
+                    InvtTot := Inventory1;
+
+                //IF Caterec <> Category THEN 
+
+                IF Category IN ['B08.SNB', 'B09.CROAKER', 'B10.SOLE', 'B11.MIX', 'B12.OTHER FISH'] THEN
+                    TESTING123 += ROUND(InvtTot, 2);
+
+                Caterec := Category;
+
             end;
 
             trigger OnPreDataItem()
@@ -2693,53 +2929,131 @@ report 50012 "Daily BreakUp by Vess Summary"
                 LastRepOptNo: Code[10];
             begin
 
+                /*  TotLoc := 0;
+                  VesselCounter := 0;
+                  CopyFilters("Inventory Posting G Cat Tot");
+                  locate2.Reset();
+                  locate2.SetRange("Location Type", 1);
+                  locate2.SetFilter("date filter", '%1', GetRangeMax("Date Filter"));
+                  if locate2.FindFirst() then
+                      repeat
+                          locate2."Last Rep Operation No. Val" := locate2.LastRepOpNo(locate2.Code, locate2.GetFilter("date filter"));
+                          locate2.VSDVal := locate2.VoySeaAnyTime(LastRepOptNo, locate2.Code, locate2.GetFilter("date filter"));
+                          if Operatn.Get(locate2."Last Rep Operation No. Val") then
+                              locate2."Fishing Area" := Operatn.FishingArea(Operatn."No.", locate2.Code, locate2.GetFilter("date filter"), '', '', '', Operatn.Vessel);
+                          Operatn.SetFilter(Operatn."Date Filter", '%1', GetRangeMax("Date Filter"));
+                          locate2."Last Reportd Vessel Pts" := Operatn.PointZ(Operatn."No.", locate2.Code, locate2.GetFilter("date filter"), '', '', '', Operatn.Vessel);
+                          Operatn.SetFilter(Operatn."Task Filter", 'SHR');
+                          locate2."Last Reportd Shrimps Pts" := Operatn.PointZ(Operatn."No.", locate2.Code, locate2.GetFilter("date filter"), '', 'SHR', '', Operatn.Vessel);
+                          Operatn.SetRange(Operatn."Task Filter");
+
+                          locate2.Modify();
+                      until locate2.Next() = 0;
+
+                  //IF SeaRange[33]='' THEN
+                  //CurrReport.SKIP;
+
+                  locate.Reset();
+                  locate.SetRange("Location Type", 1);
+                  TotLoc := locate.Count;
+                  if ArrangeBy = 0 then
+                      locate.SetCurrentKey(locate."Last Reportd Vessel Pts")
+                  else
+                      locate.SetCurrentKey(locate.VSDVal);
+                  locate.Ascending(false);
+
+                  Countx := 1;
+
+                  //locate.SETFILTER(locate."Catch Date",DateFilter);
+                  TotLoc := locate.Count;
+                  if locate.FindFirst() then
+                      repeat
+                          if locate.VSDVal <> 0 then begin
+                              SeaRange[Countx] := locate.Code;
+                              SeaRangeD[Countx] := locate.VSDVal;
+                              VesselPoint[Countx] := locate."Last Reportd Vessel Pts";   //Vessel Points Assigned
+                              ShrimpPoint[Countx] := locate."Last Reportd Shrimps Pts"; //Shrimp Points Assigned
+                              FishPoint[Countx] := VesselPoint[Countx] - ShrimpPoint[Countx];
+                              //Fishg Area
+                              locate.SetFilter(locate."date filter", '%1', GetRangeMax("Date Filter"));
+                              FishgArea[Countx] := locate."Fishing Area";
+                              //locate.CALCFIELDS(locate."Fishing Area");
+
+                              {IF locate."Fishing Area"<>'' THEN
+                                IF (Phase.GET(locate."Fishing Area")) AND (Phase."Area Code"<>'') THEN
+                                   FishgArea[Countx]:=Phase."Area Code"
+                                ELSE
+                                   FishgArea[Countx]:=COPYSTR(locate."Fishing Area",1,4);
+                                IF SeaRange[Countx]='' THEN FishgArea[Countx]:='';}
+
+                              //Totals
+                              SeaRangeDTot := SeaRangeDTot + SeaRangeD[Countx];
+                              VesselPointTot := VesselPointTot + VesselPoint[Countx];
+                              ShrimpPointTot := ShrimpPointTot + ShrimpPoint[Countx];
+                              FishPointTot := FishPointTot + FishPoint[Countx];
+                              if VesselPoint[Countx] = 0 then
+                                  PntLess := PntLess + 1
+                              else
+                                  VesselCounter += 1;
+                              Countx := Countx + 1;
+                          end;
+                      until locate.Next() = 0;
+
+                  if locate.VSDVal = 0 then
+                      CurrReport.Skip();
+                  //InvtTot := 0;
+                  TESTING123 := 0;
+                  //CLEAR(TestC);
+                  //CLEAR(SeaRangeC);*/
+
                 TotLoc := 0;
                 VesselCounter := 0;
-                CopyFilters("Inventory Posting G Cat Tot");
-                locate2.Reset();
-                locate2.SetRange("Location Type", 1);
-                locate2.SetFilter("date filter", '%1', GetRangeMax("Date Filter"));
-                if locate2.FindFirst() then
-                    repeat
-                        locate2."Last Rep Operation No. Val" := locate2.LastRepOpNo(locate2.Code, locate2.GetFilter("date filter"));
-                        locate2.VSDVal := locate2.VoySeaAnyTime(LastRepOptNo, locate2.Code, locate2.GetFilter("date filter"));
-                        if Operatn.Get(locate2."Last Rep Operation No. Val") then
-                            locate2."Fishing Area" := Operatn.FishingArea(Operatn."No.", locate2.Code, locate2.GetFilter("date filter"), '', '', '', Operatn.Vessel);
-                        Operatn.SetFilter(Operatn."Date Filter", '%1', GetRangeMax("Date Filter"));
-                        locate2."Last Reportd Vessel Pts" := Operatn.PointZ(Operatn."No.", locate2.Code, locate2.GetFilter("date filter"), '', '', '', Operatn.Vessel);
-                        Operatn.SetFilter(Operatn."Task Filter", 'SHR');
-                        locate2."Last Reportd Shrimps Pts" := Operatn.PointZ(Operatn."No.", locate2.Code, locate2.GetFilter("date filter"), '', 'SHR', '', Operatn.Vessel);
-                        Operatn.SetRange(Operatn."Task Filter");
+                COPYFILTERS("Inventory Posting G Cat Tot");
+                locate2.RESET;
+                locate2.SETRANGE("Location Type", 1);
+                locate2.SETFILTER("date filter", '%1', GETRANGEMAX("Date Filter"));
+                IF locate2.FINDFIRST THEN
+                    REPEAT
+                        locate2."Last Rep Operation No. Val" := locate2.LastRepOpNo(locate2.Code, locate2.GETFILTER("date filter"));
+                        locate2.VSDVal := locate2.VoySeaAnyTime(LastRepOptNo, locate2.Code, locate2.GETFILTER("date filter"));
+                        IF Operatn.GET(locate2."Last Rep Operation No. Val") THEN
+                            locate2."Fishing Area" := Operatn.FishingArea(Operatn."No.", locate2.Code, locate2.GETFILTER("date filter"), '', '', '', Operatn.Vessel);
+                        Operatn.SETFILTER(Operatn."Date Filter", '%1', GETRANGEMAX("Date Filter"));
+                        locate2."Last Reportd Vessel Pts" := Operatn.PointZ(Operatn."No.", locate2.Code, locate2.GETFILTER("date filter"), '', '', '', Operatn.Vessel);
+                        Operatn.SETFILTER(Operatn."Task Filter", 'SHR');
+                        locate2."Last Reportd Shrimps Pts" := Operatn.PointZ(Operatn."No.", locate2.Code, locate2.GETFILTER("date filter"), '', 'SHR', '', Operatn.Vessel);
+                        Operatn.SETRANGE(Operatn."Task Filter");
 
-                        locate2.Modify();
-                    until locate2.Next() = 0;
+                        locate2.MODIFY();
+                    UNTIL locate2.NEXT = 0;
 
-                /*IF SeaRange[33]='' THEN
-                  CurrReport.SKIP;*/
+                /*IF SeaRange[33] = '' THEN
+                                    CurrReport.SKIP;*/
 
-                locate.Reset();
-                locate.SetRange("Location Type", 1);
-                TotLoc := locate.Count;
-                if ArrangeBy = 0 then
-                    locate.SetCurrentKey(locate."Last Reportd Vessel Pts")
-                else
-                    locate.SetCurrentKey(locate.VSDVal);
-                locate.Ascending(false);
+
+                locate.RESET;
+                locate.SETRANGE("Location Type", 1);
+                TotLoc := locate.COUNT;
+                IF ArrangeBy = 0 THEN
+                    locate.SETCURRENTKEY(locate."Last Reportd Vessel Pts")
+                ELSE
+                    locate.SETCURRENTKEY(locate.VSDVal);
+                locate.ASCENDING(FALSE);
 
                 Countx := 1;
 
                 //locate.SETFILTER(locate."Catch Date",DateFilter);
-                TotLoc := locate.Count;
-                if locate.FindFirst() then
-                    repeat
-                        if locate.VSDVal <> 0 then begin
+                TotLoc := locate.COUNT;
+                IF locate.FINDFIRST THEN
+                    REPEAT
+                        IF locate.VSDVal <> 0 THEN BEGIN
                             SeaRange[Countx] := locate.Code;
                             SeaRangeD[Countx] := locate.VSDVal;
                             VesselPoint[Countx] := locate."Last Reportd Vessel Pts";   //Vessel Points Assigned
                             ShrimpPoint[Countx] := locate."Last Reportd Shrimps Pts"; //Shrimp Points Assigned
                             FishPoint[Countx] := VesselPoint[Countx] - ShrimpPoint[Countx];
                             //Fishg Area
-                            locate.SetFilter(locate."date filter", '%1', GetRangeMax("Date Filter"));
+                            locate.SETFILTER(locate."date filter", '%1', GETRANGEMAX("Date Filter"));
                             FishgArea[Countx] := locate."Fishing Area";
                             //locate.CALCFIELDS(locate."Fishing Area");
 
@@ -2755,20 +3069,22 @@ report 50012 "Daily BreakUp by Vess Summary"
                             VesselPointTot := VesselPointTot + VesselPoint[Countx];
                             ShrimpPointTot := ShrimpPointTot + ShrimpPoint[Countx];
                             FishPointTot := FishPointTot + FishPoint[Countx];
-                            if VesselPoint[Countx] = 0 then
+                            IF VesselPoint[Countx] = 0 THEN
                                 PntLess := PntLess + 1
-                            else
+                            ELSE
                                 VesselCounter += 1;
                             Countx := Countx + 1;
-                        end;
-                    until locate.Next() = 0;
+                        END;
+                    UNTIL locate.NEXT = 0;
 
-                if locate.VSDVal = 0 then
-                    CurrReport.Skip();
+                IF locate.VSDVal = 0 THEN
+                    CurrReport.SKIP;
                 //InvtTot := 0;
                 TESTING123 := 0;
                 //CLEAR(TestC);
                 //CLEAR(SeaRangeC);
+
+
             end;
         }
     }

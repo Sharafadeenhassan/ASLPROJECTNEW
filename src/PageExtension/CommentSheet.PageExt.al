@@ -3,7 +3,10 @@ pageextension 50211 "pageextension50211" extends "Comment Sheet"
     layout
     {
         //Unsupported feature: Property Modification (ImplicitType) on "Comment(Control 4)".
-
+        modify(Comment)
+        {
+            Visible = false;
+        }
         addafter("Code")
         {
             field("Fuel Consumed"; Rec."Fuel Consumed")
@@ -17,6 +20,18 @@ pageextension 50211 "pageextension50211" extends "Comment Sheet"
             field("Fuel Average"; Rec."Fuel Average")
             {
                 ApplicationArea = All;
+            }
+            field("Comment Temp"; "Comment Temp")
+            {
+                ApplicationArea = All;
+                Caption = 'ASL Comment';
+                Editable = true;
+
+               /* trigger OnValidate()
+                begin
+                    rec.Comment := CopyStr(rec."Comment Temp", 1, 80);
+                end;
+                */
             }
         }
     }

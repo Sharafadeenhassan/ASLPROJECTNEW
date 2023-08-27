@@ -22,6 +22,15 @@ pageextension 50259 "Item Card Ext" extends "Item Card"
         modify("Minimum Order Quantity") { Importance = Additional; }
         modify("Maximum Order Quantity") { Visible = true; }
 
+        addafter(Inventory)
+        {
+            field("CRM / STR"; "CRM / STR")
+            {
+                ApplicationArea = All;
+                Editable = false;
+            }
+        }
+
         addafter("Item Category Code")
         {
             field("Last Imported Cost"; Rec."Last Imported Cost")

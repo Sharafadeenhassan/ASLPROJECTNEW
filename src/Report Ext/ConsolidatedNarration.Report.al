@@ -35,7 +35,7 @@ report 50004 "Consolidated Narration"
             column(STRSUBSTNO_Text000_NarratnFilter_; StrSubstNo(Text000, NarratnFilter))
             {
             }
-            column(Comment_Line_Comment; Comment)
+            column(Comment_Line_Comment; "Comment Temp")
             {
             }
             column(VessName; VessName)

@@ -569,7 +569,7 @@ permissionset 50001 GeneratedPermission
         report "Voyage P & L Batch" = X,
         report "Voyage P&L Header" = X,
         report "Voyage P&L Ledger Line" = X,
-        report "Voyage P&L Ledger Line 2!" = X,
+        report "Voyage P&L Ledger Line 2" = X,
         report "Voyage P&L Ledger Line 2.swamy" = X,
         report "Voyage P&L Ledger Line A" = X,
         report "Voyage P&L Ledger Line b" = X,

@@ -55,9 +55,13 @@ page 50086 "Lost Days"
                 {
                     ApplicationArea = All;
                 }
-                field(Comment; Rec.Comment)
+                field(Comment; rec."Comment Temp")
                 {
                     ApplicationArea = All;
+                    /* trigger OnValidate()
+                     begin
+                         rec.Comment := CopyStr(rec."Comment Temp", 1, 80);
+                     end; */
                 }
                 field("Code"; Rec.Code)
                 {
