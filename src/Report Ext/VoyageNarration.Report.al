@@ -3,6 +3,8 @@ report 50099 "Voyage Narration"
     DefaultLayout = RDLC;
     RDLCLayout = './src/reportrdlc/VoyageNarration.rdlc';
     Caption = 'Voyage Narration';
+    UsageCategory = ReportsAndAnalysis;
+    ApplicationArea = All, Basic, Suite;
     dataset
     {
         dataitem(Job; Job)
@@ -124,7 +126,8 @@ report 50099 "Voyage Narration"
     }
 
     requestpage
-    {
+    { 
+        SaveValues = true;
         layout
         {
         }

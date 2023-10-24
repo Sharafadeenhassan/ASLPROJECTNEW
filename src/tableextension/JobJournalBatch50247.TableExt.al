@@ -59,7 +59,7 @@ tableextension 50247 "tableextension50247" extends "Job Journal Batch"
                 JLedEntry."Job No." := "Job No.";
                 JLedEntry."Posting Date" := "Catch Date";
                 JLedEntry."Document No." := Name + Format("Catch Date");
-                JLedEntry.Type := 0;
+                JLedEntry.Type := JLedEntry.Type::Resource;
                 if jobs.Get("Job No.") then begin
                     JLedEntry.Validate("No.", jobs."Person Responsible");
 

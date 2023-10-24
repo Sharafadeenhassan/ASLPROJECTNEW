@@ -58,7 +58,8 @@ report 50057 "MR Reconciliation Report"
     }
 
     requestpage
-    {
+    { 
+        SaveValues = true;
         layout
         {
         }

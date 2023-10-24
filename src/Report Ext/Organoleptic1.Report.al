@@ -5,6 +5,8 @@ report 50209 "Organoleptic1"
     DefaultLayout = RDLC;
     RDLCLayout = './src/reportrdlc/Organoleptic1.rdlc';
     Caption = 'Organoleptic1';
+    UsageCategory = ReportsAndAnalysis;
+    ApplicationArea = All, Basic, Suite;
     dataset
     {
         dataitem("Comment Line"; "Comment Line")

@@ -47,15 +47,15 @@ tableextension 50332 "Inventory Posting Group Ext" extends "Inventory Posting Gr
         }
         field(50368; Inventory; Decimal)
         {
-            CalcFormula = Sum("Job Ledger Entry".Quantity WHERE("Inventory Posting Group" = FIELD(Code),
-                                                                 "Location Code" = FIELD("Location Filter"),
-                                                                 "Posting Date" = FIELD("Date Filter"),
-                                                                 "External Document No." = FILTER(''),
-                                                                 "Reason Code" = FIELD(Reasoncodefilter)));
             Caption = 'Inventory Total';
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
+            CalcFormula = Sum("Job Ledger Entry".Quantity WHERE("Job Posting Group" = FIELD(Code),
+                                                                 "Location Code" = FIELD("Location Filter"),
+                                                                 "Posting Date" = FIELD("Date Filter"),
+                                                                 "External Document No." = FILTER(''),
+                                                                 "Reason Code" = FIELD(Reasoncodefilter)));
         }
         field(50369; Points; Decimal)
         {
@@ -68,25 +68,25 @@ tableextension 50332 "Inventory Posting Group Ext" extends "Inventory Posting Gr
         field(50378; Inventory1; Decimal)
         {
             Caption = 'Value Entry Valued Quantity';
-            CalcFormula = Sum("Value Entry"."Valued Quantity" WHERE("Inventory Posting Group" = FIELD(Code),
-                                                                     "Location Code" = FIELD("Location Filter"),
-                                                                     "Posting Date" = FIELD("Date Filter")));
             DecimalPlaces = 0 : 5;
             Description = 'Inventory Total Value';
             Editable = false;
             FieldClass = FlowField;
+            CalcFormula = Sum("Value Entry"."Valued Quantity" WHERE("Inventory Posting Group" = FIELD(Code),
+                                                                     "Location Code" = FIELD("Location Filter"),
+                                                                     "Posting Date" = FIELD("Date Filter")));
         }
         field(50379; Inventory2; Decimal)
         {
-            CalcFormula = - Sum("Job Ledger Entry".Quantity WHERE("Inventory Posting Group" = FIELD(Code),
-                                                                  "Location Code" = FIELD("Location Filter"),
-                                                                  "Posting Date" = FIELD("Date Filter"),
-                                                                  "External Document No." = FILTER(''),
-                                                                  "Vessel Type" = CONST(" ")));
             DecimalPlaces = 0 : 5;
             Description = 'Inventory Total Job';
             Editable = false;
             FieldClass = FlowField;
+            CalcFormula = - Sum("Job Ledger Entry".Quantity WHERE("Job Posting Group" = FIELD(Code),
+                                                                  "Location Code" = FIELD("Location Filter"),
+                                                                  "Posting Date" = FIELD("Date Filter"),
+                                                                  "External Document No." = FILTER(''),
+                                                                  "Vessel Type" = CONST(" ")));
         }
         field(50389; "Drop Shipment Filter"; Boolean)
         {
@@ -123,24 +123,24 @@ tableextension 50332 "Inventory Posting Group Ext" extends "Inventory Posting Gr
         }
         field(55429; "Inventory total1"; Decimal)
         {
-            CalcFormula = - Sum("Job Ledger Entry".Quantity WHERE("Location Code" = FILTER(<> 'CRM-ASL' & <> 'FISH-SHOP'),
-                                                                  "Posting Date" = FIELD("Date Filter"),
-                                                                  GroupSort = FIELD(Category)));
             Caption = 'Inventory Total Vessel';
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
+            CalcFormula = - Sum("Job Ledger Entry".Quantity WHERE("Location Code" = FILTER(<> 'CRM-ASL' & <> 'FISH-SHOP'),
+                                                                  "Posting Date" = FIELD("Date Filter"),
+                                                                  GroupSort = FIELD(Category)));
         }
         field(55430; "Inventory total2"; Decimal)
         {
-            CalcFormula = - Sum("Job Ledger Entry".Quantity WHERE("Location Code" = FILTER(<> 'CRM-ASL' & <> 'FISH-SHOP'),
-                                                                  "Posting Date" = FIELD("Date Filter"),
-                                                                  GroupSort = FIELD(Category),
-                                                                  "External Document No." = FILTER('')));
             Caption = 'Inventory Total Fishing Grd';
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
+            CalcFormula = - Sum("Job Ledger Entry".Quantity WHERE("Location Code" = FILTER(<> 'CRM-ASL' & <> 'FISH-SHOP'),
+                                                                  "Posting Date" = FIELD("Date Filter"),
+                                                                  GroupSort = FIELD(Category),
+                                                                  "External Document No." = FILTER('')));
         }
         field(55431; Reasoncodefilter; Code[10])
         {
@@ -155,15 +155,15 @@ tableextension 50332 "Inventory Posting Group Ext" extends "Inventory Posting Gr
         }
         field(55450; "Inventory Incentive"; Decimal)
         {
+            Caption = 'Inventory Incentive';
+            DecimalPlaces = 0 : 5;
+            Editable = false;
+            FieldClass = FlowField;
             CalcFormula = - Sum("Job Ledger Entry".Quantity WHERE(GroupSort = FIELD(Category),
                                                                   "Location Code" = FIELD("Location Filter"),
                                                                   "Posting Date" = FIELD("Date Filter"),
                                                                   "Source Code" = FIELD("Source Filter"),
                                                                   "Reason Code" = FIELD(Reasoncodefilter)));
-            Caption = 'Inventory Incentive';
-            DecimalPlaces = 0 : 5;
-            Editable = false;
-            FieldClass = FlowField;
         }
         field(55462; Inventory4; Decimal)
         {
@@ -192,8 +192,9 @@ tableextension 50332 "Inventory Posting Group Ext" extends "Inventory Posting Gr
         }
         key(Key2; Category)
         {
+            enabled = true;
         }
-        key(Key3; "Statistics Group", Category, "S/No.")
+        key(Key3; Category,"Statistics Group","S/No.")
         {
             Enabled = true;
         }

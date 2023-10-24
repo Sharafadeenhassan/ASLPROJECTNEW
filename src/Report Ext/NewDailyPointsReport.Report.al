@@ -670,7 +670,7 @@ report 50075 "New Daily Points Report"
     }
 
     requestpage
-    {
+    { SaveValues = true;
         layout
         {
             area(content)

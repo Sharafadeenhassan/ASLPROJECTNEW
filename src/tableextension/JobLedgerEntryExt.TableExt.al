@@ -95,13 +95,21 @@ tableextension 50232 "Job Ledger Entry Ext" extends "Job Ledger Entry"
         key(ASLKey2; "Job No.", "Location Code", "Work Type Code") { Enabled = true; }
         key(ASLKey3; "Job No.", "Location Code") { Enabled = true; }
         key(ASLKey3a; GroupSort) { enabled = true; }
-        key(ASLKey4; "Location Code", "Posting Date", "External Document No.")
-        { enabled = true; SumIndexFields = Quantity; }
-        key(ASLKey5; "Inventory Posting Group") { }
+        key(ASLKey4; "External Document No.", "Job Posting Group", "Location Code", "Posting Date")
+        {
+             enabled = true; 
+             SumIndexFields = Quantity; 
+             }
+        key(ASLKey5; "Job Posting Group") { }
         key(ASLKey6; Type, "No.", "Location Code", "Posting Date") { Enabled = true; }
         key(ASLKey7; "Catch Sea Days") { }
-        Key(ASLKey9; GroupSort, "Inventory posting Group") { Enabled = true; }
-
+        Key(ASLKey9; GroupSort, "Inventory posting Group")
+        {
+            Enabled = true;
+        }
+        key(Key10; "Location Code", "Posting Date", "Source code", "Reason Code")
+        {
+        }
         // key(ASLKey1; "Job No.", "Location Code", "Posting Date", "Journal Batch Name", Type, "Gen. Prod. Posting Group", "Task Code");
         //   {SumIndexFields = "Total Price"; }
         // key(ASLKey3; "Job No.", "Location Code", GroupSort) {}

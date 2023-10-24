@@ -1,8 +1,11 @@
 page 50081 "Lost day Type"
 {
-    PageType = Card;
+    PageType = List;
     SourceTable = "Lost Days";
     Caption = 'Lost day Type';
+    UsageCategory = Lists;
+    ApplicationArea = All, Suite;
+    InsertAllowed = true;
     layout
     {
         area(content)

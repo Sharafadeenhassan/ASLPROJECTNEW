@@ -3,6 +3,9 @@ report 50008 "Daily BreakUp by Vessel Rep 2"
     DefaultLayout = RDLC;
     RDLCLayout = './src/reportrdlc/DailyBreakUpbyVesselRep2.rdlc';
     Caption = 'Daily BreakUp by Vessel Rep 2';
+    UsageCategory = ReportsAndAnalysis;
+    ApplicationArea = All, Basic, Suite;
+    
     dataset
     {
         dataitem("Inventory Posting G Cat Tot"; "Inventory Posting Group")
@@ -5269,6 +5272,7 @@ report 50008 "Daily BreakUp by Vessel Rep 2"
 
     requestpage
     {
+        SaveValues = True;
         layout
         {
             area(content)
@@ -5276,7 +5280,7 @@ report 50008 "Daily BreakUp by Vessel Rep 2"
                 group(Control2)
                 {
                     ShowCaption = false;
-                    field("Arrenge Column by"; ArrangeBy)
+                    field("Arrange Column by"; ArrangeBy)
                     {
                         ApplicationArea = All;
                     }

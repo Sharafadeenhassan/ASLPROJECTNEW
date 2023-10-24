@@ -295,6 +295,10 @@ tableextension 50333 "tableextension50333" extends "Comment Line"
         }
         field(70000; "Comment Temp"; Text[250])
         {
+             trigger OnValidate()
+                begin
+                    rec.Comment := CopyStr(rec."Comment Temp", 1, 80);
+                end;
         }
     }
     keys

@@ -118,6 +118,9 @@ report 50136 "Inventory - BINCARD 704"
                 column(PageCounter_Number; Number)
                 {
                 }
+                column(RecordNo; RecordNo)
+                {
+                }
                 dataitem("Item Ledger Entry"; "Item Ledger Entry")
                 {
                     DataItemLink = "Item No." = FIELD("No."), "Variant Code" = FIELD("Variant Filter"), "Posting Date" = FIELD("Date Filter"), "Location Code" = FIELD("Location Filter"), "Global Dimension 1 Code" = FIELD("Global Dimension 1 Filter"), "Global Dimension 2 Code" = FIELD("Global Dimension 2 Filter");
@@ -207,13 +210,18 @@ report 50136 "Inventory - BINCARD 704"
                     column(Item_Ledger_Entry_Global_Dimension_2_Code; "Global Dimension 2 Code")
                     {
                     }
+                   Column(PrintBin;"Print Bin Card")
+                   {                    
+                   }
+                   column(HandQty;HandQty)
+                   {}
                     column(ReqNo; IssueNo)
                     {
                     }
 
                     trigger OnAfterGetRecord()
                     var
-                        HandQty: Decimal;
+                        
                     // IssueNo: Text[30];
                     begin
                         CurrReport.CreateTotals(Quantity, IncreasesQty, DecreasesQty);
@@ -298,11 +306,14 @@ report 50136 "Inventory - BINCARD 704"
                         SetFilter("Date Filter", ItemDateFilter);
                     end;
                 ItemOnHand := StartOnHand;
+                if PrintOnlyOnePerPage then
+                    RecordNo := RecordNo + 1;
             end;
 
             trigger OnPreDataItem()
             begin
                 CurrReport.NewPagePerRecord := PrintOnlyOnePerPage;
+                RecordNo := 1;
             end;
         }
     }
@@ -337,6 +348,7 @@ report 50136 "Inventory - BINCARD 704"
         StartOnHand: Decimal;
         IncreasesQty: Decimal;
         DecreasesQty: Decimal;
+        RecordNo: Integer;
         PrintOnlyOnePerPage: Boolean;
         TransShip: Record "Transfer Shipment Header";
         InvtSetUp: Record "Inventory Setup";

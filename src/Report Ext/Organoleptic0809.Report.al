@@ -6,6 +6,8 @@ report 50031 "Organoleptic0809"
     DefaultLayout = RDLC;
     RDLCLayout = './src/reportrdlc/Organoleptic0809.rdlc';
     Caption = 'Organoleptic0809';
+    UsageCategory = ReportsAndAnalysis;
+    ApplicationArea = All, Basic, Suite;
     dataset
     {
         dataitem("Comment Line"; "Comment Line")
@@ -169,7 +171,7 @@ report 50031 "Organoleptic0809"
     }
 
     requestpage
-    {
+    { SaveValues = true;
         layout
         {
         }

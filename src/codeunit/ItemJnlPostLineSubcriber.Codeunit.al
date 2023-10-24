@@ -1,7 +1,7 @@
 codeunit 50028 "ItemJnlPostLineSubcriber"
 {
-    EventSubscriberInstance = StaticAutomatic;
-
+   EventSubscriberInstance = StaticAutomatic;
+/*
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Item Jnl.-Post Line", 'OnBeforePostItem', '', true, true)]
     local procedure ItemJnlPostLineOnBeforePostItem(var ItemJournalLine: Record "Item Journal Line")
     var
@@ -30,7 +30,7 @@ codeunit 50028 "ItemJnlPostLineSubcriber"
             Item.Modify;
         end
     end;
-
+*/
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Item Jnl.-Post Line", 'OnAfterInitItemLedgEntry', '', true, true)]
     local procedure ItemJnlPostLineOnAfterInitItemLedgEntry(var NewItemLedgEntry: Record "Item Ledger Entry"; var ItemJournalLine: Record "Item Journal Line")
     begin
@@ -47,7 +47,7 @@ codeunit 50028 "ItemJnlPostLineSubcriber"
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Item Jnl.-Post Line", 'OnBeforePostInventoryToGL', '', true, true)]
     local procedure ItemJnlPostLineOnBeforePostInventoryToGL(var ValueEntry: Record "Value Entry"; var IsHandled: Boolean)
     begin
-        if ValueEntry."Item Ledger Entry Type" = ValueEntry."Item Ledger Entry Type"::Transfer then
+        if ValueEntry."Item Ledger Entry Type" in[ValueEntry."Item Ledger Entry Type"::Transfer,ValueEntry."Item Ledger Entry Type"::Sale,ValueEntry."Item Ledger Entry Type"::Consumption] then
             IsHandled := true;
     end;
 
@@ -300,4 +300,4 @@ codeunit 50028 "ItemJnlPostLineSubcriber"
 
 //                          }
 //                           }
-//   }
+//  */ }

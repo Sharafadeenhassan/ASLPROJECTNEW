@@ -82,7 +82,7 @@ tableextension 50281 "tableextension50281" extends Employee
             Enabled = true;
             TableRelation = "Payroll-Employee Group Header.";
 
-            trigger OnValidate()
+            /*trigger OnValidate()
             begin
                 EmpGrpRec.SETRANGE(Code, "Employee Group");
                 IF EmpGrpRec.FIND('-') THEN BEGIN
@@ -91,8 +91,8 @@ tableextension 50281 "tableextension50281" extends Employee
                     EmpGrpRec.CALCFIELDS(EmpGrpRec."Gross Pay");
                     EDAmount := EmpGrpRec."Gross Pay";
                 END;
-                CheckMod();
-            end;
+                CheckMod(); 
+            end;*/
         }
         field(50020; "SAM Number"; Code[20])
         {

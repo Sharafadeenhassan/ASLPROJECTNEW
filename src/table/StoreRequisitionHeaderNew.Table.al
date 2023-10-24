@@ -608,7 +608,7 @@ table 50031 "Store Requisition Header New"
     // [Scope('OnPrem')]
     ///This procedure create Journal for the Issue Item and post
     /// CreateAdjSmt.
-    /// </summary>
+    /// /summary>
     procedure CreateAdjSmt()
     var
         ItemJnl: Record "Item Journal Line";

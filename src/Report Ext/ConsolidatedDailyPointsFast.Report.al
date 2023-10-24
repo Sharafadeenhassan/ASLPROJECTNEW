@@ -769,6 +769,7 @@ report 50218 "Consolidated Daily Points Fast"
 
     requestpage
     {
+        SaveValues = True;
         layout
         {
         }

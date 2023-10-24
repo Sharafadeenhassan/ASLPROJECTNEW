@@ -6,6 +6,8 @@ report 50214 "Voyage Narration (Points)"
     DefaultLayout = RDLC;
     RDLCLayout = './src/reportrdlc/VoyageNarrationPoints.rdlc';
     Caption = 'Voyage Narration (Points)';
+    UsageCategory = ReportsAndAnalysis;
+    ApplicationArea = All, Basic, Suite;
     dataset
     {
         dataitem(Date; Date)

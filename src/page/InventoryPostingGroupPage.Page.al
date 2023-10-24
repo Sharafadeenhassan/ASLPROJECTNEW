@@ -1,4 +1,4 @@
-page 50271 "Inventory Posting Group Page"
+page 50271 "Inventory Posting Group Detail"
 {
     Caption = 'Inventory Posting Group Page ';
     PageType = Card;

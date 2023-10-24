@@ -20,6 +20,7 @@ pageextension 50257 "pageextension50257" extends "Job Journal Batches"
             field("Voyage No."; Rec."Voyage No.")
             {
                 ApplicationArea = All;
+                
             }
             field("Fuel Balance"; Rec."Fuel Balance")
             {

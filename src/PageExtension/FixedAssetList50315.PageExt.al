@@ -8,6 +8,11 @@ pageextension 50315 "pageextension50315" extends "Fixed Asset List"
             {
                 ApplicationArea = All;
             }
+            field("Serial No.";"Serial No.")
+            {
+                ApplicationArea = All;
+                Visible = True;
+            }
         }
     }
 }

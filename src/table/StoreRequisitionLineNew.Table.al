@@ -367,6 +367,17 @@ table 50032 "Store Requisition Line New"
             FieldClass = FlowField;
             Editable = false;
         }
+        field(50; "Committed Approved Qty"; Decimal)
+        {
+            CalcFormula = Sum("Store Requisition Line New"."Approved Quantity" WHERE("Final Approval" = FILTER(Approved),
+                                                                                      Processed = CONST(false),
+                                                                                      "Req. Type" = FILTER(Issue | Invoice | Complementary | Transfer),
+                                                                                      "Item No." = FIELD("Item No."),
+                                                                                      "Store Location" = FIELD("Store Location"),
+                                                                                      Rejected = CONST(false)));
+            Editable = false;
+            FieldClass = FlowField;
+        }
     }
 
     keys

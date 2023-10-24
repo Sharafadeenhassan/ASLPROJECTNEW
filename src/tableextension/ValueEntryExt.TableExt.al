@@ -30,6 +30,8 @@ tableextension 50307 "Value Entry Ext" extends "Value Entry"
     {
         key(ASLKey1; "Location Code", "Inventory Posting Group", "Posting Date", "Source Code")
         {
+            Enabled = true;
+
             SumIndexFields = "Valued Quantity";
         }
         key(ASLKey2; "Inventory Posting Group", "Item No.", "Posting Date", "Location Code", "External Document No.")
@@ -48,8 +50,9 @@ tableextension 50307 "Value Entry Ext" extends "Value Entry"
         key(ASLKey6; "External Document No.")
         {
         }
-        key(ASLKey7; "Inventory Posting Group", "Posting Date", "Location Code", "External Document No.")
+        key(ASLKey7; "Posting Date","Location Code","Inventory Posting Group","External Document No.")
         {
+            Enabled = true; 
             SumIndexFields = "Valued Quantity";
         }
         key(ASLKey8; "Gen. Prod. Posting Group", "Document No.")
@@ -58,6 +61,7 @@ tableextension 50307 "Value Entry Ext" extends "Value Entry"
         key(ASLKey9; "Marked Rec") { }
         key(ASLKey10; "Gen. Prod. Posting Group", "Location Code", "Posting Date")
         {
+            Enabled = true;
             SumIndexFields = "Valued Quantity", "Cost Amount (Actual)";
         }
     }

@@ -3091,6 +3091,7 @@ report 50012 "Daily BreakUp by Vess Summary"
 
     requestpage
     {
+        SaveValues = True;
         layout
         {
             area(content)

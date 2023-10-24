@@ -1,5 +1,5 @@
 tableextension 50245 "tableextension50245" extends "Gen. Journal Batch"
-{
+{ 
     fields
     {
         field(50329; "Shortcut Dimension 1 Code"; Code[20])

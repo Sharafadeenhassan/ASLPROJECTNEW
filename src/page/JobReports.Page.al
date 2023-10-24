@@ -77,13 +77,13 @@ page 50165 "Job-Reports"
                 }
                 action("Voyage Narration")
                 {
-                    Image = "report";
+                    Image = AnalysisView;
                     RunObject = Report "Voyage Narration";
                     ApplicationArea = All;
                 }
                 action("Transfer To Vessel")
                 {
-                    Image = "report";
+                    Image = Add;
                     RunObject = Report "Transfer To Vessel";
                     ApplicationArea = All;
                 }

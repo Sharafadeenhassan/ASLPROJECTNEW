@@ -8,6 +8,7 @@ report 50049 "Skipper/Vessel Performance"
     UsageCategory = ReportsAndAnalysis;
     ApplicationArea = All, Basic, Suite;
     Caption = 'Skipper/Vessel Performance';
+    AllowScheduling = true; 
     dataset
     {
         dataitem("Jobs Point Validate"; Job)
@@ -386,7 +387,8 @@ report 50049 "Skipper/Vessel Performance"
     }
 
     requestpage
-    {
+    { 
+        SaveValues = true;
         layout
         {
         }

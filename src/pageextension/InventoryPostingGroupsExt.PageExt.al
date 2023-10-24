@@ -8,20 +8,20 @@ pageextension 50207 "Inventory Posting Groups Ext" extends "Inventory Posting Gr
         // {
         //    Visible = false;
         // }
-        // addafter(Description)
-        // {
-        //     field("Group Type"; "Group Type")
-        //     {
-        //         ApplicationArea = All;
-        //     }
-        //     field(Category; Category)
-        //     {
-        //         ApplicationArea = All;
-        //     }
-        //     field("Category 2"; "Category 2")
-        //     {
-        //         ApplicationArea = All;
-        //     }
+         addafter(Description)
+         {
+             field("Group Type"; "Group Type")
+             {
+                 ApplicationArea = All;
+             }
+             field(Category; Category)
+             {
+                 ApplicationArea = All;
+             }
+             field("Category 2"; "Category 2")
+             {
+                 ApplicationArea = All;
+             }
         //     field(Inventory; Inventory)
         //     {
         //         Visible = false;
@@ -32,28 +32,28 @@ pageextension 50207 "Inventory Posting Groups Ext" extends "Inventory Posting Gr
         //     {
         //         ApplicationArea = All;
         //     }
-        //     field("Statistics Group"; "Statistics Group")
-        //     {
-        //         Visible = false;
-        //         ApplicationArea = All;
-        //     }
+             field("Statistics Group"; "Statistics Group")
+             {
+                 Visible = false;
+                 ApplicationArea = All;
+             }
         //     field("Date Filter"; "Date Filter")
         //     {
         //         ApplicationArea = All;
         //     }
-        //     field("Group Code"; "Group Code")
-        //     {
-        //         ApplicationArea = All;
-        //     }
+             field("Group Code"; "Group Code")
+             {
+                 ApplicationArea = All;
+             }
         //     field("Points/KG"; "Points/KG")
         //     {
         //         ApplicationArea = All;
         //     }
-        //     field("In Use"; "In Use")
-        //     {
-        //         Visible = true;
-        //         ApplicationArea = All;
-        //     }
+             field("In Use"; "In Use")
+             {
+                 Visible = true;
+                 ApplicationArea = All;
+             }
         //     field(Points; Points)
         //     {
         //         Visible = true;
@@ -64,26 +64,26 @@ pageextension 50207 "Inventory Posting Groups Ext" extends "Inventory Posting Gr
         //         Visible = false;
         //         ApplicationArea = All;
         //     }
-        //     field("S/No."; "S/No.")
-        //     {
-        //         Visible = false;
-        //         ApplicationArea = All;
-        //     }
+             field("S/No."; "S/No.")
+             {
+                 Visible = false;
+                 ApplicationArea = All;
+             }
         //     field("Catch Budget"; "Catch Budget")
         //     {
         //         Visible = false;
         //         ApplicationArea = All;
         //     }
-        //     field(Inventory1; Inventory1)
-        //     {
-        //         Visible = false;
-        //         ApplicationArea = All;
-        //     }
-        //     field(Inventory2; Inventory2)
-        //     {
-        //         Visible = false;
-        //         ApplicationArea = All;
-        //     }
+            field(Inventory1; Inventory1)
+             {
+                 Visible = true;
+                 ApplicationArea = All;
+             }
+             field(Inventory2; Inventory2)
+             {
+               Visible = true;
+                ApplicationArea = All;
+             }
         //     field("Inventory total2"; "Inventory total2")
         //     {
         //         Visible = false;
@@ -122,7 +122,7 @@ pageextension 50207 "Inventory Posting Groups Ext" extends "Inventory Posting Gr
     // {
     //     Visible = false;
     // }
-
+    }
     actions
     {
         addafter("&Setup")
@@ -131,8 +131,16 @@ pageextension 50207 "Inventory Posting Groups Ext" extends "Inventory Posting Gr
             {
                 Caption = 'InV. Post. Group Detailes';
                 ApplicationArea = All;
-                RunObject = page "Inventory Posting Group Page";
+                RunObject = page "Inventory Posting Group Detail";
                 RunPageOnRec = true;
+            }
+            action("Category List")
+            {
+                Caption = 'Categories';
+                ApplicationArea = All;
+                RunObject = page  "Item Category Card";
+                RunPageOnRec = true;
+
             }
         }
     }

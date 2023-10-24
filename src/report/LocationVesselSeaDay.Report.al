@@ -1,8 +1,11 @@
+/// <summary>
+/// Report Location Vessel Sea Day (ID 50508).
+/// </summary>
 report 50508 "Location Vessel Sea Day"
 {
-    ApplicationArea = All;
     Caption = 'Location Vessel Sea Day';
     UsageCategory = ReportsAndAnalysis;
+    ApplicationArea = All, Basic, Suite;
     DefaultLayout = RDLC;
     RDLCLayout = '.\LocationVesselSeaDay.rdlc';
     dataset
