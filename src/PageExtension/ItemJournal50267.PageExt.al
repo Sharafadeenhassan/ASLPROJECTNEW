@@ -26,9 +26,14 @@ pageextension 50267 "pageextension50267" extends "Item Journal"
         }
         addafter("Unit Amount")
         {
-            field("Item List Cat83033"; Rec."Item List Cat")
+            field("Item List Cat"; Rec."Item List Cat")
             {
                 ApplicationArea = All;
+            }
+            field("Issue Type"; Rec."Issue Type")
+            {
+                ApplicationArea = All;
+                Visible = true;
             }
         }
         modify("Entry Type")
