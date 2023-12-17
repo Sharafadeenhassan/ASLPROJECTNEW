@@ -494,6 +494,13 @@ pageextension 50353 "pageextension50353" extends "Job Card"
                         REPORT.Run(50032, true, true, Rec);
                     end;
                 }
+                action("Voyage P&L Ledger Line 2")
+                {
+                    Caption = 'Voyage P&L Ledger Line 1 Job 1 Vessel at a Time';
+                    Image = Apply;
+                    ApplicationArea = All;
+                    RunObject = report "Voyage P&L Ledger Line 2";
+                }
             }
         }
         addfirst("&Job")

@@ -1,3 +1,6 @@
+/// <summary>
+/// Codeunit ItemJnlPostSubsriber (ID 50010).
+/// </summary>
 codeunit 50010 "ItemJnlPostSubsriber"
 {
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Item Jnl.-Post", 'OnCodeOnAfterItemJnlPostBatchRun', '', true, true)]
@@ -9,10 +12,12 @@ codeunit 50010 "ItemJnlPostSubsriber"
     local procedure PostAssociatedAsset()
     var
         l_GenJournalLine: Record "Gen. Journal Line";
+        Gcount : Integer;
     begin
         l_GenJournalLine.Reset();
         l_GenJournalLine.SetRange("Ready to Post", true);
-        if l_GenJournalLine.FindSet() then
+        Gcount := l_GenJournalLine.Count;
+        if l_GenJournalLine.FindFirst() then
             repeat
                 CODEUNIT.Run(CODEUNIT::"Gen. Jnl.-Post", l_GenJournalLine);
             until l_GenJournalLine.Next() = 0;

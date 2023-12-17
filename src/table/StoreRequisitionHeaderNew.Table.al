@@ -681,6 +681,7 @@ table 50031 "Store Requisition Header New"
         JobJnl: Record "Job Journal Line";
         LineNo: Integer;
         ReqLines: Record "Store Requisition Line New";
+        PostJob : Codeunit "Job Jnl.-Post Line";
     begin
         if "Req. Type" < 3 then Error('Invalid Requisition Type');
         TestField("Final Approved", 2);
@@ -690,7 +691,8 @@ table 50031 "Store Requisition Header New"
         TestField("Document No.", '');
         TestField("Issued Captured");
         TestField("Job No.");
-        rec."Processed Date" := Today;
+        if Rec."Processed Date" = 0D then 
+                rec."Processed Date" := Today;
         ReqLines.SetRange(ReqLines."Req. No.", rec."Req. No");
         ReqLines.SetFilter(ReqLines."Issued Quantity", '<>%1', 0);
         if not ReqLines.FindSet() then
@@ -710,7 +712,6 @@ table 50031 "Store Requisition Header New"
                 JobJnl."Reason Code" := "Reason Code";
                 JobJnl."External Document No." := "External Document No";
                 JobJnl."Line No." := LineNo;
-                JobJnl.Insert();
                 JobJnl."Document No." := ReqLines."Req. No.";
                 JobJnl.Validate(JobJnl."Posting Date", rec."Processed Date");
                 JobJnl.Validate(JobJnl."Job No.", rec."Job No.");
@@ -720,13 +721,15 @@ table 50031 "Store Requisition Header New"
                 JobJnl.Description := ReqLines."Item Description";
                 JobJnl."Location Code" := ReqLines."Store Location";
                 JobJnl.Validate(JobJnl.Quantity, ReqLines."Issued Quantity");
+                JobJnl."Job Task No." := 'Temp';
                 JobJnl."Lock Qty" := true;
-                JobJnl.Modify();
-                //InveSetup.GET();
-                //IF InveSetup."Auto Post Job Journal" THEN
-                //  PostJob.RUN(JobJnl)
-                //ELSE
-
+                //JobJnl.Modify();
+                 InveSetup.GET();
+                 IF InveSetup."Auto Post Job Journal" THEN
+                   PostJob.RUN(JobJnl)
+                 ELSE
+                JobJnl.Insert();
+                
                 ReqLines.Processed := true;
                 ReqLines.Modify();
             until ReqLines.Next() = 0;

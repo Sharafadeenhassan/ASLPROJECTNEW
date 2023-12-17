@@ -5,7 +5,7 @@ pageextension 50242 "Job Journal Ext" extends "Job Journal"
         modify("Line Type") { Visible = false; }
         modify("Document No.") { Visible = false; }
         modify("Job No.") { Visible = false; }
-        modify("Job Task No.") { Visible = false; }
+        modify("Job Task No.") { Visible = true;}
         modify(Type) { Visible = false; }
         modify("Unit of Measure Code") { Visible = false; }
         modify("Unit Cost") { Visible = false; }
@@ -39,6 +39,7 @@ pageextension 50242 "Job Journal Ext" extends "Job Journal"
             field(Catch; Rec.Catch) { ApplicationArea = All; }
             field("Stock Position Calc."; Rec."Stock Position Calc.") { ApplicationArea = All; }
             field("Posting Group"; Rec."Posting Group") { ApplicationArea = All; }
+            field("Catch Sea Days";"Catch Sea Days"){ApplicationArea = All;}
         }
         addafter("Gen. Prod. Posting Group")
         {

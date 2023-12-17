@@ -1,0 +1,1083 @@
+OBJECT Report 50217 Small Sales Invoice 2
+{
+  OBJECT-PROPERTIES
+  {
+    Date=28/10/20;
+    Time=[ 4:47:35 PM];
+    Modified=Yes;
+    Version List=NAVW13.00;
+  }
+  PROPERTIES
+  {
+    CaptionML=ENU=Invoice;
+    TopMargin=1000;
+    BottomMargin=1000;
+    LeftMargin=3;
+    OnInitReport=BEGIN
+                   GLSetup.GET;
+                 END;
+
+    HorzGrid=210;
+  }
+  DATAITEMS
+  {
+    { PROPERTIES
+      {
+        DataItemTable=Table112;
+        DataItemTableView=SORTING(No.);
+        NewPagePerRecord=Yes;
+        ReqFilterHeadingML=ENU=Posted Sales Invoice;
+        OnPreDataItem=BEGIN
+                        CompanyInfo.GET;
+                      END;
+
+        OnAfterGetRecord=BEGIN
+                           CurrReport.LANGUAGE := Language.GetLanguageID("Language Code");
+
+                           IF RespCenter.GET("Responsibility Center") THEN BEGIN
+                             FormatAddr.RespCenter(CompanyAddr,RespCenter);
+                             CompanyInfo."Phone No." := RespCenter."Phone No.";
+                             CompanyInfo."Fax No." := RespCenter."Fax No.";
+                           END ELSE
+                             FormatAddr.Company(CompanyAddr,CompanyInfo);
+
+                           PostedDocDim1.SETRANGE("Table ID",DATABASE::"Sales Invoice Header");
+                           PostedDocDim1.SETRANGE("Document No.","Sales Invoice Header"."No.");
+
+                           IF "Order No." = '' THEN
+                             OrderNoText := ''
+                           ELSE
+                             OrderNoText := FIELDCAPTION("Order No.");
+                           IF "Salesperson Code" = '' THEN BEGIN
+                             SalesPurchPerson.INIT;
+                             SalesPersonText := '';
+                           END ELSE BEGIN
+                             IF SalesPurchPerson.READPERMISSION THEN BEGIN
+                               SalesPurchPerson.GET("Salesperson Code");
+                               SalesPersonText := Text000;
+                             END;
+                           END;
+                           IF "Your Reference" = '' THEN
+                             ReferenceText := ''
+                           ELSE
+                             ReferenceText := FIELDCAPTION("Your Reference");
+                           IF "VAT Registration No." = '' THEN
+                             VATNoText := ''
+                           ELSE
+                             VATNoText := FIELDCAPTION("VAT Registration No.");
+                           IF "Currency Code" = '' THEN BEGIN
+                             GLSetup.TESTFIELD("LCY Code");
+                             TotalText := STRSUBSTNO(Text001,GLSetup."LCY Code");
+                             TotalInclVATText := STRSUBSTNO(Text002,GLSetup."LCY Code");
+                             TotalExclVATText := STRSUBSTNO(Text006,GLSetup."LCY Code");
+                           END ELSE BEGIN
+                             TotalText := STRSUBSTNO(Text001,"Currency Code");
+                             TotalInclVATText := STRSUBSTNO(Text002,"Currency Code");
+                             TotalExclVATText := STRSUBSTNO(Text006,"Currency Code");
+                           END;
+                           FormatAddr.SalesInvBillTo(CustAddr,"Sales Invoice Header");
+                           Cust.GET("Bill-to Customer No.");
+
+                           IF "Payment Terms Code" = '' THEN
+                             PaymentTerms.INIT
+                           ELSE
+                             PaymentTerms.GET("Payment Terms Code");
+                           IF "Shipment Method Code" = '' THEN
+                             ShipmentMethod.INIT
+                           ELSE
+                             ShipmentMethod.GET("Shipment Method Code");
+
+                           FormatAddr.SalesInvShipTo(ShipToAddr,"Sales Invoice Header");
+                           ShowShippingAddr := "Sell-to Customer No." <> "Bill-to Customer No.";
+                           FOR i := 1 TO ARRAYLEN(ShipToAddr) DO
+                             IF ShipToAddr[i] <> CustAddr[i] THEN
+                               ShowShippingAddr := TRUE;
+
+                           IF NOT CurrReport.PREVIEW THEN
+                             SegManagement.LogDocument(
+                               4,"No.",DATABASE::Customer,"Bill-to Customer No.","Salesperson Code","Posting Description");
+                         END;
+
+        ReqFilterFields=No.,Sell-to Customer No.,No. Printed;
+      }
+      SECTIONS
+      {
+      }
+       }
+    { PROPERTIES
+      {
+        DataItemIndent=1;
+        DataItemTable=Table2000000026;
+        DataItemTableView=SORTING(Number);
+        NewPagePerRecord=Yes;
+        DataItemVarName=CopyLoop;
+        OnPreDataItem=BEGIN
+                        NoOfLoops := ABS(NoOfCopies) + Cust."Invoice Copies" + 1;
+                        IF NoOfLoops <= 0 THEN
+                          NoOfLoops := 1;
+                        CopyText := '';
+                        SETRANGE(Number,1,NoOfLoops);
+                      END;
+
+        OnAfterGetRecord=BEGIN
+                           IF Number > 1 THEN
+                             CopyText := Text003;
+                           CurrReport.PAGENO := 1;
+                         END;
+
+        OnPostDataItem=BEGIN
+                         IF NOT CurrReport.PREVIEW THEN
+                           SalesInvCountPrinted.RUN("Sales Invoice Header");
+                       END;
+
+      }
+      SECTIONS
+      {
+      }
+       }
+    { PROPERTIES
+      {
+        DataItemIndent=2;
+        DataItemTable=Table2000000026;
+        DataItemTableView=SORTING(Number)
+                          WHERE(Number=CONST(1));
+        DataItemVarName=PageLoop;
+      }
+      SECTIONS
+      {
+        { PROPERTIES
+          {
+            SectionType=Header;
+            PrintOnEveryPage=Yes;
+            SectionWidth=6956;
+            SectionHeight=6973;
+            OnPreSection=BEGIN
+                           ExtDocNo:="Sales Invoice Header"."External Document No.";
+                         END;
+
+          }
+          CONTROLS
+          {
+            { 1000000005;Shape  ;0    ;0    ;6930 ;2961 ;BorderWidth=2pt;
+                                                         ShapeStyle=Rectangle }
+            { 1   ;TextBox      ;0    ;80   ;6930 ;608  ;HorzAlign=Center;
+                                                         FontSize=20;
+                                                         FontBold=Yes;
+                                                         SourceExpr=Text004 }
+            { 4   ;TextBox      ;26   ;4892 ;6930 ;423  ;FontSize=7;
+                                                         SourceExpr=CustAddr[1] }
+            { 6   ;TextBox      ;26   ;5315 ;6930 ;423  ;FontSize=7;
+                                                         SourceExpr=CustAddr[2] }
+            { 8   ;TextBox      ;26   ;5738 ;6930 ;423  ;FontSize=7;
+                                                         SourceExpr=CustAddr[3] }
+            { 27  ;TextBox      ;0    ;4416 ;2235 ;423  ;HorzAlign=Left;
+                                                         FontSize=8;
+                                                         FontBold=Yes;
+                                                         SourceExpr="Sales Invoice Header"."Bill-to Customer No." }
+            { 34  ;TextBox      ;3780 ;3807 ;2915 ;423  ;FontSize=7;
+                                                         SourceExpr=SalesPurchPerson.Name }
+            { 35  ;Label        ;0    ;3411 ;1470 ;423  ;FontSize=7;
+                                                         FontBold=Yes;
+                                                         CaptionML=ENU=Invoice No. }
+            { 36  ;TextBox      ;1680 ;3411 ;1890 ;423  ;HorzAlign=Left;
+                                                         FontSize=8;
+                                                         FontBold=Yes;
+                                                         SourceExpr="Sales Invoice Header"."No." }
+            { 39  ;TextBox      ;0    ;3834 ;1680 ;423  ;FontSize=7;
+                                                         SourceExpr=OrderNoText }
+            { 40  ;TextBox      ;1680 ;3834 ;1890 ;423  ;HorzAlign=Left;
+                                                         FontSize=7;
+                                                         SourceExpr="Sales Invoice Header"."Order No." }
+            { 54  ;TextBox      ;3780 ;3014 ;3150 ;423  ;HorzAlign=Left;
+                                                         FontSize=8;
+                                                         FontBold=Yes;
+                                                         SourceExpr=[ 'DATE :' + FORMAT("Sales Invoice Header"."Document Date",0,0)] }
+            { 5   ;TextBox      ;0    ;688  ;6930 ;423  ;HorzAlign=Center;
+                                                         FontSize=10;
+                                                         FontBold=Yes;
+                                                         SourceExpr=CompanyAddr[1] }
+            { 7   ;TextBox      ;0    ;1111 ;6930 ;423  ;HorzAlign=Center;
+                                                         FontSize=9;
+                                                         FontBold=Yes;
+                                                         SourceExpr=CompanyAddr[2] }
+            { 1000000001;Label  ;0    ;2988 ;3780 ;423  ;FontSize=9;
+                                                         FontBold=Yes;
+                                                         CaptionML=ENU=SALES CONFIRMATION }
+            { 14  ;TextBox      ;0    ;2407 ;6930 ;423  ;HorzAlign=Center;
+                                                         FontSize=7;
+                                                         FontBold=Yes;
+                                                         CaptionML=ENU=Phone No.;
+                                                         SourceExpr=CompanyInfo."Phone No." }
+            { 1000000003;Shape  ;0    ;4336 ;6930 ;50   ;BorderWidth=3pt;
+                                                         ShapeStyle=HorzLine }
+            { 17  ;TextBox      ;0    ;1600 ;6881 ;423  ;HorzAlign=Center;
+                                                         FontSize=7;
+                                                         CaptionML=ENU=E-Mail;
+                                                         SourceExpr=CompanyInfo."E-Mail" }
+            { 21  ;TextBox      ;0    ;1992 ;6881 ;423  ;HorzAlign=Center;
+                                                         FontSize=7;
+                                                         CaptionML=ENU=Home Page;
+                                                         SourceExpr=CompanyInfo."Home Page" }
+            { 20  ;Label        ;27   ;6497 ;6915 ;423  ;HorzAlign=Center;
+                                                         Border=Yes;
+                                                         BorderWidth=1pt;
+                                                         FontSize=10;
+                                                         FontBold=Yes;
+                                                         CaptionML=ENU=CASH BILL }
+            { 1000000010;TextBox;3780 ;3383 ;3105 ;423  ;HorzAlign=Left;
+                                                         FontSize=8;
+                                                         FontBold=Yes;
+                                                         SourceExpr=['TIME :' + FORMAT(TIME,0,0) ] }
+          }
+           }
+        { PROPERTIES
+          {
+            SectionType=Header;
+            SectionWidth=6956;
+            SectionHeight=2538;
+            OnPreSection=BEGIN
+                           CurrReport.SHOWOUTPUT(FALSE);
+                         END;
+
+          }
+          CONTROLS
+          {
+            { 19  ;TextBox      ;2310 ;846  ;4200 ;423  ;FontSize=6;
+                                                         CaptionML=ENU=VAT Reg. No.;
+                                                         SourceExpr=CompanyInfo."VAT Registration No." }
+            { 18  ;Label        ;0    ;846  ;2100 ;423  ;ParentControl=19;
+                                                         FontSize=9 }
+            { 23  ;TextBox      ;2310 ;1692 ;4200 ;423  ;FontSize=6;
+                                                         CaptionML=ENU=Bank;
+                                                         SourceExpr=CompanyInfo."Bank Name" }
+            { 22  ;Label        ;0    ;1692 ;2100 ;423  ;ParentControl=23;
+                                                         FontSize=9 }
+            { 25  ;TextBox      ;2310 ;2115 ;4200 ;423  ;FontSize=6;
+                                                         CaptionML=ENU=Account No.;
+                                                         SourceExpr=CompanyInfo."Bank Account No." }
+            { 24  ;Label        ;0    ;2115 ;2100 ;423  ;ParentControl=25;
+                                                         FontSize=9 }
+            { 1000000004;Shape  ;0    ;94   ;6930 ;50   ;BorderWidth=3pt;
+                                                         ShapeStyle=HorzLine }
+            { 1000000002;TextBox;0    ;310  ;1470 ;423  ;FontSize=7;
+                                                         FontBold=Yes;
+                                                         SourceExpr=ExtDocNo }
+          }
+           }
+      }
+       }
+    { PROPERTIES
+      {
+        DataItemIndent=3;
+        DataItemTable=Table2000000026;
+        DataItemTableView=SORTING(Number)
+                          WHERE(Number=FILTER(1..));
+        DataItemVarName=DimensionLoop1;
+        OnPreDataItem=BEGIN
+                        IF NOT ShowInternalInfo THEN
+                          CurrReport.BREAK;
+                      END;
+
+        OnAfterGetRecord=BEGIN
+                           IF Number = 1 THEN BEGIN
+                             IF NOT PostedDocDim1.FIND('-') THEN
+                               CurrReport.BREAK;
+                           END ELSE
+                             IF NOT Continue THEN
+                               CurrReport.BREAK;
+
+                           CLEAR(DimText);
+                           Continue := FALSE;
+                           REPEAT
+                             OldDimText := DimText;
+                             IF DimText = '' THEN
+                               DimText := STRSUBSTNO(
+                                 '%1 %2',PostedDocDim1."Dimension Code",PostedDocDim1."Dimension Value Code")
+                             ELSE
+                               DimText :=
+                                 STRSUBSTNO(
+                                   '%1, %2 %3',DimText,
+                                   PostedDocDim1."Dimension Code",PostedDocDim1."Dimension Value Code");
+                             IF STRLEN(DimText) > MAXSTRLEN(OldDimText) THEN BEGIN
+                               DimText := OldDimText;
+                               Continue := TRUE;
+                               EXIT;
+                             END;
+                           UNTIL (PostedDocDim1.NEXT = 0);
+                         END;
+
+        DataItemLinkReference=Sales Invoice Header;
+      }
+      SECTIONS
+      {
+        { PROPERTIES
+          {
+            SectionType=Body;
+            SectionWidth=6956;
+            SectionHeight=423;
+            OnPreSection=BEGIN
+                           CurrReport.SHOWOUTPUT(Number = 1);
+                         END;
+
+          }
+          CONTROLS
+          {
+            { 91  ;TextBox      ;3360 ;0    ;3150 ;423  ;FontSize=9;
+                                                         SourceExpr=DimText }
+            { 93  ;Label        ;0    ;0    ;3150 ;423  ;FontSize=9;
+                                                         CaptionML=ENU=Header Dimensions }
+          }
+           }
+        { PROPERTIES
+          {
+            SectionType=Body;
+            SectionWidth=6956;
+            SectionHeight=423;
+            OnPreSection=BEGIN
+                           CurrReport.SHOWOUTPUT(Number > 1);
+                         END;
+
+          }
+          CONTROLS
+          {
+            { 98  ;TextBox      ;0    ;0    ;6510 ;423  ;FontSize=9;
+                                                         SourceExpr=DimText }
+          }
+           }
+      }
+       }
+    { PROPERTIES
+      {
+        DataItemIndent=3;
+        DataItemTable=Table113;
+        DataItemTableView=SORTING(Document No.,Line No.);
+        OnPreDataItem=BEGIN
+                        VATAmountLine.DELETEALL;
+                        MoreLines := FIND('+');
+                        WHILE MoreLines AND (Description = '') AND ("No." = '') AND (Quantity = 0) AND (Amount = 0) DO
+                          MoreLines := NEXT(-1) <> 0;
+                        IF NOT MoreLines THEN
+                          CurrReport.BREAK;
+                        SETRANGE("Line No.",0,"Line No.");
+                        CurrReport.CREATETOTALS("Line Amount",Amount,"Amount Including VAT","Inv. Discount Amount");
+                      END;
+
+        OnAfterGetRecord=BEGIN
+                           IF (Type = Type::"Account (G/L)") AND (NOT ShowInternalInfo) THEN
+                             "No." := '';
+
+                           VATAmountLine.INIT;
+                           VATAmountLine."VAT Identifier" := "VAT Identifier";
+                           VATAmountLine."VAT Calculation Type" := "VAT Calculation Type";
+                           VATAmountLine."Tax Group Code" := "Tax Group Code";
+                           VATAmountLine."VAT %" := "VAT %";
+                           VATAmountLine."VAT Base" := Amount;
+                           VATAmountLine."Amount Including VAT" := "Amount Including VAT";
+                           VATAmountLine."Line Amount" := "Line Amount";
+                           IF "Allow Invoice Disc." THEN
+                             VATAmountLine."Inv. Disc. Base Amount" := "Line Amount";
+                           VATAmountLine."Invoice Discount Amount" := "Inv. Discount Amount";
+                           VATAmountLine.InsertLine;
+                         END;
+
+        DataItemLinkReference=Sales Invoice Header;
+        DataItemLink=Document No.=FIELD(No.);
+      }
+      SECTIONS
+      {
+        { PROPERTIES
+          {
+            SectionType=Header;
+            PrintOnEveryPage=Yes;
+            SectionWidth=6956;
+            SectionHeight=899;
+            OnPreSection=BEGIN
+                           Countz := 0;
+                         END;
+
+          }
+          CONTROLS
+          {
+            { 42  ;Label        ;840  ;53   ;1680 ;846  ;ParentControl=65;
+                                                         VertAlign=Bottom;
+                                                         FontSize=7;
+                                                         FontBold=Yes;
+                                                         MultiLine=Yes }
+            { 43  ;Label        ;3360 ;53   ;630  ;846  ;ParentControl=66;
+                                                         HorzAlign=Right;
+                                                         VertAlign=Bottom;
+                                                         FontSize=7;
+                                                         FontBold=Yes;
+                                                         MultiLine=Yes }
+            { 45  ;Label        ;4200 ;53   ;1050 ;846  ;ParentControl=68;
+                                                         HorzAlign=Right;
+                                                         VertAlign=Bottom;
+                                                         FontSize=7;
+                                                         FontBold=Yes;
+                                                         MultiLine=Yes;
+                                                         CaptionML=ENU=Rate/Kg }
+            { 46  ;Label        ;0    ;53   ;630  ;846  ;ParentControl=69;
+                                                         HorzAlign=Left;
+                                                         VertAlign=Bottom;
+                                                         FontSize=7;
+                                                         FontBold=Yes;
+                                                         MultiLine=Yes }
+            { 47  ;Label        ;5460 ;53   ;1288 ;846  ;ParentControl=70;
+                                                         HorzAlign=Right;
+                                                         VertAlign=Bottom;
+                                                         FontSize=7;
+                                                         FontBold=Yes;
+                                                         MultiLine=Yes;
+                                                         CaptionML=ENU=Amount Naira }
+            { 1000000006;Shape  ;0    ;0    ;6930 ;50   ;BorderWidth=3pt;
+                                                         ShapeStyle=HorzLine }
+            { 1000000007;Shape  ;0    ;849  ;6930 ;50   ;BorderWidth=3pt;
+                                                         ShapeStyle=HorzLine }
+          }
+           }
+        { PROPERTIES
+          {
+            SectionType=Body;
+            SectionWidth=6956;
+            SectionHeight=423;
+            OnPreSection=BEGIN
+                           CurrReport.SHOWOUTPUT(Type = 0);
+                         END;
+
+          }
+          CONTROLS
+          {
+            { 57  ;TextBox      ;0    ;0    ;6720 ;423  ;FontSize=7;
+                                                         SourceExpr=Description }
+          }
+           }
+        { PROPERTIES
+          {
+            SectionType=Body;
+            SectionWidth=6956;
+            SectionHeight=440;
+            OnPreSection=BEGIN
+                           CurrReport.SHOWOUTPUT(Type > 0);
+                           Countz:=Countz+1;
+                         END;
+
+          }
+          CONTROLS
+          {
+            { 65  ;TextBox      ;840  ;0    ;2100 ;423  ;FontSize=7;
+                                                         SourceExpr=Description }
+            { 66  ;TextBox      ;3150 ;0    ;840  ;423  ;HorzAlign=Right;
+                                                         FontSize=7;
+                                                         CaptionML=ENU=Qty;
+                                                         BlankZero=Yes;
+                                                         SourceExpr=Quantity }
+            { 68  ;TextBox      ;4200 ;0    ;1050 ;423  ;HorzAlign=Right;
+                                                         FontSize=6;
+                                                         CaptionML=ENU=Rate/Kg;
+                                                         BlankZero=Yes;
+                                                         SourceExpr="Unit Price";
+                                                         AutoFormatType=2;
+                                                         AutoFormatExpr="Sales Invoice Line".GetCurrencyCode }
+            { 69  ;TextBox      ;0    ;0    ;630  ;423  ;HorzAlign=Center;
+                                                         FontSize=7;
+                                                         CaptionML=ENU="Sr. No. ";
+                                                         BlankZero=Yes;
+                                                         SourceExpr=Countz }
+            { 70  ;TextBox      ;5460 ;0    ;1470 ;423  ;HorzAlign=Right;
+                                                         FontSize=6;
+                                                         CaptionML=ENU=Amount Naira;
+                                                         BlankZero=Yes;
+                                                         SourceExpr="Line Amount";
+                                                         AutoFormatType=1;
+                                                         AutoFormatExpr="Sales Invoice Line".GetCurrencyCode }
+          }
+           }
+        { PROPERTIES
+          {
+            SectionType=Footer;
+            SectionWidth=6956;
+            SectionHeight=423;
+          }
+          CONTROLS
+          {
+          }
+           }
+        { PROPERTIES
+          {
+            SectionType=Footer;
+            SectionWidth=6956;
+            SectionHeight=846;
+            OnPreSection=BEGIN
+                           CurrReport.SHOWOUTPUT("Amount Including VAT" = Amount);
+                         END;
+
+          }
+          CONTROLS
+          {
+            { 73  ;TextBox      ;0    ;0    ;3150 ;423  ;FontSize=8;
+                                                         FontBold=Yes;
+                                                         SourceExpr=TotalText }
+            { 74  ;TextBox      ;3674 ;27   ;3150 ;423  ;ParentControl=47;
+                                                         HorzAlign=Right;
+                                                         FontSize=8;
+                                                         FontBold=Yes;
+                                                         SourceExpr=Amount;
+                                                         AutoFormatType=1;
+                                                         AutoFormatExpr="Sales Invoice Line".GetCurrencyCode }
+            { 1000000009;Shape  ;0    ;0    ;6930 ;50   ;BorderWidth=3pt;
+                                                         ShapeStyle=HorzLine }
+            { 1000000008;Shape  ;0    ;490  ;6930 ;50   ;BorderWidth=3pt;
+                                                         ShapeStyle=HorzLine }
+          }
+           }
+        { PROPERTIES
+          {
+            SectionType=Footer;
+            SectionWidth=6956;
+            SectionHeight=1269;
+            OnPreSection=BEGIN
+                           CurrReport.SHOWOUTPUT(
+                             (NOT "Sales Invoice Header"."Prices Including VAT") AND ("Amount Including VAT" <> Amount));
+                         END;
+
+          }
+          CONTROLS
+          {
+            { 90  ;TextBox      ;4410 ;0    ;2520 ;423  ;FontSize=9;
+                                                         FontBold=Yes;
+                                                         SourceExpr=Amount;
+                                                         AutoFormatType=1;
+                                                         AutoFormatExpr="Sales Invoice Line".GetCurrencyCode }
+            { 92  ;TextBox      ;4410 ;423  ;2520 ;423  ;FontSize=9;
+                                                         SourceExpr="Amount Including VAT" - Amount;
+                                                         AutoFormatType=1;
+                                                         AutoFormatExpr="Sales Invoice Line".GetCurrencyCode }
+            { 94  ;TextBox      ;4410 ;846  ;2520 ;423  ;FontSize=9;
+                                                         FontBold=Yes;
+                                                         SourceExpr="Amount Including VAT";
+                                                         AutoFormatType=1;
+                                                         AutoFormatExpr="Sales Invoice Line".GetCurrencyCode }
+            { 79  ;TextBox      ;0    ;423  ;4200 ;423  ;FontSize=9;
+                                                         SourceExpr=VATAmountLine.VATAmountText }
+            { 80  ;TextBox      ;0    ;0    ;4200 ;423  ;FontSize=9;
+                                                         FontBold=Yes;
+                                                         SourceExpr=TotalExclVATText }
+            { 81  ;TextBox      ;0    ;846  ;4200 ;423  ;FontSize=9;
+                                                         FontBold=Yes;
+                                                         SourceExpr=TotalInclVATText }
+          }
+           }
+        { PROPERTIES
+          {
+            SectionType=Footer;
+            SectionWidth=6956;
+            SectionHeight=423;
+            OnPreSection=BEGIN
+                           CurrReport.SHOWOUTPUT(
+                             "Sales Invoice Header"."Prices Including VAT" AND
+                             ("Amount Including VAT" <> Amount) AND
+                             ("Sales Invoice Header"."VAT Base Discount %" <> 0));
+                         END;
+
+          }
+          CONTROLS
+          {
+            { 84  ;Label        ;0    ;0    ;4200 ;423  ;ParentControl=143;
+                                                         FontSize=9 }
+            { 143 ;TextBox      ;4410 ;0    ;2520 ;423  ;FontSize=9;
+                                                         CaptionML=ENU=Payment Discount on VAT;
+                                                         SourceExpr=-("Line Amount" - "Inv. Discount Amount" - "Amount Including VAT");
+                                                         AutoFormatType=1;
+                                                         AutoFormatExpr="Sales Invoice Header"."Currency Code" }
+          }
+           }
+        { PROPERTIES
+          {
+            SectionType=Footer;
+            SectionWidth=6956;
+            SectionHeight=2115;
+            OnPreSection=BEGIN
+                           CurrReport.SHOWOUTPUT(
+                             "Sales Invoice Header"."Prices Including VAT" AND ("Amount Including VAT" <> Amount));
+                         END;
+
+          }
+          CONTROLS
+          {
+            { 60  ;TextBox      ;0    ;0    ;4200 ;423  ;FontSize=9;
+                                                         FontBold=Yes;
+                                                         SourceExpr=TotalInclVATText }
+            { 61  ;TextBox      ;0    ;846  ;4200 ;423  ;FontSize=9;
+                                                         SourceExpr=VATAmountLine.VATAmountText }
+            { 62  ;TextBox      ;4410 ;846  ;2520 ;423  ;FontSize=9;
+                                                         SourceExpr="Amount Including VAT" - Amount;
+                                                         AutoFormatType=1;
+                                                         AutoFormatExpr="Sales Invoice Line".GetCurrencyCode }
+            { 63  ;TextBox      ;4410 ;1269 ;2520 ;423  ;FontSize=9;
+                                                         SourceExpr=Amount;
+                                                         AutoFormatType=1;
+                                                         AutoFormatExpr="Sales Invoice Line".GetCurrencyCode }
+            { 71  ;TextBox      ;4410 ;0    ;2520 ;423  ;FontSize=9;
+                                                         FontBold=Yes;
+                                                         SourceExpr="Amount Including VAT";
+                                                         AutoFormatType=1;
+                                                         AutoFormatExpr="Sales Invoice Line".GetCurrencyCode }
+            { 72  ;TextBox      ;0    ;1269 ;4200 ;423  ;FontSize=9;
+                                                         SourceExpr=TotalExclVATText }
+          }
+           }
+      }
+       }
+    { PROPERTIES
+      {
+        DataItemIndent=4;
+        DataItemTable=Table2000000026;
+        DataItemTableView=SORTING(Number)
+                          WHERE(Number=FILTER(1..));
+        DataItemVarName=DimensionLoop2;
+        OnPreDataItem=BEGIN
+                        IF NOT ShowInternalInfo THEN
+                          CurrReport.BREAK;
+
+                        PostedDocDim2.SETRANGE("Table ID",DATABASE::"Sales Invoice Line");
+                        PostedDocDim2.SETRANGE("Document No.","Sales Invoice Line"."Document No.");
+                        PostedDocDim2.SETRANGE("Line No.","Sales Invoice Line"."Line No.");
+                      END;
+
+        OnAfterGetRecord=BEGIN
+                           IF Number = 1 THEN BEGIN
+                             IF NOT PostedDocDim2.FIND('-') THEN
+                               CurrReport.BREAK;
+                           END ELSE
+                             IF NOT Continue THEN
+                               CurrReport.BREAK;
+
+                           CLEAR(DimText);
+                           Continue := FALSE;
+                           REPEAT
+                             OldDimText := DimText;
+                             IF DimText = '' THEN
+                               DimText := STRSUBSTNO(
+                                 '%1 %2',PostedDocDim2."Dimension Code",PostedDocDim2."Dimension Value Code")
+                             ELSE
+                               DimText :=
+                                 STRSUBSTNO(
+                                   '%1, %2 %3',DimText,
+                                   PostedDocDim2."Dimension Code",PostedDocDim2."Dimension Value Code");
+                             IF STRLEN(DimText) > MAXSTRLEN(OldDimText) THEN BEGIN
+                               DimText := OldDimText;
+                               Continue := TRUE;
+                               EXIT;
+                             END;
+                           UNTIL (PostedDocDim2.NEXT = 0);
+                         END;
+
+      }
+      SECTIONS
+      {
+        { PROPERTIES
+          {
+            SectionType=Body;
+            SectionWidth=6956;
+            SectionHeight=423;
+          }
+          CONTROLS
+          {
+            { 82  ;TextBox      ;2310 ;0    ;4200 ;423  ;FontSize=7;
+                                                         SourceExpr=DimText }
+            { 83  ;Label        ;0    ;0    ;2100 ;423  ;FontSize=7;
+                                                         CaptionML=ENU=Line Dimensions }
+          }
+           }
+      }
+       }
+    { PROPERTIES
+      {
+        DataItemIndent=3;
+        DataItemTable=Table2000000026;
+        DataItemTableView=SORTING(Number);
+        DataItemVarName=VATCounter;
+        OnPreDataItem=BEGIN
+                        IF VATAmountLine.GetTotalVATAmount = 0 THEN
+                          CurrReport.BREAK;
+                        SETRANGE(Number,1,VATAmountLine.COUNT);
+                        CurrReport.CREATETOTALS(
+                          VATAmountLine."Line Amount",VATAmountLine."Inv. Disc. Base Amount",
+                          VATAmountLine."Invoice Discount Amount",VATAmountLine."VAT Base",VATAmountLine."VAT Amount");
+                      END;
+
+        OnAfterGetRecord=BEGIN
+                           VATAmountLine.GetLine(Number);
+                         END;
+
+      }
+      SECTIONS
+      {
+        { PROPERTIES
+          {
+            SectionType=Header;
+            PrintOnEveryPage=Yes;
+            SectionWidth=6956;
+            SectionHeight=0;
+          }
+          CONTROLS
+          {
+          }
+           }
+        { PROPERTIES
+          {
+            SectionType=TransHeader;
+            SectionWidth=6956;
+            SectionHeight=0;
+          }
+          CONTROLS
+          {
+          }
+           }
+        { PROPERTIES
+          {
+            SectionType=Body;
+            SectionWidth=6956;
+            SectionHeight=423;
+          }
+          CONTROLS
+          {
+            { 107 ;TextBox      ;420  ;0    ;630  ;423  ;FontSize=6;
+                                                         CaptionML=ENU=VAT %;
+                                                         DecimalPlaces=0:5;
+                                                         SourceExpr=VATAmountLine."VAT %" }
+            { 108 ;TextBox      ;3990 ;0    ;1260 ;423  ;FontSize=6;
+                                                         CaptionML=ENU=VAT Base;
+                                                         SourceExpr=VATAmountLine."VAT Base";
+                                                         AutoFormatType=1;
+                                                         AutoFormatExpr="Sales Invoice Header"."Currency Code" }
+            { 109 ;TextBox      ;5250 ;0    ;1470 ;423  ;FontSize=6;
+                                                         CaptionML=ENU=VAT Amount;
+                                                         SourceExpr=VATAmountLine."VAT Amount";
+                                                         AutoFormatType=1;
+                                                         AutoFormatExpr="Sales Invoice Header"."Currency Code" }
+            { 135 ;TextBox      ;0    ;0    ;420  ;423  ;FontSize=6;
+                                                         CaptionML=ENU=VAT Identifier;
+                                                         SourceExpr=VATAmountLine."VAT Identifier" }
+            { 140 ;TextBox      ;1050 ;0    ;840  ;423  ;FontSize=6;
+                                                         CaptionML=ENU=Line Amount;
+                                                         SourceExpr=VATAmountLine."Line Amount";
+                                                         AutoFormatType=1;
+                                                         AutoFormatExpr="Sales Invoice Header"."Currency Code" }
+            { 141 ;TextBox      ;1680 ;0    ;1680 ;423  ;FontSize=6;
+                                                         CaptionML=ENU=Inv. Disc. Base Amount;
+                                                         SourceExpr=VATAmountLine."Inv. Disc. Base Amount";
+                                                         AutoFormatType=1;
+                                                         AutoFormatExpr="Sales Invoice Header"."Currency Code" }
+            { 142 ;TextBox      ;2940 ;0    ;1050 ;423  ;FontSize=6;
+                                                         CaptionML=ENU=Invoice Discount Amount;
+                                                         SourceExpr=VATAmountLine."Invoice Discount Amount";
+                                                         AutoFormatType=1;
+                                                         AutoFormatExpr="Sales Invoice Header"."Currency Code" }
+          }
+           }
+        { PROPERTIES
+          {
+            SectionType=TransFooter;
+            SectionWidth=6956;
+            SectionHeight=846;
+          }
+          CONTROLS
+          {
+            { 111 ;Label        ;0    ;423  ;630  ;423  ;ParentControl=112;
+                                                         FontSize=6;
+                                                         LeaderDots=Yes }
+            { 112 ;TextBox      ;2520 ;423  ;1470 ;423  ;FontSize=6;
+                                                         CaptionML=ENU=Continued;
+                                                         SourceExpr=VATAmountLine."VAT Base";
+                                                         AutoFormatType=1;
+                                                         AutoFormatExpr="Sales Invoice Header"."Currency Code" }
+            { 113 ;TextBox      ;3990 ;423  ;2100 ;423  ;FontSize=6;
+                                                         SourceExpr=VATAmountLine."VAT Amount";
+                                                         AutoFormatType=1;
+                                                         AutoFormatExpr="Sales Invoice Header"."Currency Code" }
+            { 110 ;TextBox      ;630  ;423  ;630  ;423  ;FontSize=6;
+                                                         CaptionML=ENU=Line Amount;
+                                                         SourceExpr=VATAmountLine."Line Amount";
+                                                         AutoFormatType=1;
+                                                         AutoFormatExpr="Sales Invoice Header"."Currency Code" }
+            { 114 ;TextBox      ;1260 ;423  ;630  ;423  ;FontSize=6;
+                                                         CaptionML=ENU=Inv. Disc. Base Amount;
+                                                         SourceExpr=VATAmountLine."Inv. Disc. Base Amount";
+                                                         AutoFormatType=1;
+                                                         AutoFormatExpr="Sales Invoice Header"."Currency Code" }
+            { 118 ;TextBox      ;1890 ;423  ;630  ;423  ;FontSize=6;
+                                                         CaptionML=ENU=Invoice Discount Amount;
+                                                         SourceExpr=VATAmountLine."Invoice Discount Amount";
+                                                         AutoFormatType=1;
+                                                         AutoFormatExpr="Sales Invoice Header"."Currency Code" }
+          }
+           }
+        { PROPERTIES
+          {
+            SectionType=Footer;
+            SectionWidth=6956;
+            SectionHeight=846;
+          }
+          CONTROLS
+          {
+            { 117 ;TextBox      ;5250 ;423  ;1680 ;423  ;FontSize=6;
+                                                         FontBold=Yes;
+                                                         SourceExpr=VATAmountLine."VAT Amount";
+                                                         AutoFormatType=1;
+                                                         AutoFormatExpr="Sales Invoice Header"."Currency Code" }
+            { 132 ;TextBox      ;420  ;423  ;1260 ;423  ;FontSize=6;
+                                                         FontBold=Yes;
+                                                         CaptionML=ENU=Line Amount;
+                                                         SourceExpr=VATAmountLine."Line Amount";
+                                                         AutoFormatType=1;
+                                                         AutoFormatExpr="Sales Invoice Header"."Currency Code" }
+            { 133 ;TextBox      ;1680 ;423  ;1260 ;423  ;FontSize=6;
+                                                         FontBold=Yes;
+                                                         CaptionML=ENU=Inv. Disc. Base Amount;
+                                                         SourceExpr=VATAmountLine."Inv. Disc. Base Amount";
+                                                         AutoFormatType=1;
+                                                         AutoFormatExpr="Sales Invoice Header"."Currency Code" }
+            { 134 ;TextBox      ;2730 ;423  ;1260 ;423  ;FontSize=6;
+                                                         FontBold=Yes;
+                                                         CaptionML=ENU=Invoice Discount Amount;
+                                                         SourceExpr=VATAmountLine."Invoice Discount Amount";
+                                                         AutoFormatType=1;
+                                                         AutoFormatExpr="Sales Invoice Header"."Currency Code" }
+            { 116 ;TextBox      ;4200 ;423  ;1260 ;423  ;FontSize=6;
+                                                         FontBold=Yes;
+                                                         CaptionML=ENU=Total;
+                                                         SourceExpr=VATAmountLine."VAT Base";
+                                                         AutoFormatType=1;
+                                                         AutoFormatExpr="Sales Invoice Header"."Currency Code" }
+            { 115 ;Label        ;0    ;423  ;420  ;423  ;ParentControl=116;
+                                                         FontSize=6;
+                                                         FontBold=Yes }
+          }
+           }
+      }
+       }
+    { PROPERTIES
+      {
+        DataItemIndent=3;
+        DataItemTable=Table2000000026;
+        DataItemTableView=SORTING(Number)
+                          WHERE(Number=CONST(1));
+        DataItemVarName=Total;
+      }
+      SECTIONS
+      {
+        { PROPERTIES
+          {
+            SectionType=Body;
+            SectionWidth=6956;
+            SectionHeight=2115;
+          }
+          CONTROLS
+          {
+            { 119 ;Label        ;0    ;0    ;1470 ;423  ;ParentControl=120;
+                                                         VertAlign=Top;
+                                                         FontSize=6;
+                                                         MultiLine=Yes }
+            { 120 ;TextBox      ;1680 ;0    ;5250 ;846  ;HorzAlign=General;
+                                                         VertAlign=Top;
+                                                         FontSize=8;
+                                                         FontBold=Yes;
+                                                         MultiLine=Yes;
+                                                         CaptionML=ENU=Payment Terms;
+                                                         SourceExpr=PaymentTerms.Description }
+            { 121 ;Label        ;0    ;1269 ;1470 ;846  ;ParentControl=122;
+                                                         VertAlign=Top;
+                                                         FontSize=6;
+                                                         FontBold=Yes;
+                                                         MultiLine=Yes }
+            { 122 ;TextBox      ;1680 ;1269 ;5250 ;846  ;HorzAlign=General;
+                                                         VertAlign=Top;
+                                                         FontSize=8;
+                                                         FontBold=Yes;
+                                                         MultiLine=Yes;
+                                                         CaptionML=ENU=Shipment Method;
+                                                         SourceExpr=ShipmentMethod.Description }
+          }
+           }
+        { PROPERTIES
+          {
+            SectionType=Body;
+            SectionWidth=6956;
+            SectionHeight=3120;
+          }
+          CONTROLS
+          {
+            { 1000000000;TextBox;0    ;0    ;6930 ;2115 ;FontSize=7;
+                                                         MultiLine=Yes;
+                                                         CaptionML=ENU=Shipment Method;
+                                                         SourceExpr=Text501 }
+            { 16  ;Label        ;1    ;2434 ;6863 ;686  ;HorzAlign=Center;
+                                                         FontName=Times;
+                                                         FontSize=15;
+                                                         FontBold=Yes;
+                                                         FontItalic=Yes;
+                                                         FontUnderline=Yes;
+                                                         CaptionML=ENU=<<Thank You Visit Again>> }
+          }
+           }
+      }
+       }
+    { PROPERTIES
+      {
+        DataItemIndent=3;
+        DataItemTable=Table2000000026;
+        DataItemTableView=SORTING(Number)
+                          WHERE(Number=CONST(1));
+        DataItemVarName=Total2;
+        OnPreDataItem=BEGIN
+                        IF NOT ShowShippingAddr THEN
+                          CurrReport.BREAK;
+                      END;
+
+      }
+      SECTIONS
+      {
+        { PROPERTIES
+          {
+            SectionType=Body;
+            SectionWidth=6956;
+            SectionHeight=423;
+          }
+          CONTROLS
+          {
+            { 123 ;Label        ;0    ;0    ;6300 ;423  ;FontSize=6;
+                                                         FontBold=Yes;
+                                                         CaptionML=ENU=Ship-to Address }
+          }
+           }
+        { PROPERTIES
+          {
+            SectionType=Body;
+            SectionWidth=6956;
+            SectionHeight=846;
+            OnPreSection=BEGIN
+                           CurrReport.SHOWOUTPUT :=
+                             "Sales Invoice Header"."Sell-to Customer No." <> "Sales Invoice Header"."Bill-to Customer No.";
+                         END;
+
+          }
+          CONTROLS
+          {
+            { 125 ;TextBox      ;3360 ;0    ;2100 ;423  ;HorzAlign=Left;
+                                                         FontSize=6;
+                                                         SourceExpr="Sales Invoice Header"."Sell-to Customer No." }
+            { 124 ;Label        ;0    ;0    ;3150 ;423  ;ParentControl=125;
+                                                         FontSize=6 }
+          }
+           }
+        { PROPERTIES
+          {
+            SectionType=Body;
+            SectionWidth=6956;
+            SectionHeight=3384;
+            OnPreSection=BEGIN
+                           CurrReport.SHOWOUTPUT(FALSE);
+                         END;
+
+          }
+          CONTROLS
+          {
+            { 126 ;TextBox      ;0    ;0    ;6300 ;423  ;FontSize=6;
+                                                         SourceExpr=ShipToAddr[1] }
+            { 127 ;TextBox      ;0    ;423  ;6300 ;423  ;FontSize=6;
+                                                         SourceExpr=ShipToAddr[2] }
+            { 128 ;TextBox      ;0    ;846  ;6300 ;423  ;FontSize=6;
+                                                         SourceExpr=ShipToAddr[3] }
+            { 129 ;TextBox      ;0    ;1269 ;6300 ;423  ;FontSize=6;
+                                                         SourceExpr=ShipToAddr[4] }
+            { 130 ;TextBox      ;0    ;1692 ;6300 ;423  ;FontSize=6;
+                                                         SourceExpr=ShipToAddr[5] }
+            { 131 ;TextBox      ;0    ;2115 ;6300 ;423  ;FontSize=6;
+                                                         SourceExpr=ShipToAddr[6] }
+            { 51  ;TextBox      ;0    ;2538 ;6300 ;423  ;FontSize=6;
+                                                         SourceExpr=ShipToAddr[7] }
+            { 52  ;TextBox      ;0    ;2961 ;6300 ;423  ;FontSize=6;
+                                                         SourceExpr=ShipToAddr[8] }
+          }
+           }
+      }
+       }
+  }
+  REQUESTFORM
+  {
+    PROPERTIES
+    {
+      Width=5060;
+      Height=990;
+      SaveValues=Yes;
+    }
+    CONTROLS
+    {
+      { 1   ;TextBox      ;3410 ;0    ;1650 ;440  ;CaptionML=ENU=No. of Copies;
+                                                   SourceExpr=NoOfCopies }
+      { 21  ;Label        ;0    ;0    ;3300 ;440  ;ParentControl=1 }
+      { 2   ;CheckBox     ;3410 ;550  ;440  ;440  ;ShowCaption=No;
+                                                   CaptionML=ENU=Show Internal Information;
+                                                   SourceExpr=ShowInternalInfo }
+      { 3   ;Label        ;0    ;550  ;3300 ;440  ;ParentControl=2 }
+    }
+  }
+  CODE
+  {
+    VAR
+      Text000@1000 : TextConst 'ENU=Salesperson';
+      Text001@1001 : TextConst 'ENU=Total %1';
+      Text002@1002 : TextConst 'ENU=Total %1 Incl. VAT';
+      Text003@1003 : TextConst 'ENU=COPY';
+      Text004@1004 : TextConst 'ENU=THE FISH SHOP';
+      Text005@1005 : TextConst 'ENU=Page %1';
+      Text006@1006 : TextConst 'ENU=Total %1 Excl. VAT';
+      GLSetup@1007 : Record 98;
+      ShipmentMethod@1008 : Record 10;
+      PaymentTerms@1009 : Record 3;
+      SalesPurchPerson@1010 : Record 13;
+      CompanyInfo@1011 : Record 79;
+      Cust@1012 : Record 18;
+      VATAmountLine@1013 : TEMPORARY Record 290;
+      PostedDocDim1@1014 : Record 359;
+      PostedDocDim2@1015 : Record 359;
+      RespCenter@1016 : Record 5714;
+      Language@1017 : Record 8;
+      SalesInvCountPrinted@1018 : Codeunit 315;
+      FormatAddr@1019 : Codeunit 365;
+      SegManagement@1020 : Codeunit 5051;
+      CustAddr@1021 : ARRAY [8] OF Text[50];
+      ShipToAddr@1022 : ARRAY [8] OF Text[50];
+      CompanyAddr@1023 : ARRAY [8] OF Text[50];
+      OrderNoText@1024 : Text[30];
+      SalesPersonText@1025 : Text[30];
+      VATNoText@1026 : Text[30];
+      ReferenceText@1027 : Text[30];
+      TotalText@1028 : Text[50];
+      TotalExclVATText@1029 : Text[50];
+      TotalInclVATText@1030 : Text[50];
+      MoreLines@1031 : Boolean;
+      NoOfCopies@1032 : Integer;
+      NoOfLoops@1033 : Integer;
+      CopyText@1034 : Text[30];
+      ShowShippingAddr@1035 : Boolean;
+      i@1036 : Integer;
+      DimText@1037 : Text[120];
+      OldDimText@1038 : Text[75];
+      ShowInternalInfo@1039 : Boolean;
+      Continue@1040 : Boolean;
+      "------------------"@1000000000 : Text[30];
+      Countz@1000000001 : Integer;
+      numbers@1000000002 : Integer;
+      Text501@1000000003 : TextConst 'ENU="T&C : Please verify product quality to your satisfaction before buying . All products need consistent storage at -18''C temperature to preserve their taste & quality. Goods once sold shall be neither returned nor exchanged. "';
+      ExtDocNo@1000000004 : Text[30];
+
+    BEGIN
+    {
+      Text501
+    }
+    END.
+  }
+}
+

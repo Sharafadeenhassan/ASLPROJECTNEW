@@ -206,7 +206,7 @@ codeunit 50001 "General Purpose Codeunit"
                 FromBOMComp.Type::Resource:
                     ToSalesLine.Type := ToSalesLine.Type::Resource;
             end;
-            if ToSalesLine.Type <> 0 then begin
+            if ToSalesLine.Type <> ToSalesLine.type::" " then begin
                 ToSalesLine.Validate("No.", FromBOMComp."No.");
                 ToSalesLine.Validate("Variant Code", FromBOMComp."Variant Code");
                 if ToSalesLine.Type = ToSalesLine.Type::Item then begin

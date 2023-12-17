@@ -1,3 +1,6 @@
+/// <summary>
+/// Codeunit ItemJnlPostLineSubcriber (ID 50028).
+/// </summary>
 codeunit 50028 "ItemJnlPostLineSubcriber"
 {
    EventSubscriberInstance = StaticAutomatic;
@@ -6,7 +9,7 @@ codeunit 50028 "ItemJnlPostLineSubcriber"
     local procedure ItemJnlPostLineOnBeforePostItem(var ItemJournalLine: Record "Item Journal Line")
     var
         ItemAvailability: Codeunit "Item-Check Avail.";
-        text001: Label 'ENU="%1 is Insurficient in Line %2   "';
+        text001: Label 'ENU="%1 is Insufficient in Line %2   "';
     begin
         IF ItemJournalLine."Entry Type" = ItemJournalLine."Entry Type"::Transfer THEN
             IF ItemAvailability.ItemJnlCheckLine(ItemJournalLine) THEN //IF ItemAvailability.ItemJnlCheckLinePost(ItemJnlLine) THEN
@@ -51,6 +54,14 @@ codeunit 50028 "ItemJnlPostLineSubcriber"
             IsHandled := true;
     end;
 
+[EventSubscriber(ObjectType::Codeunit, Codeunit::"Item Jnl.-Post Line",'OnAfterPostInventoryToGL','',True,true)]
+local procedure ItemJnlPostLineOnAfterPostInventoryToGL(var ValueEntry: Record "Value Entry")
+var IsHandled : Boolean;
+begin
+   if (ValueEntry."Item Ledger Entry Type" = ValueEntry."Item Ledger Entry Type"::Transfer) and (ValueEntry."Source Code" = 'INVTADJMT') then 
+   //IsHandled := true;
+   exit;   
+end;
     // [EventSubscriber(ObjectType::Codeunit, Codeunit::"Item Jnl.-Post Line", 'OnAfterInitValueEntry', '', true, true)]
     // local procedure ItemJnlPostLineOnAfterInitValueEntry(var ValueEntry: Record "Value Entry"; ItemJournalLine: Record "Item Journal Line")
     // begin

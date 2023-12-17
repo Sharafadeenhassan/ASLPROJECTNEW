@@ -179,72 +179,84 @@ report 50062 "Payroll Report"
                 if not PayEmp.Get("Payroll-Payslip Lines."."Employee No") then CurrReport.Skip(); //Added by Adam to skip Deleted? Employees//
                 EmployeeName := PayEmp."First Name" + ' ' + PayEmp."Last Name";                                                                               // Not: Employees are normally kept
                 if PayEmp.Blocked then CurrReport.Skip(); //Added by Adam to skip Blocked Employees
-
+                CountValue := 0;
                 case "E/D Code" of
                     RequestEDsArray[1]."E/D Code":
                         begin
                             EDAmountsArray[1] := Amount;
                             GrandTotals[1] += EDAmountsArray[1];
+                            if EDAmountsArray[1] <> 0 then CountValue +=1;
                         end;
                     RequestEDsArray[2]."E/D Code":
                         begin
                             EDAmountsArray[2] := Amount;
                             GrandTotals[2] += EDAmountsArray[2];
+                            if EDAmountsArray[2] <> 0 then CountValue +=1;
                         end;
                     RequestEDsArray[3]."E/D Code":
                         begin
                             EDAmountsArray[3] := Amount;
                             GrandTotals[3] += EDAmountsArray[3];
+                            if EDAmountsArray[3] <> 0 then CountValue +=1;
                         end;
                     RequestEDsArray[4]."E/D Code":
                         begin
                             EDAmountsArray[4] := Amount;
                             GrandTotals[4] += EDAmountsArray[4];
+                            if EDAmountsArray[4] <> 0 then CountValue +=1;
                         end;
                     RequestEDsArray[5]."E/D Code":
                         begin
                             EDAmountsArray[5] := Amount;
                             GrandTotals[5] += EDAmountsArray[5];
+                            if EDAmountsArray[5] <> 0 then CountValue +=1;
                         end;
                     RequestEDsArray[6]."E/D Code":
                         begin
                             EDAmountsArray[6] := Amount;
                             GrandTotals[6] += EDAmountsArray[6];
+                            if EDAmountsArray[6] <> 0 then CountValue +=1;
                         end;
                     RequestEDsArray[7]."E/D Code":
                         begin
                             EDAmountsArray[7] := Amount;
                             GrandTotals[7] += EDAmountsArray[7];
+                            if EDAmountsArray[7] <> 0 then CountValue +=1;
                         end;
                     RequestEDsArray[8]."E/D Code":
                         begin
                             EDAmountsArray[8] := Amount;
                             GrandTotals[8] += EDAmountsArray[8];
+                            if EDAmountsArray[8] <> 0 then CountValue +=1;
                         end;
                     RequestEDsArray[9]."E/D Code":
                         begin
                             EDAmountsArray[9] := Amount;
                             GrandTotals[9] += EDAmountsArray[9];
+                            if EDAmountsArray[9] <> 0 then CountValue +=1;
                         end;
                     RequestEDsArray[10]."E/D Code":
                         begin
                             EDAmountsArray[10] := Amount;
                             GrandTotals[10] += EDAmountsArray[10];
+                            if EDAmountsArray[10] <> 0 then CountValue +=1;
                         end;
                     RequestEDsArray[11]."E/D Code":
                         begin
                             EDAmountsArray[11] := Amount;
                             GrandTotals[11] += EDAmountsArray[11];
                             Total11 := Total11 + Amount;
+                            if EDAmountsArray[11] <> 0 then CountValue +=1;
                         end;
                     RequestEDsArray[ArrayTop]."E/D Code":
                         begin
                             EDAmountsArray[ArrayTop] := Amount;
                             GrandTotals[12] += EDAmountsArray[12];
                             Total12 := Total12 + Amount;
+                            if EDAmountsArray[12] <> 0 then CountValue +=1;
                         end;
                 end;
-
+                if CountValue = 0 then CurrReport.skip;
                 RecCount += 1;
             end;
 
@@ -447,4 +459,5 @@ report 50062 "Payroll Report"
         GrandTotals: array[12] of Decimal;
         g_EmpNo: Code[20];
         RecCount: Integer;
+        CountValue : Integer;
 }

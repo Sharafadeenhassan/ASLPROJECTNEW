@@ -4,30 +4,40 @@ codeunit 50017 "ItemJnlPostBatchSubscriber"
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Item Jnl.-Post Batch", 'OnBeforeCheckLines', '', true, true)]
     local procedure ItemJnlLnPostBatcOnBeforeCheckLines(var ItemJnlLine: Record "Item Journal Line")
+    var 
+     ItemJnlLine2 : Record "Item Journal Line";
+     JournalLine : Integer;   
     begin
+        ItemJnlLine2.SetRange(ItemJnlLine2."Journal Template Name",ItemJnlLine."Journal Template Name");
+        ItemJnlLine2.SetRange(ItemJnlLine2."Journal Batch Name",ItemJnlLine."Journal Batch Name");
+      if ItemJnlLine2.FindFirst() then
+       repeat        
         InventSU.Get();
-        if (ItemJnlLine."Reason Code" = InventSU."FA Acquisition") and (ItemJnlLine."External Document No." <> '') then begin
+        if (ItemJnlLine2."Reason Code" = InventSU."FA Acquisition") and (ItemJnlLine2."External Document No." <> '') then 
+        begin
             FAUseReaCd := InventSU."FA Acquisition";
             FAJourlTemp := InventSU."FA Acquisition Template";
-            IJL(ItemJnlLine);
+            IJL(ItemJnlLine2);
         end
         else
-            if (ItemJnlLine."Reason Code" = InventSU."FA Maintenance") and (ItemJnlLine."External Document No." <> '') then begin
+            if (ItemJnlLine2."Reason Code" = InventSU."FA Maintenance") and (ItemJnlLine2."External Document No." <> '') then 
+            begin
                 FAUseReaCd := InventSU."FA Maintenance";
                 FAJourlTemp := InventSU."FA Maintenance Template";
-                IJLM(ItemJnlLine);
+                IJLM(ItemJnlLine2);
             end;
+       until ItemJnlLine2.Next = 0;
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Item Jnl.-Post Batch", 'OnPostLinesOnBeforePostLine', '', true, true)]
     local procedure ItemJnlLnPostBatcOnPostLinesOnBeforePostLine(var ItemJournalLine: Record "Item Journal Line")
     begin
-        if (ItemJournalLine."Reason Code" = FAUseReaCd) and (ItemJournalLine."External Document No." <> '') then
+       /* if (ItemJournalLine."Reason Code" = FAUseReaCd) and (ItemJournalLine."External Document No." <> '') then
             //Posting of Acquisition Cost for FA GL
             if REC.Get(FAJourlTemp, ItemJournalLine."Journal Batch Name", ItemJournalLine."Line No.") then begin
                 REC."Ready to Post" := true;
                 REC.Modify();
-            end;
+            end; */
     end;
 
     Var
@@ -44,7 +54,8 @@ codeunit 50017 "ItemJnlPostBatchSubscriber"
         GenPostgSetup: Record "General Posting Setup";
     BEGIN
         InventSU.Get();
-        if not FAJnlTemplate.Get(InventSU."FA Acquisition Template") then begin
+        if not FAJnlTemplate.Get(InventSU."FA Acquisition Template") then 
+        begin
             FAJnlTemplate.Init();
             FAJnlTemplate.Name := InventSU."FA Acquisition Template";
             FAJnlTemplate.Insert();
@@ -54,7 +65,7 @@ codeunit 50017 "ItemJnlPostBatchSubscriber"
             FAJnlBatch.Init();
             FAJnlBatch."Journal Template Name" := InventSU."FA Acquisition Template";
             FAJnlBatch.Name := ItemJL."Journal Batch Name";
-            FAJnlBatch.Description := 'Inventory Tranfer to Fixed Asset';
+            FAJnlBatch.Description := 'Inventory Transfer to Fixed Asset';
             FAJnlBatch.Insert();
         end;
 
@@ -77,6 +88,7 @@ codeunit 50017 "ItemJnlPostBatchSubscriber"
         FAJnlLine.Validate(FAJnlLine.Amount, ItemJL.Amount);
         FAJnlLine."FA Posting Type" := FAJnlLine."FA Posting Type"::"Acquisition Cost";
         FAJnlLine."FA Posting Date" := ItemJL."Posting Date";
+        FAJnlLine."Ready to Post" := true;
         FAJnlLine."Shortcut Dimension 1 Code" := ItemJL."Shortcut Dimension 1 Code";
         FAJnlLine."Shortcut Dimension 2 Code" := ItemJL."Shortcut Dimension 2 Code";
         FAJnlLine."Source Code" := 'INVTOFA';
@@ -135,6 +147,7 @@ codeunit 50017 "ItemJnlPostBatchSubscriber"
         FAJnlLine.Validate(FAJnlLine.Amount, ItemJL.Amount);
         FAJnlLine."FA Posting Type" := FAJnlLine."FA Posting Type"::Maintenance;
         FAJnlLine."FA Posting Date" := ItemJL."Posting Date";
+        FAJnlLine."Ready to Post" := true;
         FAJnlLine."Shortcut Dimension 1 Code" := ItemJL."Shortcut Dimension 1 Code";
         FAJnlLine."Shortcut Dimension 2 Code" := ItemJL."Shortcut Dimension 2 Code";
         FAJnlLine."Source Code" := 'INVTOFA';

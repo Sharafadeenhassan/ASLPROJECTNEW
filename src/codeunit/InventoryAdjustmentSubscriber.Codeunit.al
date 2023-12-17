@@ -10,5 +10,6 @@ codeunit 50035 "InventoryAdjustmentSubscriber"
         if ItemLedgEntry."Item No." = SkipItem then
             exit;
         ItemLedgEntry.SetFilter(ItemLedgEntry."Entry Type", '<>%1', ItemLedgEntry."Entry Type"::Transfer);  //Refactor (Place it outside this event)
+        ItemLedgEntry.SETFILTER(ItemLedgEntry."Entry Type",'<>%1',ItemLedgEntry."Entry Type"::Transfer);//shod 2018
     end;
 }

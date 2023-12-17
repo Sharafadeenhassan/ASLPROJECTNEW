@@ -2,15 +2,16 @@ pageextension 50315 "pageextension50315" extends "Fixed Asset List"
 {
     layout
     {
-        addafter("FA Location Code")
+        addafter("Description")
         {
             field(Blocked; Rec.Blocked)
             {
-                ApplicationArea = All;
+                ApplicationArea = FixedAsset;
             }
             field("Serial No.";"Serial No.")
             {
-                ApplicationArea = All;
+                ApplicationArea = FixedAssets;
+                ToolTip = 'Specify The Unique Serial No for The Asset e.g Vehicle Registration No.';
                 Visible = True;
             }
         }

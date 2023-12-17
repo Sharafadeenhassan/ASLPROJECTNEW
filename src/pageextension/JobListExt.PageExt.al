@@ -238,9 +238,9 @@ pageextension 50354 "Job List Ext" extends "Job List"
             {
                 Caption = 'Voyage P&L Ledger Line - (1 Vessel & 1Job at a time)';
                 Image = "Report";
-                // RunObject = Report "Voyage P&L Ledger Line 2";  //AAA***
-                ApplicationArea = All;
-                Visible = false;
+                RunObject = Report "Voyage P&L Ledger Line 2";  
+                ApplicationArea = All;                
+                Visible = true;
             }
             action("Consolidated Voyage P&L - (Monthly Report)")
             {

@@ -8,6 +8,8 @@ report 50016 "Periodic Landing Report"
     DefaultLayout = RDLC;
     RDLCLayout = './src/reportrdlc/PeriodicLandingReport.rdlc';
     Caption = 'Periodic Landing Report';
+    UsageCategory = ReportsAndAnalysis;
+    ApplicationArea = All;
     dataset
     {
         dataitem(Job; Job)
@@ -167,6 +169,7 @@ report 50016 "Periodic Landing Report"
 
     requestpage
     {
+        SaveValues = true;
         layout
         {
         }

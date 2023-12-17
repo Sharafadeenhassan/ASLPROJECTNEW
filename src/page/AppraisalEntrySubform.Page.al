@@ -339,6 +339,54 @@ page 50029 "Appraisal Entry Subform."
         ShortcutDimCode: array[8] of Code[20];
 
     [Scope('OnPrem')]
+    procedure _InsertExtendedText(Unconditionally: Boolean)
+    begin
+        if TransferExtendedText.SalesCheckIfAnyExtText(Rec, Unconditionally) then begin
+            CurrPage.SaveRecord();
+            TransferExtendedText.InsertSalesExtText(Rec);
+        end;
+        if TransferExtendedText.MakeUpdate() then
+            UpdateForm(true);
+    end;
+
+    [Scope('OnPrem')]
+    procedure _ItemAvailability(AvailabilityType: Option Date,Variant,Location,Bin)
+    begin
+        ItemAvailability(AvailabilityType);
+    end;
+
+    [Scope('OnPrem')]
+    procedure _OpenItemTrackingLines()
+    begin
+        Rec.OpenItemTrackingLines();
+    end;
+
+    [Scope('OnPrem')]
+    procedure _ShowDimensions()
+    begin
+        Rec.ShowDimensions();
+    end;
+
+    [Scope('OnPrem')]
+    procedure _ShowItemSub()
+    begin
+        Rec.ShowItemSub();
+    end;
+
+    [Scope('OnPrem')]
+    procedure _ShowReservation()
+    begin
+        Rec.Find();
+        Rec.ShowReservation();
+    end;
+
+    [Scope('OnPrem')]
+    procedure _ShowReservationEntries()
+    begin
+        Rec.ShowReservationEntries(true);
+    end;
+
+    [Scope('OnPrem')]
     procedure ApproveCalcInvDisc()
     begin
         CODEUNIT.Run(CODEUNIT::"Sales-Disc. (Yes/No)", Rec);
@@ -357,6 +405,35 @@ page 50029 "Appraisal Entry Subform."
     end;
 
     [Scope('OnPrem')]
+    procedure InsertExtendedText(Unconditionally: Boolean)
+    begin
+        if TransferExtendedText.SalesCheckIfAnyExtText(Rec, Unconditionally) then begin
+            CurrPage.SaveRecord();
+            TransferExtendedText.InsertSalesExtText(Rec);
+        end;
+        if TransferExtendedText.MakeUpdate() then
+            UpdateForm(true);
+    end;
+
+    [Scope('OnPrem')]
+    procedure ItemAvailability(AvailabilityType: Option Date,Variant,Location,Bin)
+    begin
+        ItemAvailability(AvailabilityType);
+    end;
+
+    [Scope('OnPrem')]
+    procedure ItemChargeAssgnt()
+    begin
+        Rec.ShowItemChargeAssgnt();
+    end;
+
+    [Scope('OnPrem')]
+    procedure OpenItemTrackingLines()
+    begin
+        Rec.OpenItemTrackingLines();
+    end;
+
+    [Scope('OnPrem')]
     procedure OpenPurchOrderForm()
     var
         PurchHeader: Record "Purchase Header";
@@ -369,81 +446,9 @@ page 50029 "Appraisal Entry Subform."
     end;
 
     [Scope('OnPrem')]
-    procedure _InsertExtendedText(Unconditionally: Boolean)
-    begin
-        if TransferExtendedText.SalesCheckIfAnyExtText(Rec, Unconditionally) then begin
-            CurrPage.SaveRecord();
-            TransferExtendedText.InsertSalesExtText(Rec);
-        end;
-        if TransferExtendedText.MakeUpdate() then
-            UpdateForm(true);
-    end;
-
-    [Scope('OnPrem')]
-    procedure InsertExtendedText(Unconditionally: Boolean)
-    begin
-        if TransferExtendedText.SalesCheckIfAnyExtText(Rec, Unconditionally) then begin
-            CurrPage.SaveRecord();
-            TransferExtendedText.InsertSalesExtText(Rec);
-        end;
-        if TransferExtendedText.MakeUpdate() then
-            UpdateForm(true);
-    end;
-
-    [Scope('OnPrem')]
-    procedure _ShowReservation()
-    begin
-        Rec.Find();
-        Rec.ShowReservation();
-    end;
-
-    [Scope('OnPrem')]
-    procedure ShowReservation()
-    begin
-        Rec.Find();
-        Rec.ShowReservation();
-    end;
-
-    [Scope('OnPrem')]
-    procedure _ItemAvailability(AvailabilityType: Option Date,Variant,Location,Bin)
-    begin
-        ItemAvailability(AvailabilityType);
-    end;
-
-    [Scope('OnPrem')]
-    procedure ItemAvailability(AvailabilityType: Option Date,Variant,Location,Bin)
-    begin
-        ItemAvailability(AvailabilityType);
-    end;
-
-    [Scope('OnPrem')]
-    procedure _ShowReservationEntries()
-    begin
-        Rec.ShowReservationEntries(true);
-    end;
-
-    [Scope('OnPrem')]
-    procedure ShowReservationEntries()
-    begin
-        Rec.ShowReservationEntries(true);
-    end;
-
-    [Scope('OnPrem')]
-    procedure _ShowDimensions()
-    begin
-        Rec.ShowDimensions();
-    end;
-
-    [Scope('OnPrem')]
     procedure ShowDimensions()
     begin
         Rec.ShowDimensions();
-    end;
-
-    [Scope('OnPrem')]
-    procedure _ShowItemSub()
-    begin
-        Rec.ShowItemSub();
     end;
 
     [Scope('OnPrem')]
@@ -458,16 +463,24 @@ page 50029 "Appraisal Entry Subform."
         Rec.ShowNonstock();
     end;
 
+    /// <summary>
+    /// ShowReservation.
+    /// </summary>
     [Scope('OnPrem')]
-    procedure _OpenItemTrackingLines()
+    procedure ShowReservation()
     begin
-        Rec.OpenItemTrackingLines();
+        OnBeforeShowReservation();
+
+        Rec.Find();
+        Rec.ShowReservation();
+
+        OnAfterShowReservation(Rec);
     end;
 
     [Scope('OnPrem')]
-    procedure OpenItemTrackingLines()
+    procedure ShowReservationEntries()
     begin
-        Rec.OpenItemTrackingLines();
+        Rec.ShowReservationEntries(true);
     end;
 
     [Scope('OnPrem')]
@@ -477,12 +490,6 @@ page 50029 "Appraisal Entry Subform."
     begin
         TrackingPage.SetSalesLine(Rec);
         TrackingPage.RunModal();
-    end;
-
-    [Scope('OnPrem')]
-    procedure ItemChargeAssgnt()
-    begin
-        Rec.ShowItemChargeAssgnt();
     end;
 
     [Scope('OnPrem')]
@@ -507,5 +514,15 @@ page 50029 "Appraisal Entry Subform."
             Rec.AutoReserve();
             CurrPage.Update(false);
         end;
+    end;
+
+    [IntegrationEvent(false, false)]
+    local procedure OnAfterShowReservation(var Rec: Record "Sales Line")
+    begin
+    end;
+
+    [IntegrationEvent(false, false)]
+    local procedure OnBeforeShowReservation()
+    begin
     end;
 }

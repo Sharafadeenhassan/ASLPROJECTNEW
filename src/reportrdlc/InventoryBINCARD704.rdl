@@ -112,7 +112,7 @@
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>0.846cm</Height>
+                  <Height>0.94125cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -454,7 +454,7 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.423cm</Height>
+                  <Height>0.51825cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -859,7 +859,7 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.423cm</Height>
+                  <Height>0.51825cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -1035,7 +1035,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!StartOnHand___Quantity.Value)</Value>
+                                  <Value>=(Fields!StartOnHand___Quantity.Value)</Value>
                                   <Style>
                                     <FontSize>7pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -1163,7 +1163,7 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.423cm</Height>
+                  <Height>0.51825cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -1342,8 +1342,10 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value />
-                                  <Style />
+                                  <Value>=Fields!QtyOnHand.Value</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -1357,11 +1359,13 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="TextBox18">
+                        <Textbox Name="QtyOnHand">
+                          <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
@@ -1374,8 +1378,12 @@
                               <Style />
                             </Paragraph>
                           </Paragraphs>
+                          <rd:DefaultName>QtyOnHand</rd:DefaultName>
+                          <ZIndex>9</ZIndex>
                           <Style>
-                            <VerticalAlign>Middle</VerticalAlign>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -1523,8 +1531,8 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSet_Result</DataSetName>
-            <Top>1.692cm</Top>
-            <Height>2.115cm</Height>
+            <Top>2.98317cm</Top>
+            <Height>2.496cm</Height>
             <Width>18.38814cm</Width>
             <ZIndex>2</ZIndex>
             <Style />
@@ -1631,11 +1639,43 @@
               <VerticalAlign>Middle</VerticalAlign>
             </Style>
           </Textbox>
+          <Textbox Name="Textbox6">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Stock On Hand</Value>
+                    <Style>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox6</rd:DefaultName>
+            <Top>0.5717in</Top>
+            <Left>3.205in</Left>
+            <Height>0.25in</Height>
+            <Width>1.26667in</Width>
+            <ZIndex>7</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
         </ReportItems>
-        <Height>1.49882in</Height>
+        <Height>2.31614in</Height>
         <Style />
       </Body>
-      <Width>7.23943in</Width>
+      <Width>7.27068in</Width>
       <Page>
         <PageHeader>
           <Height>0.66614in</Height>
@@ -1821,7 +1861,6 @@
         <PageHeight>11.69291in</PageHeight>
         <PageWidth>8.38583in</PageWidth>
         <LeftMargin>0.82677in</LeftMargin>
-        <RightMargin>0in</RightMargin>
         <TopMargin>0.7874in</TopMargin>
         <BottomMargin>0.7874in</BottomMargin>
         <Style />
@@ -1978,9 +2017,6 @@ End Function
         <Field Name="PageCounter_Number">
           <DataField>PageCounter_Number</DataField>
         </Field>
-        <Field Name="RecordNo">
-          <DataField>RecordNo</DataField>
-        </Field>
         <Field Name="StartOnHand___Quantity">
           <DataField>StartOnHand___Quantity</DataField>
         </Field>
@@ -2095,17 +2131,14 @@ End Function
         <Field Name="Item_Ledger_Entry_Global_Dimension_2_Code">
           <DataField>Item_Ledger_Entry_Global_Dimension_2_Code</DataField>
         </Field>
-        <Field Name="PrintBin">
-          <DataField>PrintBin</DataField>
-        </Field>
-        <Field Name="HandQty">
-          <DataField>HandQty</DataField>
-        </Field>
-        <Field Name="HandQtyFormat">
-          <DataField>HandQtyFormat</DataField>
-        </Field>
         <Field Name="ReqNo">
           <DataField>ReqNo</DataField>
+        </Field>
+        <Field Name="QtyOnHand">
+          <DataField>QtyOnHand</DataField>
+        </Field>
+        <Field Name="QtyOnHandFormat">
+          <DataField>QtyOnHandFormat</DataField>
         </Field>
         <Field Name="Integer_Number">
           <DataField>Integer_Number</DataField>

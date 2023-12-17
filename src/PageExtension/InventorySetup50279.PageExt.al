@@ -18,6 +18,10 @@ pageextension 50279 "pageextension50279" extends "Inventory Setup"
                 {
                     ApplicationArea = All;
                 }
+                field("Auto Post Job Journal";"Auto Post Job Journal")
+                {
+                    ApplicationArea = All;
+                }
             }
             group(Other)
             {

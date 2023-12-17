@@ -1,7 +1,6 @@
 tableextension 50247 "tableextension50247" extends "Job Journal Batch"
 {
     //Unsupported feature: Property Insertion (Permissions) on ""Job Journal Batch"(Table 237)".
-
     fields
     {
         //Unsupported feature: Property Modification (Data type) on ""Journal Template Name"(Field 1)".
@@ -31,6 +30,8 @@ tableextension 50247 "tableextension50247" extends "Job Journal Batch"
         field(50301; "Catch Date"; Date)
         {
             trigger OnValidate()
+            var JobJour : Record "Job Journal Line";
+                PostJob: Codeunit "Job Jnl.-Post line";
             begin
                 //Report Daily Variables
                 if "Catch Date" > Today then Error('Catch date cannot be in the future');
@@ -53,8 +54,40 @@ tableextension 50247 "tableextension50247" extends "Job Journal Batch"
 
                 if not OPDailyRad.Insert() then OPDailyRad.Modify();
 
-                //No Catch Reports Skipper
-                if JLedEntry.FindLast() then "LastNo." := JLedEntry."Entry No.";
+                //No Catch Reports Skipper 
+                // Imsert by SSNL for License to run
+            JobJour.Init();
+            JobJour."Journal Template Name" := "Journal Template Name";
+            JobJour."Journal Batch Name" := Name;
+            JobJour."Line No." := 1000;
+            JobJour."Job No." := "Job No.";
+            JobJour."Posting Date" := "Catch Date";
+            JobJour."Document Date" := "Catch Date";
+            JobJour."Document No." := Name + Format("Catch Date");
+            JobJour.Type := JobJour.Type::Resource;
+            if jobs.Get("Job No.") then begin
+                    JobJour.Validate("No.", jobs."Person Responsible");
+                    JobJour."Catch Sea Days" := "Catch Date" - jobs."Starting Date";
+                end;
+                JobJour.Quantity := 1;
+                JobJour."Unit of Measure Code" := 'DAY';
+                JobJour."Job Task No." := 'TEMP';
+                JobJour."Location Code" := Name;
+                //JLedEntry.Chargeable:=FALSE;
+                JobJour."Source Code" := 'Direct';
+                JobJour."Entry Type" := 0;
+                JobJour."Phase Code" := "Fishing Ground";
+                JobJour.Mark(true);                
+                if jobs.Get("Job No.") then
+                    JobJour."Catch Sea Days" := "Catch Date" - jobs."Starting Date";
+                //JobJour.Get(MarkedOnly);
+               // If Confirm('This will calculate Catch Sea days and Register the Skipper',false,'Continue Register','Check Again') then
+                  PostJob.RUN(JobJour);
+                 //else
+                 //Error('Please Check and Enter Catch Date Again'); 
+
+
+               /*if JLedEntry.FindLast() then "LastNo." := JLedEntry."Entry No.";
                 JLedEntry.Init();
                 JLedEntry."Job No." := "Job No.";
                 JLedEntry."Posting Date" := "Catch Date";
@@ -88,7 +121,7 @@ tableextension 50247 "tableextension50247" extends "Job Journal Batch"
                 end
                 else
                     JLedEntry.Insert();
-
+*/
                 locat.SetRange(locat.Code, Rec.Name);
                 if locat.FindFirst() then
                     locat."Catch Date" := Rec."Catch Date";
@@ -221,6 +254,14 @@ tableextension 50247 "tableextension50247" extends "Job Journal Batch"
     */
     //end;
 
+        trigger OnBeforeModify()
+        begin
+           if rec."Lock Batch" then Error('You Cannot Modify Locked Job Batch')
+        end;
+        trigger OnBeforeDelete()
+        begin
+            if rec."Lock Batch" then error('You Cannot Delete Locked Job Batch')
+        end;
     var
         User: Record "User Setup";
         JobsRec: Record Job;
@@ -231,4 +272,5 @@ tableextension 50247 "tableextension50247" extends "Job Journal Batch"
         OPDailyRad: Record "Operation Daily Radio";
         "LastNo.": Integer;
         locat: Record Location;
+       
 }

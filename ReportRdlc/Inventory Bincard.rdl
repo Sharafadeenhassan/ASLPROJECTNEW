@@ -11,6 +11,244 @@
       <rd:DataSourceID>446198e8-086a-4897-95ef-bd444550714d</rd:DataSourceID>
     </DataSource>
   </DataSources>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+      <Fields>
+        <Field Name="FORMAT_TODAY_0_4_">
+          <DataField>FORMAT_TODAY_0_4_</DataField>
+        </Field>
+        <Field Name="STRSUBSTNO_Text000_ItemDateFilter_">
+          <DataField>STRSUBSTNO_Text000_ItemDateFilter_</DataField>
+        </Field>
+        <Field Name="CurrReport_PAGENO">
+          <DataField>CurrReport_PAGENO</DataField>
+        </Field>
+        <Field Name="COMPANYNAME">
+          <DataField>COMPANYNAME</DataField>
+        </Field>
+        <Field Name="USERID">
+          <DataField>USERID</DataField>
+        </Field>
+        <Field Name="STRSUBSTNO___1___2__Item_TABLECAPTION_ItemFilter_">
+          <DataField>STRSUBSTNO___1___2__Item_TABLECAPTION_ItemFilter_</DataField>
+        </Field>
+        <Field Name="Item_Item__Unit_Cost_">
+          <DataField>Item_Item__Unit_Cost_</DataField>
+        </Field>
+        <Field Name="Item_Item__Unit_Cost_Format">
+          <DataField>Item_Item__Unit_Cost_Format</DataField>
+        </Field>
+        <Field Name="Item_Item_Description">
+          <DataField>Item_Item_Description</DataField>
+        </Field>
+        <Field Name="Item_Item__No__">
+          <DataField>Item_Item__No__</DataField>
+        </Field>
+        <Field Name="Item_Item__Inventory_Posting_Group_">
+          <DataField>Item_Item__Inventory_Posting_Group_</DataField>
+        </Field>
+        <Field Name="Inventory___Transaction_DetailCaption">
+          <DataField>Inventory___Transaction_DetailCaption</DataField>
+        </Field>
+        <Field Name="CurrReport_PAGENOCaption">
+          <DataField>CurrReport_PAGENOCaption</DataField>
+        </Field>
+        <Field Name="Unit_CostCaption">
+          <DataField>Unit_CostCaption</DataField>
+        </Field>
+        <Field Name="Item_Ledger_Entry__Posting_Date_Caption">
+          <DataField>Item_Ledger_Entry__Posting_Date_Caption</DataField>
+        </Field>
+        <Field Name="TransToCaption">
+          <DataField>TransToCaption</DataField>
+        </Field>
+        <Field Name="TransFrCaption">
+          <DataField>TransFrCaption</DataField>
+        </Field>
+        <Field Name="Item_Ledger_Entry__Entry_No__Caption">
+          <DataField>Item_Ledger_Entry__Entry_No__Caption</DataField>
+        </Field>
+        <Field Name="ItemOnHandCaption">
+          <DataField>ItemOnHandCaption</DataField>
+        </Field>
+        <Field Name="DecreasesQtyCaption">
+          <DataField>DecreasesQtyCaption</DataField>
+        </Field>
+        <Field Name="IncreasesQtyCaption">
+          <DataField>IncreasesQtyCaption</DataField>
+        </Field>
+        <Field Name="Item_Ledger_Entry__Document_No__Caption">
+          <DataField>Item_Ledger_Entry__Document_No__Caption</DataField>
+        </Field>
+        <Field Name="Item_Ledger_Entry__Entry_Type_Caption">
+          <DataField>Item_Ledger_Entry__Entry_Type_Caption</DataField>
+        </Field>
+        <Field Name="Item_Variant_Filter">
+          <DataField>Item_Variant_Filter</DataField>
+        </Field>
+        <Field Name="Item_Date_Filter">
+          <DataField>Item_Date_Filter</DataField>
+        </Field>
+        <Field Name="Item_Location_Filter">
+          <DataField>Item_Location_Filter</DataField>
+        </Field>
+        <Field Name="Item_Global_Dimension_1_Filter">
+          <DataField>Item_Global_Dimension_1_Filter</DataField>
+        </Field>
+        <Field Name="Item_Global_Dimension_2_Filter">
+          <DataField>Item_Global_Dimension_2_Filter</DataField>
+        </Field>
+        <Field Name="Item__No__">
+          <DataField>Item__No__</DataField>
+        </Field>
+        <Field Name="Item_Description">
+          <DataField>Item_Description</DataField>
+        </Field>
+        <Field Name="Item__Unit_Cost_">
+          <DataField>Item__Unit_Cost_</DataField>
+        </Field>
+        <Field Name="Item__Unit_Cost_Format">
+          <DataField>Item__Unit_Cost_Format</DataField>
+        </Field>
+        <Field Name="StartOnHand">
+          <DataField>StartOnHand</DataField>
+        </Field>
+        <Field Name="StartOnHandFormat">
+          <DataField>StartOnHandFormat</DataField>
+        </Field>
+        <Field Name="Unit_CostCaption_Control1000000001">
+          <DataField>Unit_CostCaption_Control1000000001</DataField>
+        </Field>
+        <Field Name="PageCounter_Number">
+          <DataField>PageCounter_Number</DataField>
+        </Field>
+        <Field Name="StartOnHand___Quantity">
+          <DataField>StartOnHand___Quantity</DataField>
+        </Field>
+        <Field Name="StartOnHand___QuantityFormat">
+          <DataField>StartOnHand___QuantityFormat</DataField>
+        </Field>
+        <Field Name="Item_Ledger_Entry__Posting_Date_">
+          <DataField>Item_Ledger_Entry__Posting_Date_</DataField>
+        </Field>
+        <Field Name="Item_Ledger_Entry__Entry_Type_">
+          <DataField>Item_Ledger_Entry__Entry_Type_</DataField>
+        </Field>
+        <Field Name="Item_Ledger_Entry__Document_No__">
+          <DataField>Item_Ledger_Entry__Document_No__</DataField>
+        </Field>
+        <Field Name="IssueNo">
+          <DataField>IssueNo</DataField>
+        </Field>
+        <Field Name="IncreasesQty">
+          <DataField>IncreasesQty</DataField>
+        </Field>
+        <Field Name="IncreasesQtyFormat">
+          <DataField>IncreasesQtyFormat</DataField>
+        </Field>
+        <Field Name="DecreasesQty">
+          <DataField>DecreasesQty</DataField>
+        </Field>
+        <Field Name="DecreasesQtyFormat">
+          <DataField>DecreasesQtyFormat</DataField>
+        </Field>
+        <Field Name="ItemOnHand">
+          <DataField>ItemOnHand</DataField>
+        </Field>
+        <Field Name="ItemOnHandFormat">
+          <DataField>ItemOnHandFormat</DataField>
+        </Field>
+        <Field Name="Item_Ledger_Entry__Entry_No__">
+          <DataField>Item_Ledger_Entry__Entry_No__</DataField>
+        </Field>
+        <Field Name="TransFr">
+          <DataField>TransFr</DataField>
+        </Field>
+        <Field Name="TransTo">
+          <DataField>TransTo</DataField>
+        </Field>
+        <Field Name="StartOnHand___Quantity_Control31">
+          <DataField>StartOnHand___Quantity_Control31</DataField>
+        </Field>
+        <Field Name="StartOnHand___Quantity_Control31Format">
+          <DataField>StartOnHand___Quantity_Control31Format</DataField>
+        </Field>
+        <Field Name="Item_Description_Control32">
+          <DataField>Item_Description_Control32</DataField>
+        </Field>
+        <Field Name="Requisition_No">
+          <DataField>Requisition_No</DataField>
+        </Field>
+        <Field Name="IncreasesQty_Control33">
+          <DataField>IncreasesQty_Control33</DataField>
+        </Field>
+        <Field Name="IncreasesQty_Control33Format">
+          <DataField>IncreasesQty_Control33Format</DataField>
+        </Field>
+        <Field Name="DecreasesQty_Control34">
+          <DataField>DecreasesQty_Control34</DataField>
+        </Field>
+        <Field Name="DecreasesQty_Control34Format">
+          <DataField>DecreasesQty_Control34Format</DataField>
+        </Field>
+        <Field Name="StartOnHand___Quantity_Control35">
+          <DataField>StartOnHand___Quantity_Control35</DataField>
+        </Field>
+        <Field Name="StartOnHand___Quantity_Control35Format">
+          <DataField>StartOnHand___Quantity_Control35Format</DataField>
+        </Field>
+        <Field Name="RequisitionNo">
+          <DataField>RequisitionNo</DataField>
+        </Field>
+        <Field Name="DecreasesQty_Control1000000044">
+          <DataField>DecreasesQty_Control1000000044</DataField>
+        </Field>
+        <Field Name="DecreasesQty_Control1000000044Format">
+          <DataField>DecreasesQty_Control1000000044Format</DataField>
+        </Field>
+        <Field Name="IncreasesQty_Control1000000045">
+          <DataField>IncreasesQty_Control1000000045</DataField>
+        </Field>
+        <Field Name="IncreasesQty_Control1000000045Format">
+          <DataField>IncreasesQty_Control1000000045Format</DataField>
+        </Field>
+        <Field Name="Item_Description_Control1000000046">
+          <DataField>Item_Description_Control1000000046</DataField>
+        </Field>
+        <Field Name="ContinuedCaption">
+          <DataField>ContinuedCaption</DataField>
+        </Field>
+        <Field Name="ContinuedCaption_Control30">
+          <DataField>ContinuedCaption_Control30</DataField>
+        </Field>
+        <Field Name="Item_Ledger_Entry_Item_No_">
+          <DataField>Item_Ledger_Entry_Item_No_</DataField>
+        </Field>
+        <Field Name="Item_Ledger_Entry_Variant_Code">
+          <DataField>Item_Ledger_Entry_Variant_Code</DataField>
+        </Field>
+        <Field Name="Item_Ledger_Entry_Location_Code">
+          <DataField>Item_Ledger_Entry_Location_Code</DataField>
+        </Field>
+        <Field Name="Item_Ledger_Entry_Global_Dimension_1_Code">
+          <DataField>Item_Ledger_Entry_Global_Dimension_1_Code</DataField>
+        </Field>
+        <Field Name="Item_Ledger_Entry_Global_Dimension_2_Code">
+          <DataField>Item_Ledger_Entry_Global_Dimension_2_Code</DataField>
+        </Field>
+        <Field Name="ReqNo">
+          <DataField>ReqNo</DataField>
+        </Field>
+        <Field Name="Integer_Number">
+          <DataField>Integer_Number</DataField>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
   <ReportSections>
     <ReportSection>
       <Body>
@@ -1035,7 +1273,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!StartOnHand___Quantity.Value)</Value>
+                                  <Value>=Fields!StartOnHand___Quantity.Value</Value>
                                   <Style>
                                     <FontSize>7pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -1523,7 +1761,7 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSet_Result</DataSetName>
-            <Top>1.692cm</Top>
+            <Top>2.98317cm</Top>
             <Height>2.115cm</Height>
             <Width>18.38814cm</Width>
             <ZIndex>2</ZIndex>
@@ -1631,11 +1869,136 @@
               <VerticalAlign>Middle</VerticalAlign>
             </Style>
           </Textbox>
+          <Textbox Name="ItemOnHand1">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=Fields!StartOnHand___Quantity.Value</Value>
+                    <Style>
+                      <FontWeight>Bold</FontWeight>
+                      <Format>#,0.00;(#,0.00)</Format>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>ItemOnHand1</rd:DefaultName>
+            <Top>0.5717in</Top>
+            <Left>4.50887in</Left>
+            <Height>0.25in</Height>
+            <Width>1.475in</Width>
+            <ZIndex>7</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox6">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Stock On Hand</Value>
+                    <Style>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox6</rd:DefaultName>
+            <Top>0.5717in</Top>
+            <Left>3.205in</Left>
+            <Height>0.25in</Height>
+            <Width>1.26667in</Width>
+            <ZIndex>8</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="StartOnHand___Quantity">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!StartOnHand___Quantity.Value, "DataSet_Result")</Value>
+                    <Style />
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>StartOnHand___Quantity</rd:DefaultName>
+            <Top>0.91059in</Top>
+            <Left>4.47762in</Left>
+            <Height>0.25in</Height>
+            <Width>1.475in</Width>
+            <ZIndex>9</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="StartOnHand">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!StartOnHand.Value, "DataSet_Result")</Value>
+                    <Style />
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>StartOnHand</rd:DefaultName>
+            <Top>0.87219in</Top>
+            <Left>2.19667in</Left>
+            <Height>0.25in</Height>
+            <Width>1.175in</Width>
+            <ZIndex>10</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
         </ReportItems>
-        <Height>1.49882in</Height>
+        <Height>2.31614in</Height>
         <Style />
       </Body>
-      <Width>7.23943in</Width>
+      <Width>7.27068in</Width>
       <Page>
         <PageHeader>
           <Height>0.66614in</Height>
@@ -1821,13 +2184,18 @@
         <PageHeight>11.69291in</PageHeight>
         <PageWidth>8.38583in</PageWidth>
         <LeftMargin>0.82677in</LeftMargin>
-        <RightMargin>0in</RightMargin>
         <TopMargin>0.7874in</TopMargin>
         <BottomMargin>0.7874in</BottomMargin>
         <Style />
       </Page>
     </ReportSection>
   </ReportSections>
+  <ReportParametersLayout>
+    <GridLayoutDefinition>
+      <NumberOfColumns>4</NumberOfColumns>
+      <NumberOfRows>2</NumberOfRows>
+    </GridLayoutDefinition>
+  </ReportParametersLayout>
   <Code>Public Function BlankZero(ByVal Value As Decimal)
     if Value = 0 then
         Return ""
@@ -1867,254 +2235,4 @@ End Function
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:ReportID>ec3baf11-328d-4d14-ae22-d824400a3f82</rd:ReportID>
-  <DataSets>
-    <DataSet Name="DataSet_Result">
-      <Fields>
-        <Field Name="FORMAT_TODAY_0_4_">
-          <DataField>FORMAT_TODAY_0_4_</DataField>
-        </Field>
-        <Field Name="STRSUBSTNO_Text000_ItemDateFilter_">
-          <DataField>STRSUBSTNO_Text000_ItemDateFilter_</DataField>
-        </Field>
-        <Field Name="CurrReport_PAGENO">
-          <DataField>CurrReport_PAGENO</DataField>
-        </Field>
-        <Field Name="COMPANYNAME">
-          <DataField>COMPANYNAME</DataField>
-        </Field>
-        <Field Name="USERID">
-          <DataField>USERID</DataField>
-        </Field>
-        <Field Name="STRSUBSTNO___1___2__Item_TABLECAPTION_ItemFilter_">
-          <DataField>STRSUBSTNO___1___2__Item_TABLECAPTION_ItemFilter_</DataField>
-        </Field>
-        <Field Name="Item_Item__Unit_Cost_">
-          <DataField>Item_Item__Unit_Cost_</DataField>
-        </Field>
-        <Field Name="Item_Item__Unit_Cost_Format">
-          <DataField>Item_Item__Unit_Cost_Format</DataField>
-        </Field>
-        <Field Name="Item_Item_Description">
-          <DataField>Item_Item_Description</DataField>
-        </Field>
-        <Field Name="Item_Item__No__">
-          <DataField>Item_Item__No__</DataField>
-        </Field>
-        <Field Name="Item_Item__Inventory_Posting_Group_">
-          <DataField>Item_Item__Inventory_Posting_Group_</DataField>
-        </Field>
-        <Field Name="Inventory___Transaction_DetailCaption">
-          <DataField>Inventory___Transaction_DetailCaption</DataField>
-        </Field>
-        <Field Name="CurrReport_PAGENOCaption">
-          <DataField>CurrReport_PAGENOCaption</DataField>
-        </Field>
-        <Field Name="Unit_CostCaption">
-          <DataField>Unit_CostCaption</DataField>
-        </Field>
-        <Field Name="Item_Ledger_Entry__Posting_Date_Caption">
-          <DataField>Item_Ledger_Entry__Posting_Date_Caption</DataField>
-        </Field>
-        <Field Name="TransToCaption">
-          <DataField>TransToCaption</DataField>
-        </Field>
-        <Field Name="TransFrCaption">
-          <DataField>TransFrCaption</DataField>
-        </Field>
-        <Field Name="Item_Ledger_Entry__Entry_No__Caption">
-          <DataField>Item_Ledger_Entry__Entry_No__Caption</DataField>
-        </Field>
-        <Field Name="ItemOnHandCaption">
-          <DataField>ItemOnHandCaption</DataField>
-        </Field>
-        <Field Name="DecreasesQtyCaption">
-          <DataField>DecreasesQtyCaption</DataField>
-        </Field>
-        <Field Name="IncreasesQtyCaption">
-          <DataField>IncreasesQtyCaption</DataField>
-        </Field>
-        <Field Name="Item_Ledger_Entry__Document_No__Caption">
-          <DataField>Item_Ledger_Entry__Document_No__Caption</DataField>
-        </Field>
-        <Field Name="Item_Ledger_Entry__Entry_Type_Caption">
-          <DataField>Item_Ledger_Entry__Entry_Type_Caption</DataField>
-        </Field>
-        <Field Name="Item_Variant_Filter">
-          <DataField>Item_Variant_Filter</DataField>
-        </Field>
-        <Field Name="Item_Date_Filter">
-          <DataField>Item_Date_Filter</DataField>
-        </Field>
-        <Field Name="Item_Location_Filter">
-          <DataField>Item_Location_Filter</DataField>
-        </Field>
-        <Field Name="Item_Global_Dimension_1_Filter">
-          <DataField>Item_Global_Dimension_1_Filter</DataField>
-        </Field>
-        <Field Name="Item_Global_Dimension_2_Filter">
-          <DataField>Item_Global_Dimension_2_Filter</DataField>
-        </Field>
-        <Field Name="Item__No__">
-          <DataField>Item__No__</DataField>
-        </Field>
-        <Field Name="Item_Description">
-          <DataField>Item_Description</DataField>
-        </Field>
-        <Field Name="Item__Unit_Cost_">
-          <DataField>Item__Unit_Cost_</DataField>
-        </Field>
-        <Field Name="Item__Unit_Cost_Format">
-          <DataField>Item__Unit_Cost_Format</DataField>
-        </Field>
-        <Field Name="StartOnHand">
-          <DataField>StartOnHand</DataField>
-        </Field>
-        <Field Name="StartOnHandFormat">
-          <DataField>StartOnHandFormat</DataField>
-        </Field>
-        <Field Name="Unit_CostCaption_Control1000000001">
-          <DataField>Unit_CostCaption_Control1000000001</DataField>
-        </Field>
-        <Field Name="PageCounter_Number">
-          <DataField>PageCounter_Number</DataField>
-        </Field>
-        <Field Name="RecordNo">
-          <DataField>RecordNo</DataField>
-        </Field>
-        <Field Name="StartOnHand___Quantity">
-          <DataField>StartOnHand___Quantity</DataField>
-        </Field>
-        <Field Name="StartOnHand___QuantityFormat">
-          <DataField>StartOnHand___QuantityFormat</DataField>
-        </Field>
-        <Field Name="Item_Ledger_Entry__Posting_Date_">
-          <DataField>Item_Ledger_Entry__Posting_Date_</DataField>
-        </Field>
-        <Field Name="Item_Ledger_Entry__Entry_Type_">
-          <DataField>Item_Ledger_Entry__Entry_Type_</DataField>
-        </Field>
-        <Field Name="Item_Ledger_Entry__Document_No__">
-          <DataField>Item_Ledger_Entry__Document_No__</DataField>
-        </Field>
-        <Field Name="IssueNo">
-          <DataField>IssueNo</DataField>
-        </Field>
-        <Field Name="IncreasesQty">
-          <DataField>IncreasesQty</DataField>
-        </Field>
-        <Field Name="IncreasesQtyFormat">
-          <DataField>IncreasesQtyFormat</DataField>
-        </Field>
-        <Field Name="DecreasesQty">
-          <DataField>DecreasesQty</DataField>
-        </Field>
-        <Field Name="DecreasesQtyFormat">
-          <DataField>DecreasesQtyFormat</DataField>
-        </Field>
-        <Field Name="ItemOnHand">
-          <DataField>ItemOnHand</DataField>
-        </Field>
-        <Field Name="ItemOnHandFormat">
-          <DataField>ItemOnHandFormat</DataField>
-        </Field>
-        <Field Name="Item_Ledger_Entry__Entry_No__">
-          <DataField>Item_Ledger_Entry__Entry_No__</DataField>
-        </Field>
-        <Field Name="TransFr">
-          <DataField>TransFr</DataField>
-        </Field>
-        <Field Name="TransTo">
-          <DataField>TransTo</DataField>
-        </Field>
-        <Field Name="StartOnHand___Quantity_Control31">
-          <DataField>StartOnHand___Quantity_Control31</DataField>
-        </Field>
-        <Field Name="StartOnHand___Quantity_Control31Format">
-          <DataField>StartOnHand___Quantity_Control31Format</DataField>
-        </Field>
-        <Field Name="Item_Description_Control32">
-          <DataField>Item_Description_Control32</DataField>
-        </Field>
-        <Field Name="Requisition_No">
-          <DataField>Requisition_No</DataField>
-        </Field>
-        <Field Name="IncreasesQty_Control33">
-          <DataField>IncreasesQty_Control33</DataField>
-        </Field>
-        <Field Name="IncreasesQty_Control33Format">
-          <DataField>IncreasesQty_Control33Format</DataField>
-        </Field>
-        <Field Name="DecreasesQty_Control34">
-          <DataField>DecreasesQty_Control34</DataField>
-        </Field>
-        <Field Name="DecreasesQty_Control34Format">
-          <DataField>DecreasesQty_Control34Format</DataField>
-        </Field>
-        <Field Name="StartOnHand___Quantity_Control35">
-          <DataField>StartOnHand___Quantity_Control35</DataField>
-        </Field>
-        <Field Name="StartOnHand___Quantity_Control35Format">
-          <DataField>StartOnHand___Quantity_Control35Format</DataField>
-        </Field>
-        <Field Name="RequisitionNo">
-          <DataField>RequisitionNo</DataField>
-        </Field>
-        <Field Name="DecreasesQty_Control1000000044">
-          <DataField>DecreasesQty_Control1000000044</DataField>
-        </Field>
-        <Field Name="DecreasesQty_Control1000000044Format">
-          <DataField>DecreasesQty_Control1000000044Format</DataField>
-        </Field>
-        <Field Name="IncreasesQty_Control1000000045">
-          <DataField>IncreasesQty_Control1000000045</DataField>
-        </Field>
-        <Field Name="IncreasesQty_Control1000000045Format">
-          <DataField>IncreasesQty_Control1000000045Format</DataField>
-        </Field>
-        <Field Name="Item_Description_Control1000000046">
-          <DataField>Item_Description_Control1000000046</DataField>
-        </Field>
-        <Field Name="ContinuedCaption">
-          <DataField>ContinuedCaption</DataField>
-        </Field>
-        <Field Name="ContinuedCaption_Control30">
-          <DataField>ContinuedCaption_Control30</DataField>
-        </Field>
-        <Field Name="Item_Ledger_Entry_Item_No_">
-          <DataField>Item_Ledger_Entry_Item_No_</DataField>
-        </Field>
-        <Field Name="Item_Ledger_Entry_Variant_Code">
-          <DataField>Item_Ledger_Entry_Variant_Code</DataField>
-        </Field>
-        <Field Name="Item_Ledger_Entry_Location_Code">
-          <DataField>Item_Ledger_Entry_Location_Code</DataField>
-        </Field>
-        <Field Name="Item_Ledger_Entry_Global_Dimension_1_Code">
-          <DataField>Item_Ledger_Entry_Global_Dimension_1_Code</DataField>
-        </Field>
-        <Field Name="Item_Ledger_Entry_Global_Dimension_2_Code">
-          <DataField>Item_Ledger_Entry_Global_Dimension_2_Code</DataField>
-        </Field>
-        <Field Name="PrintBin">
-          <DataField>PrintBin</DataField>
-        </Field>
-        <Field Name="HandQty">
-          <DataField>HandQty</DataField>
-        </Field>
-        <Field Name="HandQtyFormat">
-          <DataField>HandQtyFormat</DataField>
-        </Field>
-        <Field Name="ReqNo">
-          <DataField>ReqNo</DataField>
-        </Field>
-        <Field Name="Integer_Number">
-          <DataField>Integer_Number</DataField>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>DataSource</DataSourceName>
-        <CommandText />
-      </Query>
-    </DataSet>
-  </DataSets>
 </Report>

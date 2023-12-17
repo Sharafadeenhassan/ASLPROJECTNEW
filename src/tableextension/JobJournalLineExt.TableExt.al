@@ -233,9 +233,33 @@ tableextension 50241 "Job Journal Line Ext" extends "Job Journal Line"
         if Code1 <> '' then begin
             Syntesis(Code1, Pack, Brand);
             Validate("No.", ItemVar);
+            Rec."Job Task No." := 'Temp';
         end;
     end;
+/*trigger OnAfterInsert()
+var
+    JobBatchrec: Record "Job Journal Batch";    
+begin
+//if JobBatchrec.Get(Rec."Journal Template Name",Rec."Journal Batch Name") then
+//    if JobBatchrec."Lock Batch" then Error('You Cannot Add new Line to a Locked File')
 
+end;
+*/
+trigger OnBeforeModify()
+var
+    JobBatchrec: Record "Job Journal Batch";    
+begin
+//if JobBatchrec.Get(Rec."Journal Template Name",Rec."Journal Batch Name") then
+    if rec."Lock Qty" then Error('You Cannot Modify a Locked Record')
+end;
+
+trigger OnBeforeDelete()
+var
+    JobBatchrec: Record "Job Journal Batch";    
+begin
+//if JobBatchrec.Get(Rec."Journal Template Name",Rec."Journal Batch Name") then
+    if rec."Lock Qty" then Error('You Cannot Delete Locked Line')
+end;
     var
         Item: Record Item;
         WorkType: Record "Work Type";
