@@ -13,6 +13,11 @@ codeunit 50025 "JobJnlPostLineSubscriber"
         JobLedgEntry."Task Code" := JobJournalLine."Task Code";
         JobLedgEntry."Catch Sea Days" := JobJournalLine."Catch Sea Days";
         JobLedgEntry."Vessel Type" := JobJournalLine."Vessel Type";
+        JobLedgEntry."Unit Cost" := 0;
+        JobLedgEntry."Total Cost" := 0;
+        JobLedgEntry."Amt. to Post to G/L" := 0;
+        JobLedgEntry."Original Total Cost" := 0;
+        JobLedgEntry."Line Amount" := 0;
         if JobLedgEntry."Entry Type" <> JobLedgEntry."Entry Type"::Sale then begin
             JobLedgEntry.GroupSort := JobJournalLine.Groupsort;
             JobLedgEntry."Inventory Posting Group" := JobJournalLine."Posting Group";
@@ -71,5 +76,25 @@ codeunit 50025 "JobJnlPostLineSubscriber"
             exit(true);
         end;
         exit(false);
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, CodeUnit::"Job Jnl.-Post Line", 'OnBeforeJobLedgEntryInsert', '', true, true)]
+    local procedure JobJnlPostLineOnBeforeJobLedgEntryInsert(var JobLedgerEntry: Record "Job Ledger Entry"; JobJournalLine: Record "Job Journal Line")
+    begin
+        if (JobJournalLine."Entry Type" = JobJournalLine."Entry Type"::Usage) and (JobJournalLine.Type = JobJournalLine.Type::"G/L Account") then begin
+            JobJournalLine.Validate("Unit Cost", 0);
+            JobJournalLine.Validate("Unit Price", 0);
+            JobLedgerEntry."Unit Cost" := 0;
+            JobLedgerEntry."Total Cost" := 0;
+            JobLedgerEntry."Amt. to Post to G/L" := 0;
+            JobLedgerEntry."Original Total Cost" := 0;
+            JobLedgerEntry."Line Amount" := 0;
+            JobLedgerEntry."Unit Cost (LCy)" := 0;
+            JobLedgerEntry."Total Cost (LCY)" := 0;
+            JobLedgerEntry."Original Total Cost (LCY)" := 0;
+            JobLedgerEntry."Line Amount (LCY)" := 0;
+ 
+
+        end;
     end;
 }

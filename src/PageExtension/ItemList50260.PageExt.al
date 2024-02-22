@@ -75,6 +75,10 @@ pageextension 50260 "pageextension50260" extends "Item List"
                 Visible = false;
                 ApplicationArea = All;
             }
+            field("FT Product"; "FT Product")
+            {
+                ApplicationArea = All;
+            }
         }
     }
     actions
@@ -121,6 +125,18 @@ pageextension 50260 "pageextension50260" extends "Item List"
         moveafter("Prices_LineDiscounts"; "Requisition Worksheet")
         moveafter("Item Journal"; Resources)
     }
+    trigger OnOpenPage()
+    var
+        UserRec: Record "User Setup";
+    begin
+        IF UserRec.GET(UserId) THEN
+            IF UserRec."Allow Non FT Product" THEN
+                SETRANGE("FT Product", FALSE);
+        IF UserRec.GET(UserId) THEN
+            IF UserRec."Allow FT Product" THEN
+                SETRANGE("FT Product", TRUE);
+        FILTERGROUP(1);
+    end;
 }
 
 // actions

@@ -2,7 +2,7 @@ report 50305 "ASL Adjust Cost - Item Entries"
 {
     AdditionalSearchTerms = 'cost forwarding';
     ApplicationArea = Basic, Suite;
-    Caption = 'Adjust Cost - Item Entries';
+    Caption = 'ASL Adjust Cost - Item Entries';
     Permissions = TableData "Item Ledger Entry" = rimd,
                   TableData "Item Application Entry" = r,
                   TableData "Value Entry" = rimd,
@@ -70,6 +70,7 @@ report 50305 "ASL Adjust Cost - Item Entries"
                                   ObjTransl.TranslateObject(ObjTransl."Object Type"::Report, REPORT::"Post Inventory Cost to G/L"));
                         end;
                     }
+
                 }
             }
         }
@@ -82,7 +83,7 @@ report 50305 "ASL Adjust Cost - Item Entries"
         begin
             FilterItemCategoryEditable := true;
             FilterItemNoEditable := true;
-            PostEnable := true;
+            PostEnable := false;
         end;
 
         trigger OnOpenPage()
@@ -107,7 +108,8 @@ report 50305 "ASL Adjust Cost - Item Entries"
         UpdateItemAnalysisView: Codeunit "Update Item Analysis View";
     begin
         OnBeforePreReport(ItemNoFilter, ItemCategoryFilter, PostToGL, Item);
-
+        ItemLedgEntry.SetCurrentKey("Item No.");
+        ValueEntry.SetCurrentKey("Item No.");
         ItemApplnEntry.LockTable();
         if not ItemApplnEntry.FindLast then
             exit;
@@ -116,6 +118,7 @@ report 50305 "ASL Adjust Cost - Item Entries"
             exit;
         AvgCostAdjmtEntryPoint.LockTable();
         if AvgCostAdjmtEntryPoint.FindLast then;
+
         ValueEntry.LockTable();
         if not ValueEntry.FindLast then
             exit;
@@ -135,6 +138,7 @@ report 50305 "ASL Adjust Cost - Item Entries"
         UpdateItemAnalysisView.UpdateAll(0, true);
 
         OnAfterPreReport;
+
     end;
 
     var
@@ -172,5 +176,6 @@ report 50305 "ASL Adjust Cost - Item Entries"
     local procedure OnBeforePreReport(ItemNoFilter: Text[250]; ItemCategoryFilter: Text[250]; PostToGL: Boolean; var Item: Record Item)
     begin
     end;
+
 }
 

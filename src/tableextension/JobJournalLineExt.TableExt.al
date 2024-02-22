@@ -190,7 +190,7 @@ tableextension 50241 "Job Journal Line Ext" extends "Job Journal Line"
         }
         field(50351; Groupsort; Code[15])
         {
-            Description = 'added by santus 22-04-05';
+            Description = 'To Identify the Sorting Group';
         }
         field(50352; "Phase Code"; Code[30])
         {
@@ -236,30 +236,31 @@ tableextension 50241 "Job Journal Line Ext" extends "Job Journal Line"
             Rec."Job Task No." := 'Temp';
         end;
     end;
-/*trigger OnAfterInsert()
-var
-    JobBatchrec: Record "Job Journal Batch";    
-begin
-//if JobBatchrec.Get(Rec."Journal Template Name",Rec."Journal Batch Name") then
-//    if JobBatchrec."Lock Batch" then Error('You Cannot Add new Line to a Locked File')
+    /*trigger OnAfterInsert()
+    var
+        JobBatchrec: Record "Job Journal Batch";    
+    begin
+    //if JobBatchrec.Get(Rec."Journal Template Name",Rec."Journal Batch Name") then
+    //    if JobBatchrec."Lock Batch" then Error('You Cannot Add new Line to a Locked File')
 
-end;
-*/
-trigger OnBeforeModify()
-var
-    JobBatchrec: Record "Job Journal Batch";    
-begin
-//if JobBatchrec.Get(Rec."Journal Template Name",Rec."Journal Batch Name") then
-    if rec."Lock Qty" then Error('You Cannot Modify a Locked Record')
-end;
+    end;
+    */
+    trigger OnBeforeModify()
+    var
+        JobBatchrec: Record "Job Journal Batch";
+    begin
+        //if JobBatchrec.Get(Rec."Journal Template Name",Rec."Journal Batch Name") then
+        if rec."Lock Qty" then Error('You Cannot Modify a Locked Record')
+    end;
 
-trigger OnBeforeDelete()
-var
-    JobBatchrec: Record "Job Journal Batch";    
-begin
-//if JobBatchrec.Get(Rec."Journal Template Name",Rec."Journal Batch Name") then
-    if rec."Lock Qty" then Error('You Cannot Delete Locked Line')
-end;
+    trigger OnBeforeDelete()
+    var
+        JobBatchrec: Record "Job Journal Batch";
+    begin
+        //if JobBatchrec.Get(Rec."Journal Template Name",Rec."Journal Batch Name") then
+        if rec."Lock Qty" then Error('You Cannot Delete Locked Line')
+    end;
+
     var
         Item: Record Item;
         WorkType: Record "Work Type";

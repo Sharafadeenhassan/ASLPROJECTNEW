@@ -81,7 +81,7 @@ table 50032 "Store Requisition Line New"
                     ItemRec.SetFilter(ItemRec."Location Filter", '%1', StoreLine."Store Location");
                     ItemRec.CalcFields(ItemRec.Inventory, ItemRec."MR Approved Qty", ItemRec."MR Pending  Qty");
                     StoreLine.CalcFields(StoreLine."Pending Approved Qty", "Doc Line Qty");
-                    "Available Quantity" := (ItemRec.Inventory - (StoreLine."Pending Approved Qty" + "Doc Line Qty" - "Requested Quantity"));
+                    "Available Quantity" := (ItemRec.Inventory - (StoreLine."Pending Approved Qty" + "Doc Line Qty" + "Requested Quantity"));
                     if "Available Quantity" < 0 then "Available Quantity" := 0;
                 end;
                 if (("Requested Quantity" > "Available Quantity") and ("Req. Type" < 5)) then begin

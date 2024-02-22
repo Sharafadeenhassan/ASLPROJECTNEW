@@ -9,6 +9,9 @@ tableextension 50300 "tableextension50300" extends "Item Category"
         field(50001; "No."; Integer)
         {
         }
+        field(50003; "FT Product"; Boolean)
+        {            
+        }
         field(50385; "Shipped Quantity"; Decimal)
         {
             CalcFormula = Sum("Sales Shipment Line".Quantity WHERE("Shipment Date" = FIELD("Date Filter"),

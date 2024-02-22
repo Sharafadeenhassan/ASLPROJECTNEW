@@ -107,6 +107,14 @@ pageextension 50209 "pageextension50209" extends "User Setup"
             {
                 ApplicationArea = All;
             }
+            field("Allow FT Product";"Allow FT Product")
+            {
+                ApplicationArea = All;
+            }
+            field("Allow Non FT Product";"Allow Non FT Product")
+            {
+                ApplicationArea = All;
+            }
         }
     }
 }

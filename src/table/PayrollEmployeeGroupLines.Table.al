@@ -146,7 +146,7 @@ table 50008 "Payroll-Employee Group Lines."
                 else
                     /* Check for rounding and Maximum/Minimum */
                   "Default Amount" := ChkRoundMaxMin("E/DFileRec", "Default Amount");
-                Message('No Enter');
+               // Message('No Enter');
             end;
         }
         field(8; ChangeOthers; Boolean)

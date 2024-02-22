@@ -24,6 +24,10 @@ tableextension 50307 "Value Entry Ext" extends "Value Entry"
             OptionCaption = ' ,Short Voyage ';
             OptionMembers = " ","Short Voyage ";
         }
+        field(50356;MADJ;Boolean)
+        {
+
+        }
     }
 
     keys
@@ -63,6 +67,14 @@ tableextension 50307 "Value Entry Ext" extends "Value Entry"
         {
             Enabled = true;
             SumIndexFields = "Valued Quantity", "Cost Amount (Actual)";
+        }
+        key(ASLKey11; "Item No.","Item Ledger Entry Type",Adjustment)
+        {
+            Enabled = true;
+        }
+        key(ASLKey12; "Item No.")
+        {
+            enabled = true;
         }
     }
 

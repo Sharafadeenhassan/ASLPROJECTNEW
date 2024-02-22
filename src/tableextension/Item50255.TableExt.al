@@ -89,6 +89,9 @@ tableextension 50255 "tableextension50255" extends Item
         field(50002; "Last Direct Cost3"; Decimal)
         {
         }
+        field(50004;"FT Product";Boolean)
+        {
+        }
         field(50099; "Monthly Consumption"; Decimal)
         {
             DecimalPlaces = 0 : 5;
@@ -476,6 +479,15 @@ tableextension 50255 "tableextension50255" extends Item
             Caption = 'Local Posting Group';
             TableRelation = "Inventory Posting Group";
         }
+     modify("Item Category Code")
+     {
+       trigger OnAfterValidate()
+       var ItemCategory1: Record "Item Category";
+       begin 
+        if ItemCategory1.get(rec."Item Category Code") then        
+            rec."FT Product" := ItemCategory1."FT Product";
+       end;     
+     }  
     }
     keys
     {

@@ -4,8 +4,8 @@
 codeunit 50028 "ItemJnlPostLineSubcriber"
 {
    EventSubscriberInstance = StaticAutomatic;
-/*
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Item Jnl.-Post Line", 'OnBeforePostItem', '', true, true)]
+
+  [EventSubscriber(ObjectType::Codeunit, Codeunit::"Item Jnl.-Post Line", 'OnBeforePostItem', '', true, true)]
     local procedure ItemJnlPostLineOnBeforePostItem(var ItemJournalLine: Record "Item Journal Line")
     var
         ItemAvailability: Codeunit "Item-Check Avail.";
@@ -15,7 +15,7 @@ codeunit 50028 "ItemJnlPostLineSubcriber"
             IF ItemAvailability.ItemJnlCheckLine(ItemJournalLine) THEN //IF ItemAvailability.ItemJnlCheckLinePost(ItemJnlLine) THEN
                 ERROR(text001, ItemJournalLine."Item No.", ItemJournalLine."Line No.");
     end;
-
+/*
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Item Jnl.-Post Line", 'OnAfterUpdateUnitCost', '', true, true)]
     local procedure ItemJnlPostLineOnAfterUpdateUnitCost(ItemJournalLine: Record "Item Journal Line"; ValueEntry: Record "Value Entry"; LastDirectCost: Decimal)
     var
@@ -50,17 +50,37 @@ codeunit 50028 "ItemJnlPostLineSubcriber"
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Item Jnl.-Post Line", 'OnBeforePostInventoryToGL', '', true, true)]
     local procedure ItemJnlPostLineOnBeforePostInventoryToGL(var ValueEntry: Record "Value Entry"; var IsHandled: Boolean)
     begin
-        if ValueEntry."Item Ledger Entry Type" in[ValueEntry."Item Ledger Entry Type"::Transfer,ValueEntry."Item Ledger Entry Type"::Sale,ValueEntry."Item Ledger Entry Type"::Consumption] then
-            IsHandled := true;
+        //if ValueEntry."Item Ledger Entry Type" in[ValueEntry."Item Ledger Entry Type"::Transfer,ValueEntry."Item Ledger Entry Type"::Sale,ValueEntry."Item Ledger Entry Type"::Consumption] then
+        if ValueEntry."Item Ledger Entry Type" = ValueEntry."Item Ledger Entry Type"::Transfer then
+        IsHandled := true;            
     end;
+[EventSubscriber(ObjectType::Codeunit,CodeUnit::"Item Jnl.-Post Line", 'OnInsertPostValueEntryToGLOnAfterTransferFields','',True,true)]
 
-[EventSubscriber(ObjectType::Codeunit, Codeunit::"Item Jnl.-Post Line",'OnAfterPostInventoryToGL','',True,true)]
+local procedure IJPLOnInsertPostValueEntryToGLOnAfterTransferFields(var PostValueEntryToGL: Record "Post Value Entry to G/L"; ValueEntry: Record "Value Entry")
+begin
+     IF ValueEntry."Item Ledger Entry Type" = ValueEntry."Item Ledger Entry Type"::Transfer  THEN EXIT;
+end;
+/*[EventSubscriber(ObjectType::Codeunit, Codeunit::"Item Jnl.-Post Line",'OnAfterPostInventoryToGL','',True,true)]
 local procedure ItemJnlPostLineOnAfterPostInventoryToGL(var ValueEntry: Record "Value Entry")
 var IsHandled : Boolean;
 begin
    if (ValueEntry."Item Ledger Entry Type" = ValueEntry."Item Ledger Entry Type"::Transfer) and (ValueEntry."Source Code" = 'INVTADJMT') then 
    //IsHandled := true;
    exit;   
+end;
+*/
+[EventSubscriber(ObjectType::Codeunit, Codeunit::"Item Jnl.-Post Line",'OnBeforeInsertValueEntry','',True,true)]
+local procedure ItemJnlPostLineOnBeforeInsertValueEntry(var ValueEntry: Record "Value Entry";CalledFromAdjustment: Boolean)
+begin
+    if CalledFromAdjustment then
+   if (ValueEntry."Item Ledger Entry Type" = ValueEntry."Item Ledger Entry Type"::Transfer)  and (ValueEntry."Source Code" = 'INVTADJMT') then
+   exit;  
+end;
+
+[EventSubscriber(ObjectType::Codeunit, CodeUnit::"Item Jnl.-Post Line", 'OnAfterPostInventoryToGL','',True,true)]
+local procedure ItemJnlPostLineOnAfterPostInvtoryToGL(var ValueEntry: Record "Value Entry")
+begin
+    IF (ValueEntry."Item Ledger Entry Type" = ValueEntry."Item Ledger Entry Type"::Transfer) AND (ValueEntry."Source Code" = 'INVTADJMT') THEN EXIT;
 end;
     // [EventSubscriber(ObjectType::Codeunit, Codeunit::"Item Jnl.-Post Line", 'OnAfterInitValueEntry', '', true, true)]
     // local procedure ItemJnlPostLineOnAfterInitValueEntry(var ValueEntry: Record "Value Entry"; ItemJournalLine: Record "Item Journal Line")

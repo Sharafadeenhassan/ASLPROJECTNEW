@@ -94,5 +94,21 @@ tableextension 50331 "tableextension50331" extends "User Setup"
         field(50350; "Fish Stk Req F.Approval"; Boolean)
         {
         }
+        field(50351; "Allow Non FT Product"; Boolean)
+        {
+            trigger OnValidate()
+            begin
+                if "Allow Non FT Product" = true then
+                "Allow FT Product" := false;
+            end;
+        }
+        field(50352;"Allow FT Product";Boolean)
+        { 
+            trigger OnValidate()
+            begin
+                if "Allow FT Product" = true then
+                "Allow Non FT Product" := false;
+            end;
+        }
     }
 }

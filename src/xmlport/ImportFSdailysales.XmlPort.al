@@ -39,6 +39,8 @@ xmlport 50011 "Import FS daily sales"
                 fieldelement(PaymType; "Fish Shop Daily Sales"."Payment Type")
                 {
                 }
+                fieldelement(PayDev;"Fish Shop Daily Sales"."Payment Device")
+                {}
             }
         }
     }

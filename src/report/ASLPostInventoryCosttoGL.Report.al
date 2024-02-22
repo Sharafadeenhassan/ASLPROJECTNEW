@@ -215,15 +215,18 @@ report 50302 "ASL Post Inventory Cost to G/L"
 
                     trigger OnAfterGetRecord()
                     begin
-                        ItemValueEntry.SetFilter(ItemValueEntry."Item Ledger Entry Type",'<>%1',ItemValueEntry."Item Ledger Entry Type"::Transfer);
-                        if ItemValueEntry.FindFirst() then;
+                        //ItemValueEntry.SetFilter(ItemValueEntry."Item Ledger Entry Type",'<>%1',ItemValueEntry."Item Ledger Entry Type"::Transfer);
+                        //if ItemValueEntry.FindFirst() then;
                         ItemValueEntry.Get("Value Entry No.");
                         with ItemValueEntry do begin
                             if "Item Ledger Entry No." = 0 then begin
                                 TempCapValueEntry."Entry No." := "Entry No.";
                                 TempCapValueEntry."Order Type" := "Order Type";
                                 TempCapValueEntry."Order No." := "Order No.";
-                                TempCapValueEntry.Insert();
+                                if ItemValueEntry."Item Ledger Entry Type" <> "Item Ledger Entry Type"::Transfer then // inserted by SSNL250124
+                                    TempCapValueEntry.Insert()
+                                else
+                                    CurrReport.skip()
                             end;
 
                             if ("Item Ledger Entry No." = 0) or not Inventoriable or
@@ -234,10 +237,13 @@ report 50302 "ASL Post Inventory Cost to G/L"
                         end;
 
                         if not InvtPostToGL.BufferInvtPosting(ItemValueEntry) then begin
+                            if ItemValueEntry."Item Ledger Entry Type" = ItemValueEntry."Item Ledger Entry Type"::Transfer then
+                                CurrReport.skip();
                             InsertValueEntryNoBuf(ItemValueEntry);
                             CurrReport.Skip();
                         end;
-
+                        if ItemValueEntry."Item Ledger Entry Type" = ItemValueEntry."Item Ledger Entry Type"::Transfer then
+                            CurrReport.skip();
                         UpdateAmounts;
                         Mark(true);
                         if Post and (PostMethod = PostMethod::"per Entry") then
@@ -341,15 +347,20 @@ report 50302 "ASL Post Inventory Cost to G/L"
                         CapValueEntry.Get(TempCapValueEntry."Entry No.");
                         if TempCapValueEntry.Next() = 0 then;
                         if not InvtPostToGL.BufferInvtPosting(CapValueEntry) then begin
+                            if CapValueEntry."Item Ledger Entry Type" = CapValueEntry."Item Ledger Entry Type"::Transfer then
+                                CurrReport.skip();
                             InsertValueEntryNoBuf(CapValueEntry);
                             CurrReport.Skip();
                         end;
 
+                        if CapValueEntry."Item Ledger Entry Type" = CapValueEntry."Item Ledger Entry Type"::Transfer then
+                            CurrReport.skip();
                         UpdateAmounts;
                         PostValueEntryToGL.Get(CapValueEntry."Entry No.");
                         PostValueEntryToGL.Mark(true);
                         if Post and (PostMethod = PostMethod::"per Entry") then
-                            PostEntryToGL(CapValueEntry);
+                            CapValueEntry.Setfilter(CapValueEntry."Item Ledger Entry Type", '<>%1', CapValueEntry."Item Ledger Entry Type"::Transfer);
+                        PostEntryToGL(CapValueEntry);
 
                         if GuiAllowed and (PrevCapValueEntryOrderNo <> CapValueEntry."Order No.") then begin
                             Window.Update(1, CapValueEntry."Order No.");
@@ -453,6 +464,7 @@ report 50302 "ASL Post Inventory Cost to G/L"
                 begin
                     if Post and (PostMethod = PostMethod::"per Posting Group") then begin
                         ValueEntry."Document No." := DocNo;
+                        //ValueEntry.Setfilter(ValueEntry."Item Ledger Entry Type", '<>%1', ValueEntry."Item Ledger Entry Type"::Transfer);
                         PostEntryToGL(ValueEntry);
                     end;
                 end;
@@ -532,17 +544,20 @@ report 50302 "ASL Post Inventory Cost to G/L"
 
                     SetRange("Item No.", TempValueEntry."Item No.");
                     SetRange("Entry No.", TempValueEntry."Entry No.");
-
-                    if Item.Get("Item No.") then;
-                    if "Expected Cost" then
-                        CostAmt := "Cost Amount (Expected)"
-                    else
-                        CostAmt := "Cost Amount (Actual)";
+                    if "Item Ledger Entry Type" <> "Item Ledger Entry Type"::Transfer then Begin
+                        if Item.Get("Item No.") then;
+                        if "Expected Cost" then
+                            CostAmt := "Cost Amount (Expected)"
+                        else
+                            CostAmt := "Cost Amount (Actual)";
+                    end else
+                        CurrReport.Skip();
                 end;
 
                 trigger OnPreDataItem()
                 begin
                     TempValueEntry.SetCurrentKey("Item No.");
+                    TempValueEntry.SetFilter(TempValueEntry."Item Ledger Entry Type", '<>%1', TempValueEntry."Item Ledger Entry Type"::Transfer);
                     if not TempValueEntry.FindSet then
                         CurrReport.Break();
 
@@ -618,7 +633,6 @@ report 50302 "ASL Post Inventory Cost to G/L"
     trigger OnPreReport()
     begin
         OnBeforePreReport(Item, ItemValueEntry, PostValueEntryToGL);
-
         ValueEntryFilter := PostValueEntryToGL.GetFilters;
         InvtSetup.Get();
     end;
@@ -733,8 +747,10 @@ report 50302 "ASL Post Inventory Cost to G/L"
     local procedure PostEntryToGL(ValueEntry: Record "Value Entry")
     begin
         InvtPostToGL.Initialize(PostMethod = PostMethod::"per Posting Group");
-        InvtPostToGL.Run(ValueEntry);
-        TotalValueEntriesPostedToGL += 1;
+        if ValueEntry."Item Ledger Entry Type" <> ValueEntry."Item Ledger Entry Type"::Transfer then Begin
+            InvtPostToGL.Run(ValueEntry);
+            TotalValueEntriesPostedToGL += 1;
+        end;
     end;
 
     local procedure UpdateAmounts()
@@ -752,9 +768,11 @@ report 50302 "ASL Post Inventory Cost to G/L"
 
     local procedure InsertValueEntryNoBuf(ValueEntry: Record "Value Entry")
     begin
-        TempValueEntry.Init();
-        TempValueEntry := ValueEntry;
-        TempValueEntry.Insert();
+        if ValueEntry."Item Ledger Entry Type" <> ValueEntry."Item Ledger Entry Type"::Transfer then begin
+            TempValueEntry.Init();
+            TempValueEntry := ValueEntry;
+            TempValueEntry.Insert();
+        end;
     end;
 
     local procedure DisplayStatistics(NotSimulation: Boolean)

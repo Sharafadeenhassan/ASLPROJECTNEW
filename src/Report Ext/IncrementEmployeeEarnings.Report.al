@@ -3,6 +3,8 @@ report 50070 "Increment Employee Earnings"
     DefaultLayout = RDLC;
     RDLCLayout = './src/reportrdlc/IncrementEmployeeEarnings.rdlc';
     Caption = 'Increment Employee Earnings';
+    UsageCategory = Administration;
+    ApplicationArea = All;
     dataset
     {
         dataitem("Payroll-Employee Group Header."; "Payroll-Employee Group Header.")

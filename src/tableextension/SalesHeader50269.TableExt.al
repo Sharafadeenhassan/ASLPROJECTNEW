@@ -669,6 +669,7 @@ tableextension 50269 "tableextension50269" extends "Sales Header"
                         SalesRecLine.Validate(SalesRecLine."Unit Price", newprice);
                     SalesRecLine.Validate(SalesRecLine."Line Amount", FsdailyFilter."Day Sale Value");
                     SalesRecLine.Validate(SalesRecLine."Shipment Date", FsdailyFilter."Transaction Date");
+                    SalesRecLine.Validate(SalesRecLine."Shortcut Dimension 2 Code",FSdailyFilter."Payment Device");
                     SalesRecLine.Insert(true);
                     FsdailyFilter.ModifyAll(FsdailyFilter.Processed, true);
                 end;

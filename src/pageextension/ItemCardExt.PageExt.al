@@ -33,6 +33,10 @@ pageextension 50259 "Item Card Ext" extends "Item Card"
 
         addafter("Item Category Code")
         {
+            field("FT Product";"FT Product")
+            {
+                ApplicationArea = All;
+            }
             field("Last Imported Cost"; Rec."Last Imported Cost")
             {
                 ApplicationArea = All;

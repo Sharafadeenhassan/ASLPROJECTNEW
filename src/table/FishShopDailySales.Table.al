@@ -59,6 +59,10 @@ table 50044 "Fish Shop Daily Sales"
         field(13; "Cust No"; Code[20])
         {
         }
+        field(14;"Payment Device"; Code[20])
+        {
+
+        }
     }
 
     keys
