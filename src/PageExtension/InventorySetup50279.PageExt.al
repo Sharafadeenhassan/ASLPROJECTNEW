@@ -10,6 +10,10 @@ pageextension 50279 "pageextension50279" extends "Inventory Setup"
                 {
                     ApplicationArea = All;
                 }
+                field("DPS No. Series";"DPS No. Series")
+                {
+                    ApplicationArea = All;
+                }
                 field("Auto Post Issue Req"; Rec."Auto Post Issue Req")
                 {
                     ApplicationArea = All;

@@ -13,22 +13,22 @@ page 50167 "Payrolls-Reports"
         {
             group(Action152)
             {
-                Image = "report";
+                Image = Report;
                 action("Create New Payslips ")
                 {
-                    Image = "Report";
+                    Image = Report;
                     RunObject = Report "ASL Create New payslips - New";
                     ApplicationArea = All;
                 }
                 action("Monthly Payslip")
                 {
-                    Image = "Report";
+                    Image = Report;
                     RunObject = Report "Monthly Payslip";
                     ApplicationArea = All;
                 }
                 action("Payroll Report")
                 {
-                    Image = "Report";
+                    Image = Report;
                     RunObject = Report "Payroll Report";
                     ApplicationArea = All;
                 }

@@ -38,7 +38,7 @@ pageextension 50399 "AccountantRoleCenter" extends "Accountant Role Center"
                     action("Employee Groups")
                     {
                         Caption = 'Employee Groups';
-                        RunObject = Page 50101;
+                        RunObject = Page "Employee Groups Survey.";
                         ApplicationArea = All;
                     }
                     action("Posting Groups")

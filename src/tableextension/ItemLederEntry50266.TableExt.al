@@ -1,4 +1,4 @@
-tableextension 50266 "tableextension50266" extends "Item Ledger Entry"
+tableextension 50266 "Item Ledger entry Ext" extends "Item Ledger Entry"
 {
     fields
     {
@@ -44,7 +44,7 @@ tableextension 50266 "tableextension50266" extends "Item Ledger Entry"
         {
             SumIndexFields = Quantity;
         }
-        key(ASLKey2; "Entry Type", Nonstock, "Item No.", "Posting Date", "Location Code")
+      /*  key(ASLKey2; "Entry Type", Nonstock, "Item No.", "Posting Date", "Location Code")
         {
         }
         key(ASLKey3; "Entry Type", "Item No.", "Posting Date", "Location Code")
@@ -56,19 +56,10 @@ tableextension 50266 "tableextension50266" extends "Item Ledger Entry"
         key(ASLKey5; "Location Code", "Item No.")
         {
         }
-        Key(ASLKey6; "Source Code") { }
-        key(ASLKey7; "Item No.") 
-        {
-            Enabled = True;
-        }
+        Key(ASLKey6; "Source Code") 
+        {            
+        }*/
+       
     }
-    procedure ASLAppliedEntryToAdjustExists(ItemNo: Code[20]): Boolean
-    begin
-        Reset;
-        SetCurrentKey("Item No.", "Applied Entry to Adjust");
-        SetRange("Item No.", ItemNo);
-        SetRange("Applied Entry to Adjust", true);
-        //SetFilter("Entry Type",'<>%1',"Entry Type"::Transfer);
-        exit(Find('-'));
-    end;
+   
 }

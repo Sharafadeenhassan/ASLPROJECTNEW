@@ -6,6 +6,9 @@ page 50083 "Voyage Catch Default"
     SourceTable = "Job catch Default";
     SourceTableView = SORTING("S/No.");
     Caption = 'Voyage Catch Default';
+    Permissions = 
+        tabledata "Catch Default" = R,
+        tabledata "Job catch Default" = RIMD;
     layout
     {
         area(content)

@@ -1,4 +1,4 @@
-pageextension 50260 "pageextension50260" extends "Item List"
+pageextension 50260 "Item List Ext" extends "Item List"
 {
     layout
     {
@@ -130,12 +130,13 @@ pageextension 50260 "pageextension50260" extends "Item List"
         UserRec: Record "User Setup";
     begin
         IF UserRec.GET(UserId) THEN
-            IF UserRec."Allow Non FT Product" THEN
-                SETRANGE("FT Product", FALSE);
-        IF UserRec.GET(UserId) THEN
-            IF UserRec."Allow FT Product" THEN
-                SETRANGE("FT Product", TRUE);
-        FILTERGROUP(1);
+            if UserRec."Allow Non FT Product" = true then 
+                 Rec.SETRANGE("FT Product", FALSE)
+        else
+            IF UserRec."Allow FT Product" then
+                Rec.SETRANGE("FT Product", TRUE);
+          
+       // Rec.FILTERGROUP(1);
     end;
 }
 

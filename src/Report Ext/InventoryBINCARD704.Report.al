@@ -11,11 +11,13 @@ report 50136 "Inventory - BINCARD 704"
     ApplicationArea = All, Basic, Suite;
 
     dataset
-    {
+    { 
+        
         dataitem(Item; Item)
         {
             PrintOnlyIfDetail = true;
             RequestFilterFields = "No.", Description, "Assembly BOM", "Inventory Posting Group", "Shelf No.", "Statistics Group", "Date Filter", "Location Filter";
+           
             column(FORMAT_TODAY_0_4_; Format(Today, 0, 4))
             {
             }

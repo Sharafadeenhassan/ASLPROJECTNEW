@@ -165,7 +165,7 @@ codeunit 50014 "ASL Inventory Adjustment"
 
             CopyItemToItem(Item, ToItem);
 
-            if ItemLedgEntry.ASLAppliedEntryToAdjustExists('') then
+            if ItemLedgEntry.AppliedEntryToAdjustExists('') then
                 InsertDeletedItem(ToItem);
 
             exit(not ToItem.IsEmpty());
@@ -224,7 +224,7 @@ codeunit 50014 "ASL Inventory Adjustment"
        // ItemLedgEntry.SetFilter("Entry Type",'<>%1',ItemLedgEntry."Entry Type"::Transfer);
         ItemLedgEntry.SETFILTER(ItemLedgEntry."Entry Type",'<>%1',ItemLedgEntry."Entry Type"::Transfer);//shod 070224
         with ItemLedgEntry do
-             if ASLAppliedEntryToAdjustExists(Item."No.") then begin
+             if AppliedEntryToAdjustExists(Item."No.") then begin
                 OnBeforeCopyILEToILE(Item, ItemLedgEntry);
 
                 CopyILEToILE(ItemLedgEntry, TempItemLedgEntry);

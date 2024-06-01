@@ -3,6 +3,9 @@ report 50168 "Purchase Register"
     DefaultLayout = RDLC;
     RDLCLayout = './src/reportrdlc/PurchaseRegister.rdlc';
     Caption = 'Purchase Register';
+    UsageCategory = ReportsAndAnalysis;
+    ApplicationArea = All;
+     
     dataset
     {
         dataitem("Purch. Inv. Header"; "Purch. Inv. Header")

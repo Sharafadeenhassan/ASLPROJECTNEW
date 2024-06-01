@@ -3,7 +3,7 @@ report 50173 "Fish Shop Receipt"
     //  SalesLine.Numbers
     //  "Shipment Text"
     DefaultLayout = RDLC;
-    RDLCLayout = './src/reportrdlc/FishShopReceipt.rdlc';
+    RDLCLayout = './src/reportrdlc/FishShopReceipt.rdl';
     UsageCategory = ReportsAndAnalysis;
     ApplicationArea = All, Basic, Suite;
     Caption = 'Order Confirmation';
@@ -15,11 +15,27 @@ report 50173 "Fish Shop Receipt"
             DataItemTableView = SORTING("Document Type", "No.") WHERE("Document Type" = CONST(Invoice));
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
             RequestFilterHeading = 'Sales Order';
+
             column(Sales_Header_Document_Type; "Document Type")
             {
             }
             column(Sales_Header_No_; "No.")
             {
+            }
+            column(Bill_to_Customer_No_; "Bill-to Customer No.")
+            {
+            }
+            column(Bill_to_Address; "Bill-to Address")
+            {
+            }
+            column(Bill_to_City; "Bill-to City")
+            {
+            }
+            column(Payment_Terms_Code; "Payment Terms Code")
+            {
+            }
+            column(ItemCount;ItemCount)
+            {                
             }
             dataitem(CopyLoop; "Integer")
             {
@@ -82,6 +98,15 @@ report 50173 "Fish Shop Receipt"
                         trigger OnPreDataItem()
                         begin
                             CurrReport.Break();
+                            //SNo := 0;
+                        end;
+
+                        trigger OnAfterGetRecord()
+                        var
+                        //Rate_kg: Decimal;
+                        begin
+                            Rate_kg := "Sales Line"."Unit Price";
+                            //SNo := SNo + 1; 
                         end;
                     }
                     dataitem(RoundLoop; "Integer")
@@ -100,6 +125,11 @@ report 50173 "Fish Shop Receipt"
                         }
                         column(Sales_Line__Quantity; "Sales Line".Quantity)
                         {
+                        }
+                        column(Sales_Line___Unit_Price_; "Sales Line"."Unit Price")
+                        {
+                            AutoFormatExpression = "Sales Header"."Currency Code";
+                            AutoFormatType = 1;
                         }
                         column(Sales_Line___Line_Amount_; "Sales Line"."Line Amount")
                         {
@@ -128,6 +158,12 @@ report 50173 "Fish Shop Receipt"
                         {
                             AutoFormatExpression = "Sales Header"."Currency Code";
                             AutoFormatType = 1;
+                        }
+                        column(SNo; SNo)
+                        {
+                        }
+                        column(Rate_kg; Rate_kg)
+                        {
                         }
                         column(Text502; Text502)
                         {
@@ -226,7 +262,7 @@ report 50173 "Fish Shop Receipt"
                             else
                                 SalesLine.Next();
                             "Sales Line" := SalesLine;
-
+                            SNo := SNo + 1;
                             // IF (SalesLine.Type = SalesLine.Type::"G/L Account") AND (NOT ShowInternalInfo) THEN
                             "Sales Line"."No." := '';
                         end;
@@ -249,6 +285,7 @@ report 50173 "Fish Shop Receipt"
                             SalesLine.SetRange("Line No.", 0, SalesLine."Line No.");
                             SetRange(Number, 1, SalesLine.Count);
                             CurrReport.CreateTotals(SalesLine."Line Amount", SalesLine."Inv. Discount Amount");
+                            ItemCount := SalesLine.count;
                         end;
                     }
                     dataitem(VATCounter; "Integer")
@@ -460,6 +497,9 @@ report 50173 "Fish Shop Receipt"
         OldDimText: Text[75];
         ShowInternalInfo: Boolean;
         Continue: Boolean;
+        Rate_kg: Decimal;
+        ItemCount: Integer;
+        SNo: Integer;
         VATAmount: Decimal;
         VATBaseAmount: Decimal;
         VATDiscountAmount: Decimal;

@@ -2,7 +2,7 @@
   "id": "8e62b29d-0ae9-4b2d-b33a-ecd63cd7da24",
   "name": "ASL Upgrade Operation",
   "publisher": "SSNL",
-  "version": "18.5.1.196",
+  "version": "18.5.1.217",
   "brief": "",
   "description": "Enhance Batch Job Speed/exclude Transfer and Job GL Cost Zero",
   "privacyStatement": "",

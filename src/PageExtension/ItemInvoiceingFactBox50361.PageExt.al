@@ -1,4 +1,4 @@
-pageextension 50361 "pageextension50361" extends "Item Invoicing FactBox"
+pageextension 50361 "Item Invoicing FactBox Ext" extends "Item Invoicing FactBox"
 {
     layout
     {

@@ -142,6 +142,39 @@ page 50136 "Role Center ID"
                     ApplicationArea = All;
                 }
             }
+            Group("Dynamic Procurement System")
+            {
+                action("Dynamics Register")
+                {
+                    RunObject = page "Dynamic Procurement Register";
+                    ApplicationArea = All;
+                }
+                action("Awaiting Approval")
+                {
+                    RunObject = page "DPS Waiting For Approval";
+                    RunPageView = WHERE("Send for Approval" = CONST(true));
+                    ApplicationArea = All; 
+                }
+                action("Approved Awaiting Process")
+                {
+                    RunObject = page "Processed Approved DPS";
+                    RunPageView = WHERE(Processed = CONST(false),
+                                        Approved = const(true));
+                    ApplicationArea = All;                    
+                }
+                action("Processed DPS")
+                {
+                    RunObject = page "Processed Approved DPS";
+                    RunPageView = WHERE(Processed = CONST(true),
+                                        Approved = const(true));
+                    ApplicationArea = All;   
+                }
+            }
+            Group(Sales)
+            {                
+            }
         }
+        area(Processing)
+        {}
     }
 }

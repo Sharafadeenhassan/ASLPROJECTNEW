@@ -67,7 +67,8 @@ codeunit 50037 "JobSbuscriber"
     begin
         GenSetup.Get();
         if UserId <> GenSetup.Administrator then
-            if Rec.Status = xRec.Status then
+            if Rec.Status < xRec.Status then
+            Error('Sorry You Administrator to Go Back to previous Status');
                 exit;
         // {
         //  IF Rec.Status < xRec.Status THEN

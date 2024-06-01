@@ -122,7 +122,7 @@ pageextension 50259 "Item Card Ext" extends "Item Card"
         //Unsupported feature: Property Deletion (Importance) on "Inventory(Control 14)".
 
         //***
-        modify(ItemAttributesFactbox) { Visible = false; }
+        modify(ItemAttributesFactBox) { Visible = false; }
         addfirst(OrderModifiers)
         {
             field("Monthly Consumption"; rec."Monthly Consumption")
@@ -189,7 +189,7 @@ pageextension 50259 "Item Card Ext" extends "Item Card"
         }
         addafter("Attached Documents")
         {
-            part(ItemAttributesFactbox2; "Item Attributes Factbox")
+            part(ItemAttributesFactBox2; "Item Attributes Factbox")
             {
                 ApplicationArea = Basic, Suite;
             }

@@ -1,4 +1,4 @@
-pageextension 50021 ItemCategories extends "Item Categories"
+pageextension 50021 "Item Categories Ext Page" extends"Item Categories"
 {
     layout
     {
