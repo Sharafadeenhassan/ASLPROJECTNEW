@@ -19,16 +19,22 @@ pageextension 50280 "pageextension50280" extends "Sales Invoice Subform"
         }
         modify("Job Task No.")
         {
-            ShowCaption = false;
+            ShowCaption = true;
+            Editable = true;
             //Unsupported feature: Property Modification (ControlType) on ""Job Task No."(Control 18)".
             //Unsupported feature: Property Modification (Name) on ""Job Task No."(Control 18)".
             //Unsupported feature: Property Insertion (InstructionalTextML) on ""Job Task No."(Control 18)".
             //Unsupported feature: Property Insertion (GroupType) on ""Job Task No."(Control 18)".
+            
+        }
+        modify("Job Contract Entry No.")
+        {
+            Visible = true;
+            Editable = true;
         }
         modify("Tax Category")
         {
             //Unsupported feature: Property Modification (Level) on ""Tax Category"(Control 19)".
-
             //Unsupported feature: Property Modification (ControlType) on ""Tax Category"(Control 19)".
 
             //Unsupported feature: Property Modification (Name) on ""Tax Category"(Control 19)".

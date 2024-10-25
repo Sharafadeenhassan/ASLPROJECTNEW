@@ -110,5 +110,53 @@ tableextension 50331 "tableextension50331" extends "User Setup"
                 "Allow Non FT Product" := false;
             end;
         }
+        field(50353;"FS Cashier";Boolean)
+        {
+            Description = 'Fish Shop Cashier/ Manager';
+
+        }
+        field(50534;"FS Suspend Sale";Boolean)
+        {
+            Description = 'This person will be able to suspend a Fish Shop Sales';
+            trigger OnValidate()
+            begin
+                TestField("FS Cashier",true);
+            end;
+        }
+        field(50535;"FS Cancel Sales";Boolean)
+        {
+            Description = 'This person will be able to cancel FS Sales';
+            trigger OnValidate()
+            begin
+                TestField("FS Cashier",true);
+            end;
+        }
+        field(50536;"Fish Shop Code";Code[20])
+        {
+            Description = 'Attached Fish Shop Code';
+            TableRelation = "Shop Setup"."Shop Code";
+            trigger OnValidate()
+            begin
+                TestField("FS Cashier",true);
+            end;
+        }
+        field(50537;"Fish Shop Terminal";Code[20])
+        {
+            Description = 'Attached Fish Shop Terminal';
+            TableRelation = "Shop Setup"."Terminal No." where("Shop Code"= field("Fish Shop Code"));
+            trigger OnValidate()
+            begin
+                TestField("FS Cashier",true);                
+            end;
+        }
+        field(50538;"Allow DPS Store Process";Boolean)
+        {
+        }
+        field(50539;"Allow DPS Security Check";Boolean)
+        {}
+        field(50540;"StoreKeeper";Boolean)
+        {}
+        field(50541;"Allowed DPS QC Check";Boolean)
+        {}
     }
 }

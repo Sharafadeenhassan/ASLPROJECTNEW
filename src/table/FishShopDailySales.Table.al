@@ -24,12 +24,15 @@ table 50044 "Fish Shop Daily Sales"
         }
         field(6; Quantity; Decimal)
         {
+            DecimalPlaces = 2;
         }
         field(7; "Unit Price"; Decimal)
         {
+            DecimalPlaces = 2;
         }
         field(8; Amount; Decimal)
         {
+            DecimalPlaces = 2;
         }
         field(9; "Payment Type"; Code[10])
         {
@@ -43,25 +46,28 @@ table 50044 "Fish Shop Daily Sales"
             CalcFormula = Sum("Fish Shop Daily Sales".Quantity WHERE("Item No." = FIELD("Item No."),
                                                                       Location = FIELD(Location),
                                                                       "Transaction Date" = FIELD("Transaction Date"),
-                                                                      "Payment Type" = FIELD("Payment Type")));
+                                                                      "Payment Type" = FIELD("Payment Type"),
+                                                                      "Payment Device"= field("Payment Device")));
             FieldClass = FlowField;
             Editable = false;
+            DecimalPlaces=2;
         }
         field(12; "Day Sale Value"; Decimal)
         {
             CalcFormula = Sum("Fish Shop Daily Sales".Amount WHERE("Item No." = FIELD("Item No."),
                                                                     Location = FIELD(Location),
                                                                     "Transaction Date" = FIELD("Transaction Date"),
-                                                                    "Payment Type" = FIELD("Payment Type")));
+                                                                    "Payment Type" = FIELD("Payment Type"),
+                                                                    "Payment Device"= field("Payment Device")));
             FieldClass = FlowField;
             Editable = false;
+            DecimalPlaces = 2;
         }
         field(13; "Cust No"; Code[20])
         {
         }
         field(14;"Payment Device"; Code[20])
         {
-
         }
     }
 

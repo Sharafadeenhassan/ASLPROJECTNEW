@@ -61,21 +61,89 @@ page 50136 "Role Center ID"
     {
         area(reporting)
         {
-            group(Action7)
+            group("All Menu Reports")
             {
+                action("Item Reports")
+                {
+                    Caption = 'Item Reports';
+                    RunObject = Page "Inventory-Report";
+                    ApplicationArea = All;
+                }
                 action("Periodic Stock Position")
                 {
                     Caption = 'Periodic Stock Position';
                     RunObject = Report "Periodic Stock Position-CODEWA";
                     ApplicationArea = All;
                 }
+                action(Job)
+                {
+                    Caption = 'Job Reports';
+                    RunObject = Page "Job-Reports";
+                    ApplicationArea = All;
+                }
+                action(Sales)
+                {
+                    Caption = 'Sales Report';
+                    RunObject = page "Sales& Rec-Report";
+                    ApplicationArea = All;
+                }
+                action(Purchases)
+                {
+                    Caption = 'Purchase Reports';
+                    RunObject = Page "Purchase&Pay-Reports";
+                    ApplicationArea = All;
+                }
+
+
             }
         }
         area(sections)
         {
-            group("Material Requisiion")
+            group(Inventory)
             {
-                Caption = 'Material Requisiion';
+                action(Item)
+                {
+                    RunObject = page "Item List";
+                    Image = Inventory;
+                    ApplicationArea = all;
+                }
+                action("Item Journal")
+                {
+                    RunObject = page "Item Journal";
+                    Image = InventoryJournal;
+                    ApplicationArea = all;
+                }
+                action("Transfer Order")
+                {
+                    RunObject = page "Transfer Orders";
+                    Image = TransferOrder;
+                    ApplicationArea = all;
+                }
+                action("Posted Transfer Receipt")
+                {
+                    RunObject = page "Posted Transfer Receipts";
+                    Image = PostedReceipts;
+                    ApplicationArea = all;
+                }
+                action("Posted Transfer Shipment")
+                {
+                    RunObject = page "Posted Transfer Shipments";
+                    Image = PostedShipment;
+                    ApplicationArea = all;
+                }
+                action("Item-Reports")
+                {
+                    Caption = 'Item-Reports';
+                    RunObject = Page "Inventory-Report";
+                    image = Inventory;
+                    ApplicationArea = All;
+                }
+
+
+            }
+            group("Material Requisition")
+            {
+                Caption = 'Material Requisition';
                 action(Requisition)
                 {
                     Caption = 'Materia Requisition';
@@ -149,32 +217,101 @@ page 50136 "Role Center ID"
                     RunObject = page "Dynamic Procurement Register";
                     ApplicationArea = All;
                 }
-                action("Awaiting Approval")
+                action("Awaiting  HOD Approval")
                 {
                     RunObject = page "DPS Waiting For Approval";
-                    RunPageView = WHERE("Send for Approval" = CONST(true));
-                    ApplicationArea = All; 
+                    //RunPageView = WHERE("Send for Approval" = CONST(true));
+                    ApplicationArea = All;
                 }
-                action("Approved Awaiting Process")
+                action("Awaiting Store Approver")
                 {
-                    RunObject = page "Processed Approved DPS";
-                    RunPageView = WHERE(Processed = CONST(false),
-                                        Approved = const(true));
-                    ApplicationArea = All;                    
+                    RunObject = page "Approved DPS For Processing";
+                    ApplicationArea = All;
                 }
-                action("Processed DPS")
+                action("Approved DPS Lines")
                 {
-                    RunObject = page "Processed Approved DPS";
-                    RunPageView = WHERE(Processed = CONST(true),
-                                        Approved = const(true));
-                    ApplicationArea = All;   
+                    RunObject = page "Approved DPS Line";
+                    Visible = false;
+                }
+                action("DPS Status")
+                {
+                    RunObject = page "Dynamic Procurement Status";
+                    RunPageView = order(descending);
+                    RunPageMode = View;
+                    ApplicationArea = All;
+                }
+
+
+            }
+            Group("Store Purchase Request")
+            {
+                group("StoreKeeper Processed")
+                {
+                    action("Pending DPS")
+                    {
+                        RunObject = page "Processed Approved DPS";
+                        ApplicationArea = All;
+                    }
+                    action("Send To QCC List")
+                    {
+                        RunObject = page "DPS Purch. Req. for QCC";
+                        ApplicationArea = All;
+                    }
+                    action("Send To Store Mgr. List")
+                    {
+                        RunObject = page "DPS Purch. Req. Qcc Ready";
+                        ApplicationArea = All;
+                    }
+                    action("Send for PO")
+                    {
+                        RunObject = page "Purch. Req. Process List";
+                        ApplicationArea = All;
+                    }
+                    action("Ready for PO")
+                    {
+                        RunObject = page "Purchase Request List";
+                        RunPageView = order(descending) where(Process = const(true), "Invoice No." = filter(''));
+                        Promoted = true;
+                        PromotedCategory = Process;
+                        ApplicationArea = All;
+                    }
+                    action("GRN Generated")
+                    {
+                        RunObject = page "Purchase Request List";
+                        RunPageView = where(Process = const(true), "Invoice No." = filter(<> ''));
+                        ApplicationArea = All;
+                    }
+                }
+                action("Security Check")
+                {
+                    RunObject = page "Purchase Request Sec. check";
+                    ApplicationArea = All;
+                }
+                action("Quality Check")
+                {
+                    RunObject = page "Purchase Request QCC List";
+                    ApplicationArea = All;
+                }
+                action("Awaiting Store Manager")
+                {
+                    RunObject = page "Purch Request Mgr Action Sheet";
+                    ApplicationArea = All;
+                }
+                action("Security Return")
+                {
+                    RunObject = page "Purchase Request Sec. Return";
+                    ApplicationArea = All;
+                }
+                action("Purchase Request Status")
+                {
+                    RunObject = page "Purchase Request List";
+                    RunPageView = order(descending);
+                    RunPageMode = View;
+                    ApplicationArea = All;
                 }
             }
-            Group(Sales)
-            {                
-            }
+
         }
-        area(Processing)
-        {}
+
     }
 }

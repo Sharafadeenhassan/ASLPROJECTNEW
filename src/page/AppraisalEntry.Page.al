@@ -458,7 +458,7 @@ page 50028 "Appraisal Entry"
                     begin
                         SalesSetup.Get();
                         if SalesSetup."Calc. Inv. Discount" then begin
-                            CurrPage.SalesLines.PAGE.CalcInvDisc();
+                            //CurrPage.SalesLines.PAGE.CalcInvDisc();
                             Commit()
                         end;
                         PAGE.RunModal(PAGE::"Sales Order Statistics", Rec);
@@ -628,7 +628,7 @@ page 50028 "Appraisal Entry"
                         if not UpdateAllowed() then
                             exit;
 
-                        CurrPage.SalesLines.PAGE.ShowNonstockItems();
+                        //CurrPage.SalesLines.PAGE.ShowNonstockItems();
                     end;
                 }
                 action("Order &Tracking")

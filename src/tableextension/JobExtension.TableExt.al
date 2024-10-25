@@ -31,6 +31,12 @@ tableextension 50230 "tableextension50230" extends Job
         modify(Status)
         {
             OptionCaption = 'Budget,Preparation,Voyage Start,Close Job Card';
+            trigger OnAfterValidate()
+            begin
+                if Rec.Status <> xRec.Status then
+                    if xRec.Status = xRec.Status::Completed then
+                        Rec."Ending Date" := xRec."Ending Date";
+            end;
         }
         field(50137; "Task Filter"; Code[10])
         {

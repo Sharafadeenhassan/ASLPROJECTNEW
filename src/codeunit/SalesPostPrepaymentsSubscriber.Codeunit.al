@@ -12,7 +12,7 @@ codeunit 50020 "SalesPostPrepaymentsSubscriber"
 // {
 //   CHANGES
 //   {There appears to be data type mismatch this code require review
-//     { Refactor(new procedure should be inserted to take care of this rather than modifyg)CodeModification  ;OriginalCode=BEGIN
+//     { Refactor(new procedure should be inserted to take care of this rather than modify)CodeModification  ;OriginalCode=BEGIN
 //                                         if not SalesSetup."Copy Comments Order to Invoice" then
 //                                           exit;
 

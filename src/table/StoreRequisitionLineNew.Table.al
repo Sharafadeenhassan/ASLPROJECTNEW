@@ -2,6 +2,7 @@ table 50032 "Store Requisition Line New"
 {
     DrillDownPageID = "Store Requisition Subform";
     Caption = 'Store Requisition Line New';
+    
     fields
     {
         field(1; "Req. No."; Code[10])
@@ -21,21 +22,23 @@ table 50032 "Store Requisition Line New"
                     "Item Category" := ItemRec."Gen. Prod. Posting Group";
                     "Inventory Posting Group" := ItemRec."Inventory Posting Group";
                     ItemRec.SetFilter(ItemRec."Location Filter", '%1', "Store Location");
-                    ItemRec.CalcFields(ItemRec.Inventory);
+                    ItemRec.CalcFields(ItemRec.Inventory,ItemRec."MR Req Qty");
                     if ItemRec.Inventory <= 0 then
                         "Procurement Request" := true;
                     //ELSE ERROR('Zero Stock Item Can Not be Requested, Kindly Inform the Store Manager for Order');
                 end;
-                Tranlineqty := 0;
+                TransLineQty := 0;
                 Transline.SetRange(Transline."Item No.", "Item No.");
                 Transline.SetRange(Transline."Transfer-from Code", "Store Location");
                 Transline.SetFilter(Transline."Qty. to Ship", '<>%1', 0);
                 if Transline.FindSet() then begin
                     Transline.CalcSums(Transline."Qty. to Ship");
-                    Tranlineqty := Transline."Qty. to Ship";
+                    TransLineQty := Transline."Qty. to Ship";
                 end;
+                StoreLine := Rec;
                 StoreLine.CalcFields(StoreLine."Pending Approved Qty");
-                "Available Quantity" := (ItemRec.Inventory - (StoreLine."Pending Approved Qty" + Tranlineqty));
+                //"Available Quantity" := (ItemRec.Inventory - (StoreLine."Pending Approved Qty" + Tranlineqty));
+                "Available Quantity" := (ItemRec.Inventory - ItemRec."MR Req Qty"); //+Tranlineqty);
                 if "Available Quantity" < 0 then "Available Quantity" := 0;
                 if "Req. Type" = "Req. Type"::Purchase then begin
                     ItemLedg.SetCurrentKey("Item No.", Open, "Variant Code", Positive, "Location Code", "Posting Date");
@@ -66,7 +69,6 @@ table 50032 "Store Requisition Line New"
             trigger OnValidate()
             begin
                 TestField("1st Approval", 0);
-                //TESTFIELD("Approved Quantity",0)
                 if ("Last Replacement Date" <> 0D) and (Replaced = false) then Error('You Can Not Request already issued Item before authorised');
                 if "Claim by Employee" <> '' then begin
                     NicsArt.SetRange(NicsArt."Employee No.", "Claim by Employee");
@@ -76,13 +78,19 @@ table 50032 "Store Requisition Line New"
                             Error('You can Not Give more than Authorised Quantity');
                 end;
                 StoreLine.SetRange(StoreLine."Item No.", "Item No.");
+                StoreLine.SetRange(StoreLine."Store Location","Store Location");
                 if StoreLine.FindFirst() then begin
-                    ItemRec.Get(StoreLine."Item No.");
-                    ItemRec.SetFilter(ItemRec."Location Filter", '%1', StoreLine."Store Location");
-                    ItemRec.CalcFields(ItemRec.Inventory, ItemRec."MR Approved Qty", ItemRec."MR Pending  Qty");
-                    StoreLine.CalcFields(StoreLine."Pending Approved Qty", "Doc Line Qty");
-                    "Available Quantity" := (ItemRec.Inventory - (StoreLine."Pending Approved Qty" + "Doc Line Qty" + "Requested Quantity"));
-                    if "Available Quantity" < 0 then "Available Quantity" := 0;
+                    ItemRec.Get("Item No.");
+                    ItemRec.SetFilter(ItemRec."Location Filter", '%1', "Store Location");
+                    ItemRec.CalcFields(ItemRec.Inventory, ItemRec."MR Approved Qty", ItemRec."MR Pending  Qty",ItemRec."MR Req Qty");
+                    If (xRec."Requested Quantity" <> rec."Requested Quantity") then
+                    begin
+                        "Approved Quantity" := "Requested Quantity";
+                        "Issued Quantity" := "Requested Quantity";
+                    end;   
+                    ItemRec.CalcFields(ItemRec.Inventory, ItemRec."MR Approved Qty", ItemRec."MR Pending  Qty",ItemRec."MR Req Qty");
+                    "Available Quantity" := (ItemRec.Inventory - (ItemRec."MR Req Qty" /*+ "Requested Quantity"*/));
+                if "Available Quantity" < 0 then "Available Quantity" := 0;
                 end;
                 if (("Requested Quantity" > "Available Quantity") and ("Req. Type" < 5)) then begin
                     "Approved Quantity" := "Available Quantity";
@@ -113,14 +121,17 @@ table 50032 "Store Requisition Line New"
                     1, 2, 3, 4:
                         begin
                             if "Approved Quantity" > "Requested Quantity" then Error('Approved Quantity Can not be more than Requested Quantity');
+                            "Issued Quantity" := "Approved Quantity";
                             StoreLine.SetRange(StoreLine."Item No.", "Item No.");
+                            StoreLine.SETRANGE(StoreLine."Store Location","Store Location");
                             if StoreLine.FindFirst() then begin
-                                ItemRec.Get(StoreLine."Item No.");
-                                ItemRec.SetFilter(ItemRec."Location Filter", '%1', StoreLine."Store Location");
-                                ItemRec.CalcFields(ItemRec.Inventory);
-                                StoreLine.CalcFields(StoreLine."Pending Approved Qty");
-                                "Available Quantity" := (ItemRec.Inventory - StoreLine."Pending Approved Qty");
-                            end;
+                                ItemRec.Get("Item No.");
+                                ItemRec.SetFilter(ItemRec."Location Filter", '%1',"Store Location");
+                                ItemRec.CalcFields(ItemRec.Inventory,ItemRec."MR Req Qty");
+                                //StoreLine.CalcFields(StoreLine."Pending Approved Qty");
+                                //"Available Quantity" := (ItemRec.Inventory - StoreLine."Pending Approved Qty");
+                                "Available Quantity" := (ItemRec.Inventory - (ItemRec."MR Req Qty"));
+                              end;
                             if "Approved Quantity" > "Available Quantity" then Error('Approved Quantity Can Not be more than Available Quantity');
                         end
                 end;
@@ -137,8 +148,9 @@ table 50032 "Store Requisition Line New"
                         begin
                             ItemRec.Get("Item No.");
                             ItemRec.SetFilter(ItemRec."Location Filter", '%1', "Store Location");
-                            ItemRec.CalcFields(ItemRec.Inventory);
-                            if ItemRec.Inventory < "Issued Quantity" then Error('You can Issue more than Available Quantity');
+                            ItemRec.CalcFields(ItemRec.Inventory,ItemRec."MR Req Qty");
+                            "Available Quantity" := ItemRec.Inventory - (ItemRec."MR Req Qty" - xRec."Issued Quantity");
+                            if "Available Quantity" < "Issued Quantity" then Error('You cannot Issue more than Available Quantity');
                             if "Issued Quantity" > "Approved Quantity" then Error('Issued Quantity Can not be more than Approved Quantity');
                         end;
                 end;
@@ -148,6 +160,13 @@ table 50032 "Store Requisition Line New"
         {
             InitValue = 'GNRL ASL';
             TableRelation = Location.Code;
+
+            trigger OnValidate()
+            begin
+                if xrec."Store Location" <> rec."Store Location" then
+                rec.Validate("Requested Quantity");
+            end;
+
         }
         field(9; "Claim by Employee"; Code[20])
         {
@@ -436,5 +455,5 @@ table 50032 "Store Requisition Line New"
         OldStLine: Record "Store Requisition Line New";
         ItemLedg: Record "Item Ledger Entry";
         Transline: Record "Transfer Line";
-        Tranlineqty: Decimal;
+        TransLineQty: Decimal;
 }

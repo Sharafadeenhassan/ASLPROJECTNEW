@@ -64,5 +64,25 @@ tableextension 50264 "Inventory Setup Ext" extends "Inventory Setup"
             Description = 'Dynamics Procurement System No series';
             TableRelation = "No. Series";
         }
+        field(50014; "Store Req. Transfer No."; Code[10])
+        {
+            TableRelation = "No. Series";
+        }
+        field(50015; "Store Req. Purchase No."; Code[10])
+        {
+            TableRelation = "No. Series";
+        }
+        field(50016; "Store Req. Add-In No."; Code[10])
+        {
+            TableRelation = "No. Series";
+        }
+        field(50017; "Store Req. Compliment No."; Code[10])
+        {
+            TableRelation = "No. Series";
+        }
+        field(50018; "Store Req. Invoice No."; Code[10])
+        {
+            TableRelation = "No. Series";
+        }
     }
 }

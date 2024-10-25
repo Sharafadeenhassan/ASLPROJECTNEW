@@ -12,6 +12,14 @@ pageextension 50304 "pageextension50304" extends "Purchase List"
             {
                 ApplicationArea = All;
             }
+            field("Your Reference";rec."Your Reference")
+            {
+                ApplicationArea = all;
+            }
+            field("Purchase Order Req. No";"Purchase Order Req. No")
+            {
+                ApplicationArea = All;
+            }
         }
     }
 }

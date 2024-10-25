@@ -3,11 +3,14 @@ report 50244 "Purchase Return Way Bill"
     DefaultLayout = RDLC;
     RDLCLayout = './src/reportrdlc/PurchaseReturnWayBill.rdlc';
     Caption = 'Purchase Return Way Bill';
+    UsageCategory = ReportsAndAnalysis;
+    ApplicationArea = all;
+    
     dataset
     {
         dataitem("Purchase Requisition1"; "Purchase Requisition1")
         {
-            DataItemTableView = WHERE("Return to Security" = CONST(true), "Security Returned" = CONST(false));
+            DataItemTableView = WHERE("Return to Security" = CONST(true), "Security Returned" = CONST(false),"Security Return Quantity" = filter(>0));
             RequestFilterFields = "Supply By", "Req. Proc. Date";
             column(ItemNo; "Purchase Requisition1"."Item No.")
             {

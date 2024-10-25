@@ -207,6 +207,22 @@ tableextension 50241 "Job Journal Line Ext" extends "Job Journal Line"
         {
             OptionMembers = " ","Short Voyage ";
         }
+        field(50356; "Shrimp Total"; Decimal)
+        {
+            CalcFormula = Sum("Job Journal Line".Catch WHERE("Journal Template Name" = FIELD("Journal Template Name"),
+                                                                      "Journal Batch Name" = FIELD("Journal Batch Name"),
+                                                                      "Task Code" = CONST('SHR')));
+            Editable = false;
+            FieldClass = FlowField;
+        }
+        field(50357; "Fish Total"; Decimal)
+        {
+            CalcFormula = Sum("Job Journal Line".Catch WHERE("Journal Template Name" = FIELD("Journal Template Name"),
+                                                                      "Journal Batch Name" = FIELD("Journal Batch Name"),
+                                                                      "Task Code" = CONST('FIS')));
+            Editable = false;
+            FieldClass = FlowField;
+        }
     }
     keys
     {

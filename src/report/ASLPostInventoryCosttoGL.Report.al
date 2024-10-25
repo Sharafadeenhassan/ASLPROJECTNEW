@@ -1,7 +1,7 @@
-report 50302 "ASL Post Inventory Cost to G/L"
+report 50370 "ASL Post InventoryCost to G/L"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = './src/reportrdlc/ASLPostInventoryCosttoGL.rdlc';
+    RDLCLayout = './src/reportrdlc/ASLPostInventoryCostToGL.rdlc';
     AdditionalSearchTerms = 'reconcile inventory';
     ApplicationArea = Basic, Suite;
     Caption = 'ASL Post Inventory Cost to G/L';

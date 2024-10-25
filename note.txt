@@ -1,3 +1,0 @@
-Our job jnl line has a field called Work Type code
-The field original pick work Type code get validated when the  type field is resoource
-User want to pick from item category when the type field is item, without validatig worktype code.

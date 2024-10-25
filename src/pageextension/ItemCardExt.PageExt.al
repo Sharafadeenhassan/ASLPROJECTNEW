@@ -21,10 +21,18 @@ pageextension 50259 "Item Card Ext" extends "Item Card"
         modify("Maximum Inventory") { Importance = Additional; }
         modify("Minimum Order Quantity") { Importance = Additional; }
         modify("Maximum Order Quantity") { Visible = true; }
+        addafter("Maximum Inventory")
+        {
+            field("Average Consumption Base";rec."Average Consumption Base")
+            {
+                Importance = Additional;
+                ApplicationArea = all;
+            }
+        }
 
         addafter(Inventory)
         {
-            field("CRM / STR"; "CRM / STR")
+            field("CRM / STR"; rec."CRM / STR")
             {
                 ApplicationArea = All;
                 Editable = false;
@@ -33,7 +41,7 @@ pageextension 50259 "Item Card Ext" extends "Item Card"
 
         addafter("Item Category Code")
         {
-            field("FT Product";"FT Product")
+            field("FT Product";rec."FT Product")
             {
                 ApplicationArea = All;
             }

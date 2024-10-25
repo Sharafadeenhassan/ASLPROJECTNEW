@@ -30,5 +30,11 @@ pageextension 50288 "pageextension50288" extends "Purchase Lines"
         {
             Visible = true;
         }
+        
     }
+    trigger OnAfterGetRecord()
+    begin
+        if rec."Req Locked" then
+        CurrPage.Editable(false);
+    end;
 }

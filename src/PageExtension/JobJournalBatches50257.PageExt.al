@@ -90,18 +90,3 @@ pageextension 50257 "pageextension50257" extends "Job Journal Batches"
     }
 }
 
-//Unsupported feature: Code Modification on "OnOpenPage".
-//trigger OnOpenPage()
-//>>>> ORIGINAL CODE:
-//begin
-/*
-JobJnlMgt.OpenJnlBatch(Rec);
-*/
-//end;
-//>>>> MODIFIED CODE:
-//begin
-/*
-JobJnlMgt.OpenJnlBatch(Rec);
-CurrPage.Editable(true);
-*/
-//end;

@@ -11,6 +11,7 @@ pageextension 50308 "Purchase Ord. Subf. Ext" extends "Purchase Order Subform"
             //Unsupported feature: Property Modification (ImplicitType) on ""Qty. to Receive"(Control 18)".
 
             Visible = false;
+            Editable = true;
         }
         modify(Control43)
         {
@@ -288,7 +289,19 @@ pageextension 50308 "Purchase Ord. Subf. Ext" extends "Purchase Order Subform"
             DocumentTotals.PurchaseRedistributeInvoiceDiscountAmounts(Rec, VATAmount, TotalPurchaseLine);
         CurrPage.Update();
     end;
+
+    trigger OnOpenPage()
+    begin
+        if rec."Req Locked" = true then CurrPage .Editable := false;
+    end;
+
+     trigger OnAfterGetRecord()
+    begin
+        if rec."Req Locked" then
+        CurrPage.Editable(false);
+    end;
 }
+
 
 //Unsupported feature: Property Modification (SourceExpr) on ""Line Discount Amount"(Control 60)".
 //Unsupported feature: Property Modification (Name) on ""Line Discount Amount"(Control 60)".

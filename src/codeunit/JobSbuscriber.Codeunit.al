@@ -10,7 +10,7 @@ codeunit 50037 "JobSbuscriber"
         if Job.Vessel <> '' then
             Job."Ending Date" := CalcDate('+50D', Today);
         Job."Creation Date" := Today;
-        Job."Creation Date" := Today;
+       // Job."Creation Date" := Today;
         Job."Last Date Modified" := Job."Creation Date";
         if (Job."Project Manager" <> '') and (Job.Status = Job.Status::"Open") then;
         //Job.AddToMyJobs(Job."Project Manager"); //Revisit
@@ -68,7 +68,7 @@ codeunit 50037 "JobSbuscriber"
         GenSetup.Get();
         if UserId <> GenSetup.Administrator then
             if Rec.Status < xRec.Status then
-            Error('Sorry You Administrator to Go Back to previous Status');
+            Error('Sorry You Need Administrator to Go Back to previous Status');
                 exit;
         // {
         //  IF Rec.Status < xRec.Status THEN

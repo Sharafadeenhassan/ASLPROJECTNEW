@@ -96,6 +96,11 @@ tableextension 50211 "tableextension50211" extends "Purch. Rcpt. Line"
         field(50360; "Original Purc. Order No."; Code[20])
         {
         }
+         field(50366;"DPS No.";Code[20])
+        {
+            TableRelation = "Purchase Requisition1"."Req No.";
+            Editable = false;
+        }
     }
     keys
     {

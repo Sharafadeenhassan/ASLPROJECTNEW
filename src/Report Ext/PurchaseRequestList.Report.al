@@ -4,7 +4,7 @@ report 50233 "Purchase Request List"
     RDLCLayout = './src/reportrdlc/PurchaseRequestList.rdlc';
     UsageCategory = ReportsAndAnalysis;
     ApplicationArea = All, Basic, Suite;
-    Caption = 'Purchase Request List';
+    Caption = 'Purchase Request Status List';
     dataset
     {
         dataitem("Purchase Requisition1"; "Purchase Requisition1")
@@ -28,7 +28,7 @@ report 50233 "Purchase Request List"
             column(RequsetedbyName; "Purchase Requisition1"."Req. By Name")
             {
             }
-            column(Supplyer; "Purchase Requisition1"."Supplier Name")
+            column(Supplier; "Purchase Requisition1"."Supplier Name")
             {
             }
             column(SecCheQty; "Purchase Requisition1"."Security Check Quantity")
@@ -73,6 +73,10 @@ report 50233 "Purchase Request List"
             column(SNO; SNo)
             {
             }
+            column(FilterTest;FilterTest)
+            {                
+            }
+        
 
             trigger OnAfterGetRecord()
             begin
@@ -82,6 +86,8 @@ report 50233 "Purchase Request List"
             trigger OnPreDataItem()
             begin
                 SNo := 0;
+                FilterTest := GetFilters;
+
             end;
         }
     }
@@ -103,4 +109,5 @@ report 50233 "Purchase Request List"
 
     var
         SNo: Integer;
+        FilterTest: Text[200];
 }

@@ -93,8 +93,6 @@ codeunit 50025 "JobJnlPostLineSubscriber"
             JobLedgerEntry."Total Cost (LCY)" := 0;
             JobLedgerEntry."Original Total Cost (LCY)" := 0;
             JobLedgerEntry."Line Amount (LCY)" := 0;
- 
-
         end;
     end;
 }

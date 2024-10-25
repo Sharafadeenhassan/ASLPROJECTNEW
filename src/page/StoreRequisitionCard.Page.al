@@ -9,19 +9,20 @@ page 50059 "Store Requisition Card"
         {
             group(General)
             {
+                field("Req. Type"; Rec."Req. Type")
+                {
+                    ApplicationArea = All;
+                }
                 field("Req. No"; Rec."Req. No")
                 {
                     ApplicationArea = All;
-
+                    Editable = false;
+                    
                     trigger OnAssistEdit()
                     begin
                         if Rec.AssistEdit(xRec) then
                             CurrPage.Update();
                     end;
-                }
-                field("Req. Type"; Rec."Req. Type")
-                {
-                    ApplicationArea = All;
                 }
                 field(Description; Rec.Description)
                 {
@@ -140,7 +141,7 @@ page 50059 "Store Requisition Card"
                     ApplicationArea = All;
                 }
             }
-            part(Control25; "Store Requisition Subform")
+            part("Requisition Line"; "Store Requisition Subform")
             {
                 SubPageLink = "Req. No." = FIELD("Req. No");
                 ApplicationArea = All;
@@ -206,11 +207,11 @@ page 50059 "Store Requisition Card"
                 }
             }
         }
-        area(factboxes)
+        area(FactBoxes)
         {
-            part(Control36; "Item Invoicing FactBox")
+            part(Facts; "Item Invoicing FactBox")
             {
-                Provider = Control25;
+                Provider = "Requisition Line";
                 SubPageLink = "No." = FIELD("Item No."),
                               "Location Filter" = FIELD("Store Location");
                 ApplicationArea = All;
@@ -259,9 +260,11 @@ page 50059 "Store Requisition Card"
             }
             action("Print Material Requisition")
             {
-                Image = Approve;
+                Image = Print;
                 Promoted = true;
                 RunPageOnRec = true;
+                PromotedCategory = Report;
+                PromotedOnly= true;
                 ApplicationArea = All;
 
                 trigger OnAction()
@@ -288,6 +291,7 @@ page 50059 "Store Requisition Card"
             }
             action("Check Staff Replacement")
             {
+                Image = StaleCheck;
                 ApplicationArea = All;
 
                 trigger OnAction()

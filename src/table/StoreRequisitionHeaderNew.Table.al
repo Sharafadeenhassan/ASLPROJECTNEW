@@ -4,6 +4,8 @@
 table 50031 "Store Requisition Header New"
 {
     Caption = 'Store Requisition Header New';
+    DataCaptionFields = "Req. No", "Req. Type";
+    DrillDownPageId = "Store Requisitions";
     fields
     {
         field(1; "Req. No"; Code[10])
@@ -13,8 +15,9 @@ table 50031 "Store Requisition Header New"
             trigger OnValidate()
             begin
                 if "Req. No" <> xRec."Req. No" then begin
-                    InveSetup.Get();
-                    NoSeriesMgt.TestManual(InveSetup."Store Requisition No.");
+                    //InventSetup.Get();
+                    ManualNoTest();
+                    //NoSeriesMgt.TestManual(InventSetup."Store Requisition No.");
                     "No. Series" := '';
                 end;
                 "Req Date" := Today;
@@ -23,7 +26,7 @@ table 50031 "Store Requisition Header New"
         field(2; "Req. Type"; Option)
         {
             Description = 'Requisition Type';
-            InitValue = Issue;
+            //InitValue = Issue;
             OptionCaption = ' ,Transfer,Invoice,Complementary,Issue,Add In,Purchase';
             OptionMembers = " ",Transfer,Invoice,Complementary,Issue,"Add In",Purchase;
         }
@@ -37,6 +40,7 @@ table 50031 "Store Requisition Header New"
         {
             trigger OnValidate()
             begin
+                //Revalidate();
                 StoreLine.SetFilter(StoreLine."Req. No.", '%1', "Req. No");
                 if StoreLine.FindFirst() then
                     repeat
@@ -47,7 +51,7 @@ table 50031 "Store Requisition Header New"
                         StoreLine.TestField(StoreLine."Store Location");
                     until StoreLine.Next() = 0
                 else
-                    Error('Émpty Requisition can not be sent for Approval');
+                    Error('Empty Requisition can not be sent for Approval');
                 UserRec.SetCurrentKey("User Name");
                 UserRec.SetRange("User Name", UserId);
                 if UserRec.FindSet() then begin
@@ -139,7 +143,6 @@ table 50031 "Store Requisition Header New"
 
             trigger OnValidate()
             begin
-
                 UserRec.SetRange("User Name", "Final Approval to");
                 if UserRec.FindSet() then
                     "Final Approval Name" := UserRec."Full Name";
@@ -159,6 +162,7 @@ table 50031 "Store Requisition Header New"
 
             trigger OnValidate()
             begin
+                //rec.Revalidate();
                 TestField("Send for Approval", true);
                 TestField("1st Approval to", UserId);
                 "1st Approved Time" := CurrentDateTime;
@@ -236,6 +240,7 @@ table 50031 "Store Requisition Header New"
 
             trigger OnValidate()
             begin
+                //rec.Revalidate();
                 TestField("Send for Approval", true);
                 TestField("1st Approved", 2);
                 TestField("Final Approval to", UserId);
@@ -341,6 +346,7 @@ table 50031 "Store Requisition Header New"
                 UserRec.SetRange("User Name", UserId);
                 if UserRec.FindSet() then
                     "Processed By" := UserRec."Full Name";
+                // Revalidate();
                 case "Req. Type" of
                     1:
                         TransferOrder();
@@ -461,6 +467,8 @@ table 50031 "Store Requisition Header New"
         field(55; "Fish Store Requisition"; Boolean)
         {
         }
+        field(56; Revalidated; Boolean)
+        { }
     }
 
     keys
@@ -488,26 +496,65 @@ table 50031 "Store Requisition Header New"
     end;
 
     trigger OnInsert()
+    var
+        RecNo: Code[20];
     begin
         if "Req. No" = '' then begin
-            InveSetup.Get();
-            InveSetup.TestField("Store Requisition No.");
-            NoSeriesMgt.InitSeries(InveSetup."Store Requisition No.", xRec."No. Series", 0D, "Req. No", "No. Series");
+            if rec."Req. Type" = 0 then
+                Error('Please Specify Requisition Type')
+            else begin
+                InventSetup.Get();
+                case rec."Req. Type" of
+                    1:
+                        begin
+                            InventSetup.TestField("Store Req. Transfer No.");
+                            RecNo := InventSetup."Store Req. Transfer No.";
+                        end;
+                    2:
+                        begin
+                            InventSetup.TestField("Store Req. Invoice No.");
+                            RecNo := InventSetup."Store Req. Invoice No.";
+                        end;
+                    3:
+                        begin
+                            InventSetup.TestField("Store Req. Compliment No.");
+                            RecNo := InventSetup."Store Req. Compliment No.";
+                        end;
+                    4:
+                        begin
+                            InventSetup.TestField("Store Requisition No.");
+                            RecNo := InventSetup."Store Requisition No.";
+                        end;
+                    5:
+                        begin
+                            InventSetup.TestField("Store Req. Add-In No.");
+                            RecNo := InventSetup."Store Req. Add-In No.";
+                        end;
+                    6:
+                        begin
+                            InventSetup.TestField("Store Req. Purchase No.");
+                            RecNo := InventSetup."Store Req. Purchase No.";
+                        end;
+                end;
+                NoSeriesMgt.InitSeries(RecNo, xRec."No. Series", 0D, "Req. No", "No. Series");
+            end;
+            "Req Date" := Today;
         end;
-        "Req Date" := Today;
     end;
 
     trigger OnModify()
     begin
-        TestField("Document No.", '');
+        TestField(Rec."Document No.", '');
     end;
 
     trigger OnRename()
     begin
+        xRec.TestField(xRec."Send for Approval",False);
         StoreLine.SetRange(StoreLine."Req. No.", xRec."Req. No");
         if StoreLine.FindSet() then
             repeat
-                StoreLine.Rename("Req. No", StoreLine."Line No.");
+                StoreLine.Rename(xRec."Req. No", StoreLine."Req. No.");
+                StoreLine.Rename(xRec."Req. Type",StoreLine."Req. Type");
                 StoreLine.Modify();
             until StoreLine.Next() = 0;
     end;
@@ -516,7 +563,7 @@ table 50031 "Store Requisition Header New"
         NoSeriesMgt: Codeunit NoSeriesManagement;
         UserRec: Record User;
         UserSetup: Record "User Setup";
-        InveSetup: Record "Inventory Setup";
+        InventSetup: Record "Inventory Setup";
         Custrec: Record Customer;
         StoreLine: Record "Store Requisition Line New";
         Vendrec: Record Vendor;
@@ -530,6 +577,8 @@ table 50031 "Store Requisition Header New"
         posttrans: Codeunit "TransferOrder-Post (Yes/No)";
         selection: Integer;
         Text50007: Label '&Add to Purchase Requisition Register,&Create Purchase Order';
+        RecSeries: Code[20];
+        RecType: Integer;
 
     // [Scope('OnPrem')]
     procedure AssistEdit(OldRequisition: Record "Store Requisition Header New"): Boolean
@@ -537,15 +586,29 @@ table 50031 "Store Requisition Header New"
         ReqRec: Record "Store Requisition Header New";
     begin
         ReqRec := Rec;
-        InveSetup.Get();
-        InveSetup.TestField("Store Requisition No.");
-        if NoSeriesMgt.SelectSeries(InveSetup."Store Requisition No.", OldRequisition."No. Series", ReqRec."No. Series") then begin
+        InventSetup.Get();
+        InventSetup.TestField("Store Requisition No.");
+        if NoSeriesMgt.SelectSeries(InventSetup."Store Requisition No.", OldRequisition."No. Series", ReqRec."No. Series") then begin
             NoSeriesMgt.SetSeries(ReqRec."Req. No");
             Rec := ReqRec;
             exit(true);
         end;
     end;
 
+    procedure Revalidate()
+    var
+        ReqValLine: Record "Store Requisition Line New";
+    begin
+        ReqValLine.SetRange(ReqValLine."Req. No.", "Req. No");
+        ReqValLine.SetFilter(ReqValLine."Issued Quantity", '<>%1', 0);
+        if ReqValLine.FindFirst() then
+            repeat
+                ReqValLine.Validate(ReqValLine."Issued Quantity");
+                ReqValLine.Modify();
+            until ReqValLine.Next() = 0;
+
+        Revalidated := true;
+    end;
     // [Scope('OnPrem')]
     procedure CreatesalesInv()
     var
@@ -655,8 +718,8 @@ table 50031 "Store Requisition Header New"
                 ItemJnl."Location Code" := ReqLines."Store Location";
                 ItemJnl.Validate(ItemJnl.Quantity, ReqLines."Issued Quantity");
                 ItemJnl."Lock Qty" := true;
-                InveSetup.Get();
-                if InveSetup."Auto Post Issue Req" then
+                InventSetup.Get();
+                if InventSetup."Auto Post Issue Req" then
                     PostItem.Run(ItemJnl)
                 else
                     ItemJnl.Insert();
@@ -681,7 +744,7 @@ table 50031 "Store Requisition Header New"
         JobJnl: Record "Job Journal Line";
         LineNo: Integer;
         ReqLines: Record "Store Requisition Line New";
-        PostJob : Codeunit "Job Jnl.-Post Line";
+        PostJob: Codeunit "Job Jnl.-Post Line";
     begin
         if "Req. Type" < 3 then Error('Invalid Requisition Type');
         TestField("Final Approved", 2);
@@ -691,8 +754,8 @@ table 50031 "Store Requisition Header New"
         TestField("Document No.", '');
         TestField("Issued Captured");
         TestField("Job No.");
-        if Rec."Processed Date" = 0D then 
-                rec."Processed Date" := Today;
+        if Rec."Processed Date" = 0D then
+            rec."Processed Date" := Today;
         ReqLines.SetRange(ReqLines."Req. No.", rec."Req. No");
         ReqLines.SetFilter(ReqLines."Issued Quantity", '<>%1', 0);
         if not ReqLines.FindSet() then
@@ -705,6 +768,7 @@ table 50031 "Store Requisition Header New"
             LineNo := 0;
         if ReqLines.Findset() then
             repeat
+
                 LineNo += 10000;
                 JobJnl.Init();
                 JobJnl."Journal Template Name" := 'Job';
@@ -724,12 +788,12 @@ table 50031 "Store Requisition Header New"
                 JobJnl."Job Task No." := 'Temp';
                 JobJnl."Lock Qty" := true;
                 //JobJnl.Modify();
-                 InveSetup.GET();
-                 IF InveSetup."Auto Post Job Journal" THEN
-                   PostJob.RUN(JobJnl)
-                 ELSE
-                JobJnl.Insert();
-                
+                InventSetup.GET();
+                IF InventSetup."Auto Post Job Journal" THEN
+                    PostJob.RUN(JobJnl)
+                ELSE
+                    JobJnl.Insert();
+
                 ReqLines.Processed := true;
                 ReqLines.Modify();
             until ReqLines.Next() = 0;
@@ -796,7 +860,6 @@ table 50031 "Store Requisition Header New"
                 TransLine.Description := ReqLines."Item Description";
                 TransLine."Qty. Reqd." := ReqLines."Requested Quantity";
                 TransLine.Validate(TransLine.Quantity, ReqLines."Issued Quantity");
-
                 TransLine."Lock Line" := true;
                 TransLine.Insert();
                 ReqLines.Processed := true;
@@ -808,8 +871,8 @@ table 50031 "Store Requisition Header New"
         if UserRec.FindSet() then
             "Processed By" := UserRec."Full Name";
         Modify();
-        InveSetup.Get();
-        if InveSetup."Auto Post Transfer Req" then begin
+        InventSetup.Get();
+        if InventSetup."Auto Post Transfer Req" then begin
             Transheader.Validate(Transheader."Direct Transfer", true);
             Transheader.Modify(true);
             posttrans.Run(Transheader)
@@ -943,8 +1006,23 @@ table 50031 "Store Requisition Header New"
     end;
 
     // [Scope('OnPrem')]
-    procedure GenerateStoreOrder()
+    procedure ManualNoTest()
     begin
+        InventSetup.Get();
+        case rec."Req. Type" of
+            1:
+                NoSeriesMgt.TestManual(InventSetup."Store Req. Transfer No.");
+            2:
+                NoSeriesMgt.TestManual(InventSetup."Store Req. Invoice No.");
+            3:
+                NoSeriesMgt.TestManual(InventSetup."Store Req. Compliment No.");
+            4:
+                NoSeriesMgt.TestManual(InventSetup."Store Requisition No.");
+            5:
+                NoSeriesMgt.TestManual(InventSetup."Store Req. Add-In No.");
+            6:
+                NoSeriesMgt.TestManual(InventSetup."Store Req. Purchase No.");
+        end;
     end;
 
     local procedure UpdatePurReq()
@@ -959,7 +1037,6 @@ table 50031 "Store Requisition Header New"
             StoreLine.SetRange(StoreLine."Req. No.", "Req. No");
             if StoreLine.FindFirst() then
                 repeat
-                    ;
                     "LineNo." += 10000;
                     Purcreq.Init();
                     Purcreq.Validate(Purcreq."Req No.", StoreLine."Req. No.");

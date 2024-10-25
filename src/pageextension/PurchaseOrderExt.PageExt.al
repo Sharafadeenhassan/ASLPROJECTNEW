@@ -2,9 +2,14 @@ pageextension 50284 "Purchase Order Ext" extends "Purchase Order"
 {
     layout
     {
+        //modify(General)
+        //{
+        // Editable = Rec."Req Locked" = false;   
+       // }
         modify("No.")
         {
             Visible = true;
+            Editable = Rec."Req Locked" = false;
         }
 
         modify("Document Date")
@@ -101,6 +106,14 @@ pageextension 50284 "Purchase Order Ext" extends "Purchase Order"
         modify("Lead Time Calculation")
         {
             Visible = false;
+        }
+        modify("Vendor Invoice No.")
+        {
+            Editable = true;
+        }
+        modify("Vendor Shipment No.")
+        {
+            Editable = true;
         }
 
         //trigger OnAssistEdit()
@@ -215,6 +228,15 @@ pageextension 50284 "Purchase Order Ext" extends "Purchase Order"
             field("Your Reference"; Rec."Your Reference")
             {
                 ApplicationArea = All;
+            }
+            field("DPS No.";rec."DPS No.")
+            {
+                Importance = Additional;
+            }
+            field("Req Locked";rec."Req Locked")
+            {
+                Visible = false;
+                Importance = Additional;
             }
             // field("No. of Archived Versions"; "No. of Archived Versions")
             // {
@@ -417,4 +439,8 @@ pageextension 50284 "Purchase Order Ext" extends "Purchase Order"
     begin
         CurrPage.Update();
     end;
+
+   
+
+    
 }

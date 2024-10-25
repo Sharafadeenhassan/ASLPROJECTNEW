@@ -107,13 +107,57 @@ pageextension 50209 "pageextension50209" extends "User Setup"
             {
                 ApplicationArea = All;
             }
-            field("Allow FT Product";"Allow FT Product")
+            field("Allow FT Product"; "Allow FT Product")
             {
                 ApplicationArea = All;
             }
-            field("Allow Non FT Product";"Allow Non FT Product")
+            field("Allow Non FT Product"; "Allow Non FT Product")
             {
                 ApplicationArea = All;
+            }
+            field("FS Cashier"; "FS Cashier")
+            {
+                ApplicationArea = All;
+            }
+            field("FS Suspend Sale"; "FS Suspend Sale")
+            {
+                ApplicationArea = All;
+            }
+            field("FS Cancel Sales"; "FS Cancel Sales")
+            {
+                ApplicationArea = All;
+            }
+            field("Fish Shop Code"; "Fish Shop Code")
+            {
+                ApplicationArea = All;
+            }
+            field("Fish Shop Terminal"; "Fish Shop Terminal")
+            {
+                ApplicationArea = All;
+            }
+            field(StoreKeeper; rec.StoreKeeper)
+            {
+                ApplicationArea = all;
+            }
+            field("Allow DPS Security Check"; rec."Allow DPS Security Check")
+            {
+                ApplicationArea = All;
+            }
+            field("Allow DPS Store Process"; rec."Allow DPS Store Process")
+            {
+                ApplicationArea = All;
+            }
+            field("Allowed DPS QC Check"; "Allowed DPS QC Check")
+            {
+                ApplicationArea = All;
+            }
+            field("Global Dimension 2 Code"; Rec."Global Dimension 2 Code")
+            {
+                ApplicationArea = all;
+            }
+            field("Shortcut Dimension 1 Code"; Rec."Shortcut Dimension 1 Code")
+            {
+                ApplicationArea = all;
             }
         }
     }

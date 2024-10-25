@@ -13,12 +13,14 @@ page 50125 "DPS Waiting For Approval"
                             "Send For Approval" = CONST(true),
                             Approved = CONST(false));
     Caption = 'DPS Waiting For Approval';
+    
     layout
     {
         area(content)
         {
             repeater(Group)
             {
+                Editable = false;
                 field("DPS No."; Rec."DPS No.")
                 {
                     ApplicationArea = All;
@@ -31,23 +33,15 @@ page 50125 "DPS Waiting For Approval"
                 {
                     ApplicationArea = All;
                 }
-                field("Item Filter"; Rec."Item Filter")
+                field("Send For Approval"; Rec."Send For Approval")
                 {
                     ApplicationArea = All;
                 }
-                field("Inventory Group Filter"; Rec."Inventory Group Filter")
+                field("Send For Approval By"; Rec."Send For Approval By")
                 {
                     ApplicationArea = All;
                 }
-                field("Gen. Product Posting Group"; Rec."Gen. Product Posting Group")
-                {
-                    ApplicationArea = All;
-                }
-                field("Maxmum Order Period"; Rec."Maxmum Order Period")
-                {
-                    ApplicationArea = All;
-                }
-                field("Surggest Items"; Rec."Surggest Items")
+                field(Approved; Rec.Approved)
                 {
                     ApplicationArea = All;
                 }
@@ -67,26 +61,7 @@ page 50125 "DPS Waiting For Approval"
                 {
                     ApplicationArea = All;
                 }
-                field("Update Record"; Rec."Update Record")
-                {
-                    ApplicationArea = All;
-                }
-                field("Location Filter"; Rec."Location Filter")
-                {
-                    ApplicationArea = All;
-                }
-                field("Send For Approval"; Rec."Send For Approval")
-                {
-                    ApplicationArea = All;
-                }
-                field("Send For Approval By"; Rec."Send For Approval By")
-                {
-                    ApplicationArea = All;
-                }
-                field(Approved; Rec.Approved)
-                {
-                    ApplicationArea = All;
-                }
+
             }
         }
     }

@@ -8,6 +8,7 @@
         <ConnectString />
       </ConnectionProperties>
       <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>15aa2fba-b5e8-44eb-b14f-a3d9e537572c</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <ReportSections>
@@ -21,19 +22,19 @@
                   <Width>0.39583in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.71875in</Width>
+                  <Width>0.50208in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.70833in</Width>
+                  <Width>0.65833in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.76042in</Width>
+                  <Width>0.54792in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>1in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.73958in</Width>
+                  <Width>0.58125in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>1in</Width>
@@ -51,7 +52,7 @@
                   <Width>0.69792in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.69792in</Width>
+                  <Width>0.43959in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>0.80208in</Width>
@@ -75,6 +76,7 @@
                                 <TextRun>
                                   <Value>SNO</Value>
                                   <Style>
+                                    <FontFamily>Times New Roman</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -107,6 +109,7 @@
                                 <TextRun>
                                   <Value>Req No</Value>
                                   <Style>
+                                    <FontFamily>Times New Roman</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -139,6 +142,7 @@
                                 <TextRun>
                                   <Value>Location</Value>
                                   <Style>
+                                    <FontFamily>Times New Roman</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -171,6 +175,7 @@
                                 <TextRun>
                                   <Value>Item No</Value>
                                   <Style>
+                                    <FontFamily>Times New Roman</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -203,6 +208,7 @@
                                 <TextRun>
                                   <Value>Description</Value>
                                   <Style>
+                                    <FontFamily>Times New Roman</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -235,6 +241,7 @@
                                 <TextRun>
                                   <Value>Quantity</Value>
                                   <Style>
+                                    <FontFamily>Times New Roman</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -267,6 +274,7 @@
                                 <TextRun>
                                   <Value>Requseted by Name</Value>
                                   <Style>
+                                    <FontFamily>Times New Roman</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -297,8 +305,9 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Supplyer</Value>
+                                  <Value>Supplier</Value>
                                   <Style>
+                                    <FontFamily>Times New Roman</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -331,6 +340,7 @@
                                 <TextRun>
                                   <Value>Security Check Qty</Value>
                                   <Style>
+                                    <FontFamily>Times New Roman</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -363,6 +373,7 @@
                                 <TextRun>
                                   <Value>Security Name</Value>
                                   <Style>
+                                    <FontFamily>Times New Roman</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -395,6 +406,7 @@
                                 <TextRun>
                                   <Value>Security Check Time</Value>
                                   <Style>
+                                    <FontFamily>Times New Roman</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -427,6 +439,7 @@
                                 <TextRun>
                                   <Value>Qcc Check Qty</Value>
                                   <Style>
+                                    <FontFamily>Times New Roman</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -459,6 +472,7 @@
                                 <TextRun>
                                   <Value>Qcc Check by Name</Value>
                                   <Style>
+                                    <FontFamily>Times New Roman</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -743,14 +757,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Supplyer">
+                        <Textbox Name="Supplier">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Supplyer.Value</Value>
+                                  <Value>=Fields!Supplier.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -759,7 +773,7 @@
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Supplyer</rd:DefaultName>
+                          <rd:DefaultName>Supplier</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -1002,9 +1016,9 @@
             </TablixRowHierarchy>
             <DataSetName>DataSet_Result</DataSetName>
             <Top>0.02778in</Top>
-            <Left>0.04042in</Left>
+            <Left>0.04237in</Left>
             <Height>0.64584in</Height>
-            <Width>10.55332in</Width>
+            <Width>9.65749in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1015,10 +1029,10 @@
         <Height>0.67362in</Height>
         <Style />
       </Body>
-      <Width>10.59374in</Width>
+      <Width>9.69986in</Width>
       <Page>
         <PageHeader>
-          <Height>0.78125in</Height>
+          <Height>1.15625in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -1031,7 +1045,8 @@
                     <TextRun>
                       <Value>=Globals!ExecutionTime</Value>
                       <Style>
-                        <FontSize>8pt</FontSize>
+                        <FontFamily>Times New Roman</FontFamily>
+                        <FontSize>6pt</FontSize>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -1040,9 +1055,9 @@
               </Paragraphs>
               <rd:DefaultName>ExecutionTime</rd:DefaultName>
               <Top>0.07167in</Top>
-              <Left>6.23833in</Left>
+              <Left>6.09028in</Left>
               <Height>0.25in</Height>
-              <Width>1in</Width>
+              <Width>1.125in</Width>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1062,7 +1077,8 @@
                     <TextRun>
                       <Value>=Globals!OverallTotalPages</Value>
                       <Style>
-                        <FontSize>8pt</FontSize>
+                        <FontFamily>Times New Roman</FontFamily>
+                        <FontSize>6pt</FontSize>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -1071,9 +1087,9 @@
               </Paragraphs>
               <rd:DefaultName>OverallTotalPages</rd:DefaultName>
               <Top>0.07167in</Top>
-              <Left>7.55083in</Left>
+              <Left>7.40278in</Left>
               <Height>0.25in</Height>
-              <Width>1in</Width>
+              <Width>0.85833in</Width>
               <ZIndex>1</ZIndex>
               <Style>
                 <Border>
@@ -1094,7 +1110,8 @@
                     <TextRun>
                       <Value>=User!UserID</Value>
                       <Style>
-                        <FontSize>8pt</FontSize>
+                        <FontFamily>Times New Roman</FontFamily>
+                        <FontSize>6pt</FontSize>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -1103,9 +1120,9 @@
               </Paragraphs>
               <rd:DefaultName>Textbox116</rd:DefaultName>
               <Top>0.07167in</Top>
-              <Left>8.83208in</Left>
+              <Left>8.40903in</Left>
               <Height>0.25in</Height>
-              <Width>1in</Width>
+              <Width>1.16667in</Width>
               <ZIndex>2</ZIndex>
               <Style>
                 <Border>
@@ -1126,7 +1143,8 @@
                     <TextRun>
                       <Value>Atlantic Shrimpers Limited</Value>
                       <Style>
-                        <FontSize>16pt</FontSize>
+                        <FontFamily>Times New Roman</FontFamily>
+                        <FontSize>12pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
                     </TextRun>
@@ -1136,7 +1154,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox117</rd:DefaultName>
               <Top>0.03in</Top>
-              <Left>0.13417in</Left>
+              <Left>0.01112in</Left>
               <Height>0.29292in</Height>
               <Width>4.73958in</Width>
               <ZIndex>3</ZIndex>
@@ -1159,7 +1177,8 @@
                     <TextRun>
                       <Value>Purchase Request Status List</Value>
                       <Style>
-                        <FontSize>14pt</FontSize>
+                        <FontFamily>Times New Roman</FontFamily>
+                        <FontSize>12pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
                     </TextRun>
@@ -1171,14 +1190,81 @@
               </Paragraphs>
               <rd:DefaultName>Textbox112</rd:DefaultName>
               <Top>0.36458in</Top>
+              <Left>0.00495cm</Left>
               <Height>0.25in</Height>
-              <Width>10.19791in</Width>
+              <Width>9.69791in</Width>
               <ZIndex>4</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
                 </Border>
                 <VerticalAlign>Middle</VerticalAlign>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="FilterTest">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=First(Fields!FilterTest.Value, "DataSet_Result")</Value>
+                      <Style>
+                        <FontFamily>Times New Roman</FontFamily>
+                        <FontSize>6pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>FilterTest</rd:DefaultName>
+              <Top>0.93402in</Top>
+              <Left>1.06944in</Left>
+              <Height>0.22222in</Height>
+              <Width>8.63041in</Width>
+              <ZIndex>5</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox6">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Filters:</Value>
+                      <Style>
+                        <FontFamily>Times New Roman</FontFamily>
+                        <FontSize>7pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox6</rd:DefaultName>
+              <Top>0.65625in</Top>
+              <Left>0in</Left>
+              <Height>0.25in</Height>
+              <Width>1in</Width>
+              <ZIndex>6</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
                 <PaddingLeft>2pt</PaddingLeft>
                 <PaddingRight>2pt</PaddingRight>
                 <PaddingTop>2pt</PaddingTop>
@@ -1192,6 +1278,12 @@
             </Border>
           </Style>
         </PageHeader>
+        <PageHeight>8.5in</PageHeight>
+        <PageWidth>11in</PageWidth>
+        <LeftMargin>0in</LeftMargin>
+        <RightMargin>0in</RightMargin>
+        <TopMargin>0in</TopMargin>
+        <BottomMargin>0in</BottomMargin>
         <Style />
       </Page>
     </ReportSection>
@@ -1234,6 +1326,7 @@ End Function
   <Language>=User!Language</Language>
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>09f28e38-9fff-4323-b692-5781e57164a6</rd:ReportID>
   <DataSets>
     <DataSet Name="DataSet_Result">
       <Fields>
@@ -1258,8 +1351,8 @@ End Function
         <Field Name="RequsetedbyName">
           <DataField>RequsetedbyName</DataField>
         </Field>
-        <Field Name="Supplyer">
-          <DataField>Supplyer</DataField>
+        <Field Name="Supplier">
+          <DataField>Supplier</DataField>
         </Field>
         <Field Name="SecCheQty">
           <DataField>SecCheQty</DataField>
@@ -1314,6 +1407,9 @@ End Function
         </Field>
         <Field Name="SNO">
           <DataField>SNO</DataField>
+        </Field>
+        <Field Name="FilterTest">
+          <DataField>FilterTest</DataField>
         </Field>
       </Fields>
       <Query>

@@ -24,9 +24,14 @@ tableextension 50307 "Value Entry Ext" extends "Value Entry"
             OptionCaption = ' ,Short Voyage ';
             OptionMembers = " ","Short Voyage ";
         }
-        field(50356;MADJ;Boolean)
+        field(50356; MADJ; Boolean)
         {
 
+        }
+        field(50366; "DPS No."; Code[20])
+        {
+            TableRelation = "Purchase Requisition1"."Req No.";
+            Editable = false;
         }
     }
 
@@ -54,9 +59,9 @@ tableextension 50307 "Value Entry Ext" extends "Value Entry"
         key(ASLKey6; "External Document No.")
         {
         }
-        key(ASLKey7; "Posting Date","Location Code","Inventory Posting Group","External Document No.")
+        key(ASLKey7; "Posting Date", "Location Code", "Inventory Posting Group", "External Document No.")
         {
-            Enabled = true; 
+            Enabled = true;
             SumIndexFields = "Valued Quantity";
         }
         key(ASLKey8; "Gen. Prod. Posting Group", "Document No.")
@@ -68,7 +73,7 @@ tableextension 50307 "Value Entry Ext" extends "Value Entry"
             Enabled = true;
             SumIndexFields = "Valued Quantity", "Cost Amount (Actual)";
         }
-        key(ASLKey11; "Item No.","Item Ledger Entry Type",Adjustment)
+        key(ASLKey11; "Item No.", "Item Ledger Entry Type", Adjustment)
         {
             Enabled = true;
         }

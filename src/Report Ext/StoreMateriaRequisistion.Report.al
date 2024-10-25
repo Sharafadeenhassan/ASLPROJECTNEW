@@ -1,8 +1,8 @@
-report 50094 "Store Materia Requisistion"
+report 50094 "Store Materia Requisition"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = './src/reportrdlc/StoreMateriaRequisistion.rdlc';
-    Caption = 'Store Materia Requisistion';
+    RDLCLayout = './src/reportrdlc/StoreMateriaRequisition.rdlc';
+    Caption = 'Store Materia Requisition';
     dataset
     {
         dataitem("Store Requisition Header New"; "Store Requisition Header New")

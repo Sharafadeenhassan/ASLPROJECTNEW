@@ -149,6 +149,11 @@ tableextension 50212 "tableextension50212" extends "Purch. Inv. Header"
         field(50360; "Original Purc. Order No."; Code[20])
         {
         }
+         field(50366;"DPS No.";Code[20])
+        {
+            TableRelation = "Purchase Requisition1"."Req No.";
+            Editable = false;
+        }
         field(50380; "Form M Submitted No."; Code[15])
         {
         }

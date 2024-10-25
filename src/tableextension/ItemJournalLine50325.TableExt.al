@@ -274,6 +274,11 @@ tableextension 50325 "Item Journal Line Ext" extends "Item Journal Line"
             OptionCaption = ' ,Short Voyage ';
             OptionMembers = " ","Short Voyage ";
         }
+         field(50366;"DPS No.";Code[20])
+        {
+            TableRelation = "Purchase Requisition1"."Req No.";
+            Editable = false;
+        }
         field(50405; "CRM / STR"; Decimal)
         {
             CalcFormula = Sum("Item Ledger Entry".Quantity WHERE("Item No." = FIELD("Item No."),

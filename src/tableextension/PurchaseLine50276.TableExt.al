@@ -234,6 +234,19 @@ tableextension 50276 "tableextension50276" extends "Purchase Line"
                 Validate("Indirect Cost %", "ASL Indirect Cost %")
             end;
         }
+        field(50366;"DPS No.";Code[20])
+        {
+            TableRelation = "Purchase Requisition1"."Req No.";
+            Editable = false;
+        }
+        field(50367;"DPS Line No";Integer)
+        {
+            TableRelation = "Dynamics Procurement Register"."Line No." where("DPS Code" = field("DPS No."));
+            Editable = false;
+        }
+        field(50368;"Req Locked";Boolean)
+        {
+        }
     }
 
     //Unsupported feature: Code Modification on "OnModify".
@@ -330,13 +343,32 @@ tableextension 50276 "tableextension50276" extends "Purchase Line"
 
     var
         UnitOfMeasure: Record "Unit of Measure";
+        
 
     trigger OnInsert()
-    begin
+    begin        
     end;
+trigger OnBeforeInsert()
+var HeadRec: Record "Purchase Header";
+begin
+if HeadRec.get(Rec."Document Type",rec."Document No.") then
+    if HeadRec."Req Locked" then error('Purchase Order is Locked: You Can Not Insert New Line');
+End;
 
+trigger OnAfterModify()
+begin
+    if rec."Req Locked" then begin
+        if "No." <> xRec."No." then Error('Locked PO cannot be changed');
+        if rec.Description <> xRec.Description then Error('Locked PO cannot be changed');
+        if rec.Quantity <> xRec.Quantity then Error('Locked PO cannot be changed');
+    end;
+end;
     trigger OnModify()
+    begin        
+    end;
+    trigger OnBeforeDelete()
     begin
+        if rec."Req Locked" then Error('Locked PO Cannot be Deleted');
     end;
 
     trigger OnDelete()

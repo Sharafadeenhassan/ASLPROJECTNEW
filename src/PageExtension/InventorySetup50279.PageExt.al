@@ -14,6 +14,26 @@ pageextension 50279 "pageextension50279" extends "Inventory Setup"
                 {
                     ApplicationArea = All;
                 }
+                field("Store Req. Add-In No.";"Store Req. Add-In No.")
+                {
+                    ApplicationArea = All;
+                }
+                field("Store Req. Compliment No.";"Store Req. Compliment No.")
+                {
+                    ApplicationArea = All;                    
+                }
+                field("Store Req. Invoice No.";"Store Req. Invoice No.")
+                {
+                    ApplicationArea = All;
+                }
+                field("Store Req. Purchase No.";"Store Req. Purchase No.")
+                {
+                    ApplicationArea = All;
+                }
+                field("Store Req. Transfer No.";"Store Req. Transfer No.")
+                {
+                    ApplicationArea= All;
+                }
                 field("Auto Post Issue Req"; Rec."Auto Post Issue Req")
                 {
                     ApplicationArea = All;

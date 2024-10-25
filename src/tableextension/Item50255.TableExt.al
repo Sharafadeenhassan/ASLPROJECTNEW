@@ -2,75 +2,6 @@ tableextension 50255 "tableextension50255" extends Item
 {
     fields
     {
-        //Unsupported feature: Property Insertion (InitValue) on ""Costing Method"(Field 21)".
-
-        //Unsupported feature: Property Modification (MinValue) on ""Indirect Cost %"(Field 28)".
-
-        //Unsupported feature: Property Modification (CalcFormula) on ""Transferred (Qty.)"(Field 93)".
-
-        //Unsupported feature: Property Modification (Editable) on ""Transferred (Qty.)"(Field 93)".
-
-        //Unsupported feature: Property Insertion (ValidateTableRelation) on ""Product Group Code"(Field 5704)".
-
-        //Unsupported feature: Property Insertion (Enabled) on ""Substitutes Exist"(Field 5706)".
-
-        //Unsupported feature: Property Insertion (Enabled) on ""Service Item Group"(Field 5900)".
-
-        //Unsupported feature: Property Insertion (Enabled) on ""Qty. on Service Order"(Field 5901)".
-
-        //Unsupported feature: Property Insertion (Enabled) on ""Planning Issues (Qty.)"(Field 99000761)".
-
-        //Unsupported feature: Property Insertion (Enabled) on ""Prod. Forecast Quantity (Base)"(Field 99000774)".
-
-        //Unsupported feature: Code Insertion on ""Reorder Quantity"(Field 36)".
-
-        //trigger OnValidate()
-        //Parameters and return type have not been exported.
-        //begin
-        /*
-
-        if "Order Multiple" <>0 then Modus:="Reorder Quantity"/"Order Multiple";
-        if Modus>Round(Modus, 0.001, '<') then
-        Message('The entry in not a multiple of order multiple');
-        */
-        //end;
-
-        //Unsupported feature: Property Deletion (CaptionML) on "Inventory(Field 68)".
-
-        //Unsupported feature: Code Insertion on ""Order Multiple"(Field 5414)".
-
-        //trigger OnValidate()
-        //Parameters and return type have not been exported.
-        //begin
-        /*
-
-        if "Order Multiple" <>0 then Modus:="Reorder Quantity"/"Order Multiple";
-        if Modus>Round(Modus, 0.001, '<') then
-        Message('The entry in not a factor of reorder quatity');
-        */
-        //end;
-
-        //Unsupported feature: Code Modification on ""Item Category Code"(Field 5702).OnValidate".
-
-        //trigger OnValidate()
-        //Parameters and return type have not been exported.
-        //>>>> ORIGINAL CODE:
-        //begin
-        /*
-        if not IsTemporary then
-          ItemAttributeManagement.InheritAttributesFromItemCategory(Rec,"Item Category Code",xRec."Item Category Code");
-        UpdateItemCategoryId;
-        */
-        //end;
-        //>>>> MODIFIED CODE:
-        //begin
-        /*
-        #1..3
-        // AAA - JUNE 24
-        if "Item Category Code"<>'' then  ItCat.Get("Item Category Code");
-        "Item Category No.":=ItCat."No.";
-        */
-        //end;
         Field(50003; "ASL Indirect Cost %"; integer)
         {
             Caption = 'ASL Indirect Cost %';
@@ -95,6 +26,10 @@ tableextension 50255 "tableextension50255" extends Item
         field(50099; "Monthly Consumption"; Decimal)
         {
             DecimalPlaces = 0 : 5;
+        }
+        field(50100;"Average Consumption Base";Option)
+        {
+            OptionMembers = " ","1M","3M","6M","1Y","2Y","3Y","4Y","5Y";
         }
         field(50293; "Transferred (Qty.) From Loc"; Decimal)
         {
@@ -188,7 +123,7 @@ tableextension 50255 "tableextension50255" extends Item
         }
         field(50326; "VSupplimentary Qty"; Decimal)
         {
-            Description = 'Additional Quatity supplied on the Order X';
+            Description = 'Additional Quantity supplied on the Order X';
             Editable = false;
         }
         field(50327; "VOrdered Qty"; Decimal)
@@ -296,6 +231,16 @@ tableextension 50255 "tableextension50255" extends Item
             CalcFormula = Sum("Store Requisition Line New"."Approved Quantity" WHERE("Item No." = FIELD("No."),
                                                                                       "Store Location" = FIELD("Location Filter"),
                                                                                       "Final Approval" = CONST(Approved),
+                                                                                      Processed = CONST(false),
+                                                                                      "Req. Type" = FILTER(Issue | Complementary | Invoice | Transfer),
+                                                                                      Rejected = CONST(false)));
+            Editable = false;
+            FieldClass = FlowField;
+        }
+        field(50526; "MR Req Qty"; Decimal)
+        {
+            CalcFormula = Sum("Store Requisition Line New"."Approved Quantity" WHERE("Item No." = FIELD("No."),
+                                                                                      "Store Location" = FIELD("Location Filter"),
                                                                                       Processed = CONST(false),
                                                                                       "Req. Type" = FILTER(Issue | Complementary | Invoice | Transfer),
                                                                                       Rejected = CONST(false)));

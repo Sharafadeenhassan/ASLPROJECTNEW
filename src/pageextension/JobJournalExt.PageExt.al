@@ -28,6 +28,10 @@ pageextension 50242 "Job Journal Ext" extends "Job Journal"
             {
                 ApplicationArea = all;
             }
+            field("Task Code";"Task Code")
+            {
+                ApplicationArea = All;
+            }
         }
         addafter(Quantity)
         {
@@ -442,12 +446,3 @@ pageextension 50242 "Job Journal Ext" extends "Job Journal"
         if Rec."Lock Qty" then Error('You Can Not Delete Line Generated from Requisition');
     end;
 }
-
-//to be resolved
-#pragma warning disable AL0275 // TODO - To be Reviewed
-//***P modify(ShortcutDimCode3)
-#pragma warning restore AL0275 // TODO - To be Reviewed
-//***P  {
-///***p Visible = false;
-//***P}
-//Unsupported feature: Property Modification (ImplicitType) on "CurrentJnlBatchName(Control 78)".

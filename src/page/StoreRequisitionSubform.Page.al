@@ -3,6 +3,8 @@ page 50060 "Store Requisition Subform"
     PageType = ListPart;
     SourceTable = "Store Requisition Line New";
     Caption = 'Store Requisition Subform';
+    DelayedInsert = true;
+    AutoSplitKey = true;
     layout
     {
         area(content)
@@ -136,7 +138,7 @@ page 50060 "Store Requisition Subform"
                         REPORT.RunModal(704, true, false, ReqRec);
                 end;
             }
-            action("Bin Card To Lacation")
+            action("Bin Card To Location")
             {
                 ApplicationArea = All;
 
@@ -155,4 +157,10 @@ page 50060 "Store Requisition Subform"
     var
         ReqRec: Record Item;
         StoreHead: Record "Store Requisition Header New";
+/*
+    trigger OnNewRecord();
+    begin
+        Rec."Store Location" := xRec."Store Location";
+    end;
+    */
 }

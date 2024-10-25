@@ -119,36 +119,48 @@ pageextension 50258 "pageextension50258" extends "Recurring Job Jnl."
 
         addafter("Account Name")
         {
-            group("Shrimp Points")
+            grid("Catch Summary")
             {
-                Caption = 'Shrimp Points';
-                field(Control9; Rec."Shrimp Points")
+                Caption = 'Catch Summary';
+                GridLayout = Columns;
+                group("Shrimps")
                 {
-                    ApplicationArea = All;
+                    field("Shrimp Points"; Rec."Shrimp Points")
+                    {
+                        Caption = 'Shrimp Points';
+                        ApplicationArea = All;
+                    }
+                    field("Shrimp Total"; rec."Shrimp Total")
+                    {
+                        ApplicationArea = All;
+                    }
                 }
-            }
-            group("Fish Points")
-            {
-                Caption = 'Fish Points';
-                field(Control13; Rec."Fish Points")
+                group("Fish")
                 {
-                    ApplicationArea = All;
+
+                    field("Fish Points"; Rec."Fish Points")
+                    {
+                        ApplicationArea = All;
+                        Caption = 'Fish Points';
+                    }
+                    field("Fish Total"; rec."Fish Total")
+                    {
+                        ApplicationArea = all;
+                    }
                 }
-            }
-            group("Catch Points")
-            {
-                Caption = 'Catch Points';
-                field(Control17; Rec."Catch Points")
+                group("Catches")
                 {
-                    ApplicationArea = All;
-                }
-            }
-            group("Catch Total")
-            {
-                Caption = 'Catch Total';
-                field(Control21; Rec."Catch Total")
-                {
-                    ApplicationArea = All;
+                    field("Catch Points"; Rec."Catch Points")
+                    {
+                        ApplicationArea = All;
+                        Caption = 'Catch Points';
+                    }
+                    field("Catch Total"; Rec."Catch Total")
+                    {
+                        ApplicationArea = All;
+                        Caption = 'Catch Total';
+                    }
+
                 }
             }
         }

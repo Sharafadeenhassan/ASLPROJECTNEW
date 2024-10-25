@@ -123,7 +123,7 @@ codeunit 50017 "ItemJnlPostBatchSubscriber"
             FAJnlBatch.Init();
             FAJnlBatch."Journal Template Name" := InventSU."FA Maintenance Template";
             FAJnlBatch.Name := ItemJL."Journal Batch Name";
-            FAJnlBatch.Description := 'Inventory Tranfer to Fixed Asset';
+            FAJnlBatch.Description := 'Inventory Transfer to Fixed Asset';
             FAJnlBatch.Insert();
         end;
 

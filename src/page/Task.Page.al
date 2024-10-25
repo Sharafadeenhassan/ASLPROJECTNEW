@@ -3,6 +3,8 @@ page 50054 "Task"
     PageType = List;
     SourceTable = Task;
     Caption = 'Task';
+    UsageCategory = Lists;
+    ApplicationArea = All;
     layout
     {
         area(content)

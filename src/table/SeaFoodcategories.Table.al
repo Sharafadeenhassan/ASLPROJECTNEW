@@ -1,7 +1,7 @@
 table 50033 "Sea Food categories"
 {
-    LookupPageID = "Sea Food Categories";
-    DrillDownPageId = "Sea Food Categories";
+    LookupPageID = "Sea Food Categories list";
+    DrillDownPageId = "Sea Food Categories List";
     Caption = 'Sea Food categories';
     fields
     {

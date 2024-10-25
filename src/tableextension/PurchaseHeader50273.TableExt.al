@@ -531,6 +531,14 @@ tableextension 50273 "tableextension50273" extends "Purchase Header"
             OptionCaption = ' ,Local,Foreign';
             OptionMembers = " ","Local",Foreign;
         }
+        field(50506;"DPS No.";Code[20])
+        {
+            TableRelation = "Dynamics Procurement Header"."DPS No.";
+            Editable = false;
+        }
+        field(50507;"Req Locked";Boolean)
+        {
+        }
     }
 
     //Unsupported feature: Code Modification on "OnDelete".
@@ -739,4 +747,12 @@ tableextension 50273 "tableextension50273" extends "Purchase Header"
     begin
         PurchPost.OnAfterPostPurchaseDoc(Rec, GenJnlPostLine, PurchRcpHdrNo, RetShptHdrNo, PurchInvHdrNo, PurchCrMemoHdrNo, false);
     end;
+
+   /* trigger OnBeforeModify()
+    begin
+        TestField("DPS No.",'');
+        if Rec."Req Locked" then error('Purchase Cannot be modified,because it is DPS locked');
+    end;
+    */
 }
+

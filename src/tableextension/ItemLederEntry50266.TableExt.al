@@ -37,6 +37,11 @@ tableextension 50266 "Item Ledger entry Ext" extends "Item Ledger Entry"
             OptionCaption = ' ,Short Voyage ';
             OptionMembers = " ","Short Voyage ";
         }
+         field(50366;"DPS No.";Code[20])
+        {
+            TableRelation = "Purchase Requisition1"."Req No.";
+            Editable = false;
+        }
     }
     keys
     {

@@ -1,7 +1,7 @@
 report 50099 "Voyage Narration"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = './src/reportrdlc/VoyageNarration.rdlc';
+    RDLCLayout = './src/reportrdlc/VoyageNarration.rdl';
     Caption = 'Voyage Narration';
     UsageCategory = ReportsAndAnalysis;
     ApplicationArea = All, Basic, Suite;
@@ -88,6 +88,9 @@ report 50099 "Voyage Narration"
                 }
                 column(Comment_Line_Comment; Comment)
                 {
+                }
+                column(ASLComment;"Comment Temp")
+                {                    
                 }
                 column(Comment_Line_DateCaption; FieldCaption(Date))
                 {

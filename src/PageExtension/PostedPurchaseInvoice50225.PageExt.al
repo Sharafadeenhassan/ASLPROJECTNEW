@@ -2,6 +2,14 @@ pageextension 50225 "pageextension50225" extends "Posted Purchase Invoice"
 {
     layout
     {
-        //Unsupported feature: Property Modification (ImplicitType) on ""Ship-to City"(Control 44)".
+        addafter("No.")
+        {
+            field("Your Reference"; rec."Your Reference")
+            {
+                ApplicationArea = all;
+            }
+
+            //Unsupported feature: Property Modification (ImplicitType) on ""Ship-to City"(Control 44)".
+        }
     }
 }

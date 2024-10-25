@@ -3,6 +3,8 @@ report 50019 "Purchase Register(LCY)"
     DefaultLayout = RDLC;
     RDLCLayout = './src/reportrdlc/PurchaseRegisterLCY.rdlc';
     Caption = 'Purchase Register(LCY)';
+    UsageCategory = Lists;
+    ApplicationArea = All;
     dataset
     {
         dataitem("Purch. Inv. Header"; "Purch. Inv. Header")

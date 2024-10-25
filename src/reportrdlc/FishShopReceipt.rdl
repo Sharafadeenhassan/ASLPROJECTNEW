@@ -11,160 +11,6 @@
       <rd:DataSourceID>eb8fae89-3c15-4407-958e-3b8430a73d82</rd:DataSourceID>
     </DataSource>
   </DataSources>
-  <DataSets>
-    <DataSet Name="DataSet_Result">
-      <Query>
-        <DataSourceName>DataSource</DataSourceName>
-        <CommandText />
-      </Query>
-      <Fields>
-        <Field Name="Sales_Header_Document_Type">
-          <DataField>Sales_Header_Document_Type</DataField>
-        </Field>
-        <Field Name="Sales_Header_No_">
-          <DataField>Sales_Header_No_</DataField>
-        </Field>
-        <Field Name="Bill_to_Customer_No_">
-          <DataField>Bill_to_Customer_No_</DataField>
-        </Field>
-        <Field Name="Bill_to_Address">
-          <DataField>Bill_to_Address</DataField>
-        </Field>
-        <Field Name="Bill_to_City">
-          <DataField>Bill_to_City</DataField>
-        </Field>
-        <Field Name="Payment_Terms_Code">
-          <DataField>Payment_Terms_Code</DataField>
-        </Field>
-        <Field Name="ItemCount">
-          <DataField>ItemCount</DataField>
-        </Field>
-        <Field Name="STRSUBSTNO_Text004_CopyText_">
-          <DataField>STRSUBSTNO_Text004_CopyText_</DataField>
-        </Field>
-        <Field Name="PageLoop_Number">
-          <DataField>PageLoop_Number</DataField>
-        </Field>
-        <Field Name="SalesLine__Line_Amount_">
-          <DataField>SalesLine__Line_Amount_</DataField>
-        </Field>
-        <Field Name="SalesLine__Line_Amount_Format">
-          <DataField>SalesLine__Line_Amount_Format</DataField>
-        </Field>
-        <Field Name="Sales_Line__Description">
-          <DataField>Sales_Line__Description</DataField>
-        </Field>
-        <Field Name="Sales_Line__Description_Control63">
-          <DataField>Sales_Line__Description_Control63</DataField>
-        </Field>
-        <Field Name="Sales_Line__Quantity">
-          <DataField>Sales_Line__Quantity</DataField>
-        </Field>
-        <Field Name="Sales_Line__QuantityFormat">
-          <DataField>Sales_Line__QuantityFormat</DataField>
-        </Field>
-        <Field Name="Sales_Line___Unit_Price_">
-          <DataField>Sales_Line___Unit_Price_</DataField>
-        </Field>
-        <Field Name="Sales_Line___Unit_Price_Format">
-          <DataField>Sales_Line___Unit_Price_Format</DataField>
-        </Field>
-        <Field Name="Sales_Line___Line_Amount_">
-          <DataField>Sales_Line___Line_Amount_</DataField>
-        </Field>
-        <Field Name="Sales_Line___Line_Amount_Format">
-          <DataField>Sales_Line___Line_Amount_Format</DataField>
-        </Field>
-        <Field Name="SalesLine__Line_Amount__Control84">
-          <DataField>SalesLine__Line_Amount__Control84</DataField>
-        </Field>
-        <Field Name="SalesLine__Line_Amount__Control84Format">
-          <DataField>SalesLine__Line_Amount__Control84Format</DataField>
-        </Field>
-        <Field Name="SalesLine__Inv__Discount_Amount_">
-          <DataField>SalesLine__Inv__Discount_Amount_</DataField>
-        </Field>
-        <Field Name="SalesLine__Inv__Discount_Amount_Format">
-          <DataField>SalesLine__Inv__Discount_Amount_Format</DataField>
-        </Field>
-        <Field Name="SalesLine__Line_Amount__Control70">
-          <DataField>SalesLine__Line_Amount__Control70</DataField>
-        </Field>
-        <Field Name="SalesLine__Line_Amount__Control70Format">
-          <DataField>SalesLine__Line_Amount__Control70Format</DataField>
-        </Field>
-        <Field Name="TotalText">
-          <DataField>TotalText</DataField>
-        </Field>
-        <Field Name="SalesLine__Line_Amount__SalesLine__Inv__Discount_Amount_">
-          <DataField>SalesLine__Line_Amount__SalesLine__Inv__Discount_Amount_</DataField>
-        </Field>
-        <Field Name="SalesLine__Line_Amount__SalesLine__Inv__Discount_Amount_Format">
-          <DataField>SalesLine__Line_Amount__SalesLine__Inv__Discount_Amount_Format</DataField>
-        </Field>
-        <Field Name="SNo">
-          <DataField>SNo</DataField>
-        </Field>
-        <Field Name="Rate_kg">
-          <DataField>Rate_kg</DataField>
-        </Field>
-        <Field Name="Rate_kgFormat">
-          <DataField>Rate_kgFormat</DataField>
-        </Field>
-        <Field Name="Text502">
-          <DataField>Text502</DataField>
-        </Field>
-        <Field Name="Text503">
-          <DataField>Text503</DataField>
-        </Field>
-        <Field Name="CompanyAddr_1_">
-          <DataField>CompanyAddr_1_</DataField>
-        </Field>
-        <Field Name="Text504">
-          <DataField>Text504</DataField>
-        </Field>
-        <Field Name="Sales_Line__Description_Control63Caption">
-          <DataField>Sales_Line__Description_Control63Caption</DataField>
-        </Field>
-        <Field Name="Sales_Line__QuantityCaption">
-          <DataField>Sales_Line__QuantityCaption</DataField>
-        </Field>
-        <Field Name="AmountCaption">
-          <DataField>AmountCaption</DataField>
-        </Field>
-        <Field Name="ContinuedCaption">
-          <DataField>ContinuedCaption</DataField>
-        </Field>
-        <Field Name="ContinuedCaption_Control83">
-          <DataField>ContinuedCaption_Control83</DataField>
-        </Field>
-        <Field Name="SalesLine__Inv__Discount_Amount_Caption">
-          <DataField>SalesLine__Inv__Discount_Amount_Caption</DataField>
-        </Field>
-        <Field Name="SubtotalCaption">
-          <DataField>SubtotalCaption</DataField>
-        </Field>
-        <Field Name="RoundLoop_Number">
-          <DataField>RoundLoop_Number</DataField>
-        </Field>
-        <Field Name="DimText">
-          <DataField>DimText</DataField>
-        </Field>
-        <Field Name="Line_DimensionsCaption">
-          <DataField>Line_DimensionsCaption</DataField>
-        </Field>
-        <Field Name="DimensionLoop2_Number">
-          <DataField>DimensionLoop2_Number</DataField>
-        </Field>
-        <Field Name="Text501">
-          <DataField>Text501</DataField>
-        </Field>
-        <Field Name="Total_Number">
-          <DataField>Total_Number</DataField>
-        </Field>
-      </Fields>
-    </DataSet>
-  </DataSets>
   <ReportSections>
     <ReportSection>
       <Body>
@@ -2229,12 +2075,6 @@
       </Page>
     </ReportSection>
   </ReportSections>
-  <ReportParametersLayout>
-    <GridLayoutDefinition>
-      <NumberOfColumns>4</NumberOfColumns>
-      <NumberOfRows>2</NumberOfRows>
-    </GridLayoutDefinition>
-  </ReportParametersLayout>
   <Code>Public Function BlankZero(ByVal Value As Decimal)
     if Value = 0 then
         Return ""
@@ -2274,4 +2114,158 @@ End Function
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
   <rd:ReportID>86139281-98c4-481d-bcfb-7c20b213a8d0</rd:ReportID>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Fields>
+        <Field Name="Sales_Header_Document_Type">
+          <DataField>Sales_Header_Document_Type</DataField>
+        </Field>
+        <Field Name="Sales_Header_No_">
+          <DataField>Sales_Header_No_</DataField>
+        </Field>
+        <Field Name="Bill_to_Customer_No_">
+          <DataField>Bill_to_Customer_No_</DataField>
+        </Field>
+        <Field Name="Bill_to_Address">
+          <DataField>Bill_to_Address</DataField>
+        </Field>
+        <Field Name="Bill_to_City">
+          <DataField>Bill_to_City</DataField>
+        </Field>
+        <Field Name="Payment_Terms_Code">
+          <DataField>Payment_Terms_Code</DataField>
+        </Field>
+        <Field Name="ItemCount">
+          <DataField>ItemCount</DataField>
+        </Field>
+        <Field Name="STRSUBSTNO_Text004_CopyText_">
+          <DataField>STRSUBSTNO_Text004_CopyText_</DataField>
+        </Field>
+        <Field Name="PageLoop_Number">
+          <DataField>PageLoop_Number</DataField>
+        </Field>
+        <Field Name="SalesLine__Line_Amount_">
+          <DataField>SalesLine__Line_Amount_</DataField>
+        </Field>
+        <Field Name="SalesLine__Line_Amount_Format">
+          <DataField>SalesLine__Line_Amount_Format</DataField>
+        </Field>
+        <Field Name="Sales_Line__Description">
+          <DataField>Sales_Line__Description</DataField>
+        </Field>
+        <Field Name="Sales_Line__Description_Control63">
+          <DataField>Sales_Line__Description_Control63</DataField>
+        </Field>
+        <Field Name="Sales_Line__Quantity">
+          <DataField>Sales_Line__Quantity</DataField>
+        </Field>
+        <Field Name="Sales_Line__QuantityFormat">
+          <DataField>Sales_Line__QuantityFormat</DataField>
+        </Field>
+        <Field Name="Sales_Line___Unit_Price_">
+          <DataField>Sales_Line___Unit_Price_</DataField>
+        </Field>
+        <Field Name="Sales_Line___Unit_Price_Format">
+          <DataField>Sales_Line___Unit_Price_Format</DataField>
+        </Field>
+        <Field Name="Sales_Line___Line_Amount_">
+          <DataField>Sales_Line___Line_Amount_</DataField>
+        </Field>
+        <Field Name="Sales_Line___Line_Amount_Format">
+          <DataField>Sales_Line___Line_Amount_Format</DataField>
+        </Field>
+        <Field Name="SalesLine__Line_Amount__Control84">
+          <DataField>SalesLine__Line_Amount__Control84</DataField>
+        </Field>
+        <Field Name="SalesLine__Line_Amount__Control84Format">
+          <DataField>SalesLine__Line_Amount__Control84Format</DataField>
+        </Field>
+        <Field Name="SalesLine__Inv__Discount_Amount_">
+          <DataField>SalesLine__Inv__Discount_Amount_</DataField>
+        </Field>
+        <Field Name="SalesLine__Inv__Discount_Amount_Format">
+          <DataField>SalesLine__Inv__Discount_Amount_Format</DataField>
+        </Field>
+        <Field Name="SalesLine__Line_Amount__Control70">
+          <DataField>SalesLine__Line_Amount__Control70</DataField>
+        </Field>
+        <Field Name="SalesLine__Line_Amount__Control70Format">
+          <DataField>SalesLine__Line_Amount__Control70Format</DataField>
+        </Field>
+        <Field Name="TotalText">
+          <DataField>TotalText</DataField>
+        </Field>
+        <Field Name="SalesLine__Line_Amount__SalesLine__Inv__Discount_Amount_">
+          <DataField>SalesLine__Line_Amount__SalesLine__Inv__Discount_Amount_</DataField>
+        </Field>
+        <Field Name="SalesLine__Line_Amount__SalesLine__Inv__Discount_Amount_Format">
+          <DataField>SalesLine__Line_Amount__SalesLine__Inv__Discount_Amount_Format</DataField>
+        </Field>
+        <Field Name="SNo">
+          <DataField>SNo</DataField>
+        </Field>
+        <Field Name="Rate_kg">
+          <DataField>Rate_kg</DataField>
+        </Field>
+        <Field Name="Rate_kgFormat">
+          <DataField>Rate_kgFormat</DataField>
+        </Field>
+        <Field Name="Text502">
+          <DataField>Text502</DataField>
+        </Field>
+        <Field Name="Text503">
+          <DataField>Text503</DataField>
+        </Field>
+        <Field Name="CompanyAddr_1_">
+          <DataField>CompanyAddr_1_</DataField>
+        </Field>
+        <Field Name="Text504">
+          <DataField>Text504</DataField>
+        </Field>
+        <Field Name="Sales_Line__Description_Control63Caption">
+          <DataField>Sales_Line__Description_Control63Caption</DataField>
+        </Field>
+        <Field Name="Sales_Line__QuantityCaption">
+          <DataField>Sales_Line__QuantityCaption</DataField>
+        </Field>
+        <Field Name="AmountCaption">
+          <DataField>AmountCaption</DataField>
+        </Field>
+        <Field Name="ContinuedCaption">
+          <DataField>ContinuedCaption</DataField>
+        </Field>
+        <Field Name="ContinuedCaption_Control83">
+          <DataField>ContinuedCaption_Control83</DataField>
+        </Field>
+        <Field Name="SalesLine__Inv__Discount_Amount_Caption">
+          <DataField>SalesLine__Inv__Discount_Amount_Caption</DataField>
+        </Field>
+        <Field Name="SubtotalCaption">
+          <DataField>SubtotalCaption</DataField>
+        </Field>
+        <Field Name="RoundLoop_Number">
+          <DataField>RoundLoop_Number</DataField>
+        </Field>
+        <Field Name="DimText">
+          <DataField>DimText</DataField>
+        </Field>
+        <Field Name="Line_DimensionsCaption">
+          <DataField>Line_DimensionsCaption</DataField>
+        </Field>
+        <Field Name="DimensionLoop2_Number">
+          <DataField>DimensionLoop2_Number</DataField>
+        </Field>
+        <Field Name="Text501">
+          <DataField>Text501</DataField>
+        </Field>
+        <Field Name="Total_Number">
+          <DataField>Total_Number</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+    </DataSet>
+  </DataSets>
 </Report>

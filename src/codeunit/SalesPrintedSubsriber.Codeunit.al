@@ -7,4 +7,6 @@ codeunit 50011 "SalesPrintedSubsriber"
     begin
         SalesHeader.Status := SalesHeader.Status::Released;
     end;
+
+
 }

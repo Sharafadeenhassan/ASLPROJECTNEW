@@ -8,6 +8,11 @@ pageextension 50228 "pageextension50228" extends "Posted Purchase Receipts"
             {
                 ApplicationArea = All;
             }
+            field("Your Reference";rec."Your Reference")
+            {
+ApplicationArea = all;
+            }
+
         }
     }
 }

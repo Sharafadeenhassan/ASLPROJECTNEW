@@ -504,7 +504,7 @@ report 50173 "Fish Shop Receipt"
         VATBaseAmount: Decimal;
         VATDiscountAmount: Decimal;
         TotalAmountInclVAT: Decimal;
-        Text501: Label 'Goods once sold cannot be taken back. Untill fully paid for, the title of goods does not pass to the buyer. Interest of 12% p.a will be charged from the date of delivery till payment';
+        Text501: Label 'Goods once sold cannot be taken back. Until fully paid for, the title of goods does not pass to the buyer. Interest of 12% p.a will be charged from the date of delivery till payment';
         "Shipment Text": Text[30];
         Text502: Label 'PRIM 7* STARS';
         Text503: Label 'EXPORT QUALITY SEAFOOD';

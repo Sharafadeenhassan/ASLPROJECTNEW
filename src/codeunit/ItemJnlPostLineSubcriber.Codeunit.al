@@ -73,6 +73,7 @@ codeunit 50028 "ItemJnlPostLineSubcriber"
         NewItemLedgEntry."Source Code" := ItemJournalLine."Source Code";
         NewItemLedgEntry."Scrap Quantity" := ItemJournalLine."Scrap Quantity";
         NewItemLedgEntry."Consumed Quantity" := ItemJournalLine."Consumed Quantity";
+        NewItemLedgEntry."DPS No." := ItemJournalLine."DPS No.";
         NewItemLedgEntry."Vessel Type" := ItemJournalLine."Vessel Type";
         if ItemJournalLine."Entry Type" = ItemJournalLine."Entry Type"::Consumption then begin
             NewItemLedgEntry.Quantity := -ItemJournalLine."Consumed Quantity";
@@ -82,9 +83,14 @@ codeunit 50028 "ItemJnlPostLineSubcriber"
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Item Jnl.-Post Line", 'OnBeforePostInventoryToGL', '', true, true)]
     local procedure ItemJnlPostLineOnBeforePostInventoryToGL(var ValueEntry: Record "Value Entry"; var IsHandled: Boolean)
+    var SaleItem: Record Item;
     begin
         if ValueEntry."Item Ledger Entry Type" in [ValueEntry."Item Ledger Entry Type"::Transfer, ValueEntry."Item Ledger Entry Type"::Sale, ValueEntry."Item Ledger Entry Type"::Consumption] then
             IsHandled := true;
+            if ValueEntry."Item Ledger Entry Type" = ValueEntry."Item Ledger Entry Type"::Sale then begin
+                if SaleItem.get(ValueEntry."Item No.") then 
+                IsHandled := SaleItem."FT Product"; 
+            end;
     end;
 
     [EventSubscriber(ObjectType::Codeunit, CodeUnit::"Item Jnl.-Post Line", 'OnInsertPostValueEntryToGLOnAfterTransferFields', '', True, true)]
@@ -111,7 +117,7 @@ codeunit 50028 "ItemJnlPostLineSubcriber"
                 exit;
     end;
 
-    [EventSubscriber(ObjectType::Codeunit, CodeUnit::"Item Jnl.-Post Line", 'OnAfterPostInventoryToGL', '', True, true)]
+    [EventSubscriber(ObjectType::Codeunit, CodeUnit::"Item Jnl.-Poszt Line", 'OnAfterPostInventoryToGL', '', True, true)]
     local procedure ItemJnlPostLineOnAfterPostInvtoryToGL(var ValueEntry: Record "Value Entry")
     begin
         IF (ValueEntry."Item Ledger Entry Type" = ValueEntry."Item Ledger Entry Type"::Transfer) AND (ValueEntry."Source Code" = 'INVTADJMT') THEN EXIT;

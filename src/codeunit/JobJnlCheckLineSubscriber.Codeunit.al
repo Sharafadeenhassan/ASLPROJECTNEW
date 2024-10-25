@@ -28,4 +28,5 @@ codeunit 50024 "JobJnlCheckLineSubscriber"
             ;
         IsHandled := true;
     end;
+
 }

@@ -649,10 +649,12 @@ tableextension 50269 "Sales Header Ext" extends "Sales Header"
         FSdailySale.SetFilter(FSdailySale.Processed, '%1', false);
         FSdailySale.SetFilter(FSdailySale."Transaction Date", '%1', "Document Date");
         FSdailySale.SetFilter(FSdailySale."Payment Type", '%1', "Payment Method Code");
+        FSdailySale.SetFilter(FSdailySale."Payment Device",'%1',"Shortcut Dimension 2 Code");
         if FSdailySale.FindFirst() then
             repeat
                 FsdailyFilter.CopyFilters(FSdailySale);
                 FsdailyFilter.SetFilter(FsdailyFilter."Item No.", '%1', FSdailySale."Item No.");
+                FSdailyFilter.SetFilter(FSdailyFilter."Payment Device",'%1', FSdailySale."Payment Device");
                 if FsdailyFilter.FindSet() then begin
                     FsdailyFilter.CalcFields(FsdailyFilter."Day Sale Qty", FsdailyFilter."Day Sale Value");
                     SalesRecLine.Init();
