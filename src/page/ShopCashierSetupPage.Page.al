@@ -67,7 +67,7 @@ page 50108 "Shop Cashier Setup Page"
                     ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Value Card Customer Acct field.', Comment = '%';
                 }
-                field("Multiple Pay Customer Acct";"Multiple Pay Customer Acct")
+                field("Multiple Pay Customer Acct";rec."Multiple Pay Customer Acct")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies Customer Account To be Used for Multiple Payment Customer',Comment = '%';
@@ -96,17 +96,17 @@ page 50108 "Shop Cashier Setup Page"
                 {
                     ApplicationArea = All;
                 }
-                field("Total Cash";"Total Cash")
+                field("Total Cash";rec."Total Cash")
                 {
                     ApplicationArea = all;
                     Importance = Additional;                
                 }
-                field("Total Transfer";"Total Transfer")
+                field("Total Transfer";rec."Total Transfer")
                 {
                     ApplicationArea = all;
                     Importance = Additional;
                 }
-                field("Total Value card";"Total Value card")
+                field("Total Value card";rec."Total Value card")
                 {
                     ApplicationArea = all;
                     Importance = Additional;

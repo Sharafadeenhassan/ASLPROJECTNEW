@@ -65,7 +65,7 @@ report 55558 "Voyage Ending Inventory expD12"
             dataitem(Item; Item)
             {
                 DataItemLink = "Location Filter" = FIELD(Vessel);
-                DataItemTableView = SORTING("S/No.", "Gen. Prod. Posting Group") WHERE("Statistics Group" = FILTER(0 .. 3), "Gen. Prod. Posting Group" = CONST('FIS'), Inventory = FILTER(<> 0));
+                DataItemTableView = SORTING("No.") WHERE("Statistics Group" = FILTER(0 .. 3), "Gen. Prod. Posting Group" = CONST('FIS'), Inventory = FILTER(<> 0));
                 RequestFilterFields = "No.";
                 column(Item_No; "No.")
                 {
@@ -98,7 +98,7 @@ report 55558 "Voyage Ending Inventory expD12"
             dataitem(ItemMrkt; Item)
             {
                 DataItemLink = "Location Filter" = FIELD(Vessel);
-                DataItemTableView = SORTING("S/No.", "Gen. Prod. Posting Group") WHERE("Statistics Group" = FILTER(4), "Gen. Prod. Posting Group" = CONST('FIS'));
+                DataItemTableView = SORTING("No.") WHERE("Statistics Group" = FILTER(4), "Gen. Prod. Posting Group" = CONST('FIS'));
                 column(ItemMrkt__No__; "No.")
                 {
                 }

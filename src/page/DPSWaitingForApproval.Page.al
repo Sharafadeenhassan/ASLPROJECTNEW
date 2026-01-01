@@ -13,7 +13,7 @@ page 50125 "DPS Waiting For Approval"
                             "Send For Approval" = CONST(true),
                             Approved = CONST(false));
     Caption = 'DPS Waiting For Approval';
-    
+
     layout
     {
         area(content)
@@ -72,7 +72,7 @@ page 50125 "DPS Waiting For Approval"
 
     trigger OnOpenPage()
     begin
-        Rec.SetFilter("Sent To For Approval", UserId);
+        Rec.SetFilter("1st Approval HOD", UserId);
         Rec.FilterGroup(2);
     end;
 }

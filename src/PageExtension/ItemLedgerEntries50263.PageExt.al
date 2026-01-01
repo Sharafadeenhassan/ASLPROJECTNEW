@@ -8,7 +8,7 @@ pageextension 50263 "Item Ledger Entries Ext Page" extends "Item Ledger Entries"
             {
                 ApplicationArea = All;
             }
-            field("Applied Qty Posistive"; Rec."Applied Qty Posistive")
+            field("Applied Qty Positive"; Rec."Applied Qty Positive")
             {
                 ApplicationArea = All;
             }

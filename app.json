@@ -1,26 +1,35 @@
 {
-  "id": "8e62b29d-0ae9-4b2d-b33a-ecd63cd7da24",
-  "name": "ASL Upgrade Operation",
-  "publisher": "SSNL",
-  "version": "18.5.1.393",
-  "brief": "",
-  "description": "Enhance Batch Job Speed/exclude Transfer and Job GL Cost Zero",
-  "privacyStatement": "",
-  "EULA": "",
-  "help": "",
-  "url": "",
-  "logo": "",
-  "dependencies": [],
-  "screenshots": [], 
-  "platform": "1.0.0.0", 
-  "application": "18.5.0.0",
-  "idRanges": [
-    {
-      "from": 50000,
-      "to": 99999
-    }
-  ],
-  "showMyCode": true,
-  "runtime": "7.1",
-  "target": "OnPrem"
+    "id":  "8e62b29d-0ae9-4b2d-b33a-ecd63cd7da24",
+    "name":  "ASL Upgrade Operation",
+    "publisher":  "SSNL",
+    "version":  "18.5.1.462",
+    "brief":  "ASL Fishing Operation Management System - Shipping/Fishing Industry ERP Extension",
+    "description":  "Business Central extension for ASL Fishing Operation Management System. Includes vessel operations management, payroll system with custom overtime calculations, inventory & procurement workflows, electronic invoice/credit memo export (Excel & XML), and enhanced dashboard interface. Features e-invoicing compliance, sea catch recording, AGO consumption tracking, store requisition workflows, and LS Retail integration.",
+    "privacyStatement":  "",
+    "EULA":  "",
+    "help":  "",
+    "url":  "",
+    "logo":  "",
+    "dependencies":  [
+
+                     ],
+    "screenshots":  [
+
+                    ],
+    "platform":  "1.0.0.0",
+    "application":  "18.5.0.0",
+    "idRanges":  [
+                     {
+                         "from":  50000,
+                         "to":  99999
+                     }
+                 ],
+    "showMyCode":  true,
+    "runtime":  "7.1",
+    "target":  "OnPrem",
+    "features": [
+        "TranslationFile",
+        "GenerateCaptions",
+        "NoImplicitWith"
+    ]
 }

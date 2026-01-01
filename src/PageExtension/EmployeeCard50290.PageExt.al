@@ -146,11 +146,9 @@ pageextension 50290 "pageextension50290" extends "Employee Card"
                 trigger OnAction()
                 begin
                     I := 1;
-                    Res.Init();
-                    /*IF ("Global Dimension 1 Code"<>'FLST') THEN
-                       ERROR('The Department must be FLST');*/
+                    Res.Init();                    
                     Res."No." := 'R' + Rec."No.";
-                    Res.Type := 0;
+                    Res.Type := Res.Type::Person;
                     Res.Validate(Res.Name, Rec.FullName());
                     Res."Name 2" := Rec."First Name";
                     Res.Address := Rec.Address;
@@ -177,14 +175,17 @@ pageextension 50290 "pageextension50290" extends "Employee Card"
                         Answ := Confirm('Resource already Exist,Change a EmpContra code', true);
                         if Answ then
                             ResExist();
+                        Res.Modify();
+                    end else begin
+                    rec."Resource No.":=Res."No.";
+                    rec.MODIFY;
+                    end;
                         /* REPEAT
                            I:=I+1;
                            Res."No.":="First Name"+COPYSTR("Last Name",1,I);
                          UNTIL Res.INSERT
                        END
                        ELSE*/
-                        Res.Modify();
-                    end;
                     /*
                     I:=1;
                     Res.INIT;
@@ -306,7 +307,12 @@ pageextension 50290 "pageextension50290" extends "Employee Card"
                 if Answ2 then
                     Res2.Delete()
                 else
-                    Error('Resource May not be duplicated');
+                begin
+                    if rec."Resource No." = '' then 
+                    rec."Resource No." := Res2."No.";
+                    Rec.Modify(true);
+                    //Error('Resource May not be duplicated');
+                end;
             until Res2.Next() = 0;
     end;
 }

@@ -10,6 +10,8 @@ report 50233 "Purchase Request List"
         dataitem("Purchase Requisition1"; "Purchase Requisition1")
         {
             RequestFilterFields = "Req No.", "Item No.", "Supply By";
+            DataItemTableView = sorting("Item No.");
+            
             column(ReqNo; "Purchase Requisition1"."Req No.")
             {
             }
@@ -25,6 +27,14 @@ report 50233 "Purchase Request List"
             column(Quantity; "Purchase Requisition1".Quantity)
             {
             }
+            column(DPS_HOD_Qty;"DPS HOD Qty")
+            {
+
+            }
+            column(DPS_Req_Qty;"DPS Req Qty")
+            {}
+            column(Shortage_Supplied__Quantity;"Shortage Supplied  Quantity")
+            {}
             column(RequsetedbyName; "Purchase Requisition1"."Req. By Name")
             {
             }
@@ -45,7 +55,7 @@ report 50233 "Purchase Request List"
             }
             column(QccCheName; "Purchase Requisition1"."QCC Check  Name")
             {
-            }
+            }            
             column(QccCheTime; "Purchase Requisition1"."QCC Check Time")
             {
             }

@@ -15,7 +15,7 @@ report 50178 "Vessel budget per item"
             }
             dataitem(Item; Item)
             {
-                DataItemTableView = SORTING("Gen. Prod. Posting Group") WHERE("Gen. Prod. Posting Group" = FILTER(<> 'FIS'));
+                DataItemTableView = SORTING("No.") WHERE("Gen. Prod. Posting Group" = FILTER(<> 'FIS'));
                 RequestFilterFields = "Gen. Prod. Posting Group";
                 column(FORMAT_TODAY_0_4_; Format(Today, 0, 4))
                 {

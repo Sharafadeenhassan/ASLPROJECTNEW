@@ -146,7 +146,7 @@ table 50008 "Payroll-Employee Group Lines."
                 else
                     /* Check for rounding and Maximum/Minimum */
                   "Default Amount" := ChkRoundMaxMin("E/DFileRec", "Default Amount");
-               // Message('No Enter');
+                // Message('No Enter');
             end;
         }
         field(8; ChangeOthers; Boolean)
@@ -950,8 +950,8 @@ table 50008 "Payroll-Employee Group Lines."
         /*””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””
         ‚ Returns the tax figure from a table lookup of type Tax                     ‚
         ‚ Parameters:                                                                ‚
-        ‚  by Referrence : The current Lookup detail table record = LDetailsRec.     ‚
-        ‚                  NB: By referrence so that all delimitations, sortings etc ‚
+        ‚  by Reference : The current Lookup detail table record = LDetailsRec.      ‚
+        ‚                  NB: By reference so that all delimitations, sorting etc   ‚
         ‚                      are still in effect.                                  ‚
         ‚  by value      : The amount to be taxed = TaxTableInput                    ‚
         ””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””*/
@@ -960,13 +960,13 @@ table 50008 "Payroll-Employee Group Lines."
         PrevLookRec := LDetailsRec;
         /*BDC
          COPYFILTERS(LDetailsRec );
-        */
+        //from (SSNL)
         if PrevLookRec.Next(-1) = 0 then
             ReturnAmount := (TaxTableInput * LDetailsRec."Tax Rate %") / 100
         //ELSE  ReturnAmount := CalcGraduated (LDetailsRec, TaxTableInput);
         else
-            ReturnAmount := (TaxTableInput * LDetailsRec."Tax Rate %") / 100;
-
+            ReturnAmount := (TaxTableInput * LDetailsRec."Tax Rate %") / 100; //to (SSNL2025)
+*/
         if LDetailsRec.Find('=') then
             /*Record found where Lower Amount is equal to TaxTableInput*/
           if PrevLookRec.Next(-1) = 0 then
@@ -974,18 +974,18 @@ table 50008 "Payroll-Employee Group Lines."
                 ReturnAmount := (TaxTableInput * LDetailsRec."Tax Rate %") / 100
             else
                 /* Call function to get the tax amount from the graduated tax table.*/
-                //ReturnAmount := CalcGraduated (LDetailsRec, TaxTableInput)
-                ReturnAmount := (TaxTableInput * LDetailsRec."Tax Rate %") / 100
+                ReturnAmount := CalcGraduated(LDetailsRec, TaxTableInput)
+        //ReturnAmount := (TaxTableInput * LDetailsRec."Tax Rate %") / 100 (SSNL2025)
         else
             if LDetailsRec.Find('>') then
                 /*Record found where Lower Amount is just larger than TaxTableInput.
-                 Therefore TaxableInput should be in previus range (= record)*/
-          if LDetailsRec.Next(-1) = 0 then
+                 Therefore TaxableInput should be in previous range (= record)*/
+                if LDetailsRec.Next(-1) = 0 then
                     /* The lowest taxable amount is larger than the input amount */
-            ReturnAmount := 0
+                    ReturnAmount := 0
                 else
-                    //ReturnAmount := CalcGraduated (LDetailsRec, TaxTableInput)
-                    ReturnAmount := (TaxTableInput * LDetailsRec."Tax Rate %") / 100
+                    ReturnAmount := CalcGraduated(LDetailsRec, TaxTableInput)
+            //ReturnAmount := (TaxTableInput * LDetailsRec."Tax Rate %") / 100 (SSNL2025)
             else
                 /*TaxableInput is larger than the table's greatest lower amount*/
                 if LDetailsRec.Next(-1) = 0 then
@@ -993,8 +993,8 @@ table 50008 "Payroll-Employee Group Lines."
                     ReturnAmount := (TaxTableInput * LDetailsRec."Tax Rate %") / 100
                 else
                     /* Call function to get the tax amount from the graduated tax table.*/
-                    //ReturnAmount := CalcGraduated (LDetailsRec, TaxTableInput);
-                    ReturnAmount := (TaxTableInput * LDetailsRec."Tax Rate %") / 100;
+                    ReturnAmount := CalcGraduated(LDetailsRec, TaxTableInput);
+        //ReturnAmount := (TaxTableInput * LDetailsRec."Tax Rate %") / 100;(SSNL2025)
 
         exit(ReturnAmount);
     end;
@@ -1007,7 +1007,7 @@ table 50008 "Payroll-Employee Group Lines."
         ‚ Parameters                                                                ‚
         ‚ by reference : The Table Lookup record within which the Taxable amount    ‚
         ‚                falls = WantedLookRec                                      ‚
-        ‚                NB: By referrence so that all delimitations, sortings etc  ‚
+        ‚                NB: By reference so that all delimitations, sorting etc  ‚
         ‚                    are still in effect.                                   ‚
         ‚ by value     : The amount to be taxed = InputToTable                      ‚
         ”””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””*/
@@ -1023,10 +1023,17 @@ table 50008 "Payroll-Employee Group Lines."
             /* Compute tax for the amount of money that is within the range of the
               Wanted Look Up Record then add the Cumulative Tax Payable amount from
               the previous Look Up record*/
-
-            ReturnAmount := (InputToTable - PrevLookRec."Upper Amount");
-            ReturnAmount := (ReturnAmount * WantedLookRec."Tax Rate %") / 100;
-            ReturnAmount := ReturnAmount + PrevLookRec."Cum. Tax Payable";
+            //Inserted by SSNL2025 to Calculate Tax Using Slabs Tax Begin
+            LookHeaderRec.get(WantedLookRec.TableID);
+            if LookHeaderRec."Use Slabs" then begin
+                ReturnAmount := InputToTable;
+                ReturnAmount := (ReturnAmount * WantedLookRec."Tax Rate %") / 100
+            end // Using Slabs Tax End  
+            else begin
+                ReturnAmount := (InputToTable - PrevLookRec."Upper Amount");
+                ReturnAmount := (ReturnAmount * WantedLookRec."Tax Rate %") / 100;
+                ReturnAmount := ReturnAmount + PrevLookRec."Cum. Tax Payable";
+            end;
         end;
         exit(ReturnAmount);
     end;

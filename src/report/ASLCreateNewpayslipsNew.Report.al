@@ -155,7 +155,7 @@ report 50054 "ASL Create New payslips - New"
                                 if BookGrLinesRec."Transfer Business Units" then
                                     PayLinesRec."Global Dimension 2 Code" := "Global Dimension 2 Code";
 
-                                //AAA - Found Here Taxable ref allowed values to be inseted for taxable insertion and calculation
+                                //AAA - Found Here Taxable ref allowed values to be inserted for taxable insertion and calculation
                                 if (EmpGrpLinesRec."Default Amount" <> 0) or (EDFileRec."Monthly Variable") or (EdfileRec1."Taxable Ref") then begin
                                     if not EDFileRec."OverTime(Y/N)" then
                                         PayLinesRec.Validate(PayLinesRec."E/D Code");

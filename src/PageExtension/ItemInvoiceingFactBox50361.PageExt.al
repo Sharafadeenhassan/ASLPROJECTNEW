@@ -14,7 +14,7 @@ pageextension 50361 "Item Invoicing FactBox Ext" extends "Item Invoicing FactBox
             }
             group("Material Requisition")
             {
-                field("MR Req Qty";"MR Req Qty")
+                field("MR Req Qty";rec."MR Req Qty")
                 {
                     ToolTip = 'Total MR Requested Qty Pending PROCESS Including Approved Qty';
                     ApplicationArea = All;

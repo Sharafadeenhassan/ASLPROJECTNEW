@@ -1,5 +1,23 @@
 pageextension 50221 "pageextension50221" extends "Posted Sales Credit Memo"
 {
+     layout
+    {
+        modify("No.")
+        {
+            Visible = true;
+        }
+        addbefore(SalesCrMemoLines)
+        {
+            field("Return Quantity";Rec."Return Quantity")
+            {
+                ApplicationArea = All;
+                Caption = 'Return Quantity';
+                ToolTip = 'Return Quantity';
+                Editable = false;
+            }           
+            
+        }
+    }
     actions
     {
         //Unsupported feature: Property Modification (Name) on "Print(Action 50)".

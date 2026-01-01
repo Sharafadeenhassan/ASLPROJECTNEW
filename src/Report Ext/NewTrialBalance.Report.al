@@ -13,6 +13,8 @@ report 50039 "New Trial Balance"
     DefaultLayout = RDLC;
     RDLCLayout = './src/reportrdlc/NewTrialBalance.rdlc';
     Caption = 'New Trial Balance';
+    ApplicationArea = All;
+    UsageCategory = Lists;
     dataset
     {
         dataitem("G/L Account"; "G/L Account")

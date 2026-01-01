@@ -251,7 +251,7 @@ table 50018 "Applicants"
         {
             InitValue = false;
         }
-        field(50097; "Last Renumeration"; Decimal)
+        field(50097; "Last Remuneration"; Decimal)
         {
             BlankZero = true;
             DecimalPlaces = 2 : 2;

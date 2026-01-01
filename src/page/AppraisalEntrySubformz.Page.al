@@ -4,7 +4,7 @@ page 90096 "Appraisal Entry Subform.-z"
     Caption = 'Appraisal Entry Subform';
     DelayedInsert = true;
     MultipleNewLines = true;
-    PageType = Card;
+    PageType = ListPart;
     SourceTable = "Sales Line";
     SourceTableView = WHERE("Document Type" = FILTER("Return Order"));
 
@@ -134,13 +134,6 @@ page 90096 "Appraisal Entry Subform.-z"
     end;
 
     [Scope('OnPrem')]
-    procedure ShowReservation()
-    begin
-        Rec.Find();
-        Rec.ShowReservation();
-    end;
-
-    [Scope('OnPrem')]
     procedure ItemAvailability(AvailabilityType: Option Date,Variant,Location,Bin)
     begin
         //Rec.ItemAvailability(AvailabilityType);
@@ -153,27 +146,9 @@ page 90096 "Appraisal Entry Subform.-z"
     end;
 
     [Scope('OnPrem')]
-    procedure ShowDimensions()
-    begin
-        Rec.ShowDimensions();
-    end;
-
-    [Scope('OnPrem')]
-    procedure ShowItemSub()
-    begin
-        Rec.ShowItemSub();
-    end;
-
-    [Scope('OnPrem')]
     procedure ShowNonstockItems()
     begin
         Rec.ShowNonstock();
-    end;
-
-    [Scope('OnPrem')]
-    procedure OpenItemTrackingLines()
-    begin
-        Rec.OpenItemTrackingLines();
     end;
 
     [Scope('OnPrem')]

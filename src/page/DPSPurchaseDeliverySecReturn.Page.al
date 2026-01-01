@@ -40,6 +40,11 @@ page 50123 "Purchase Request Sec. Return"
                     Editable = false;
                     ApplicationArea = All;
                 }
+                field("Unit Of Measure";rec."Unit Of Measure")
+                {
+                    Editable = False;
+                    ApplicationArea = All;
+                }
                 field("Supply By"; Rec."Supply By")
                 {
                     Editable = false;

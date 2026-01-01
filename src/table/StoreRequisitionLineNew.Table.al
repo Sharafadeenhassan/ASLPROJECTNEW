@@ -2,7 +2,7 @@ table 50032 "Store Requisition Line New"
 {
     DrillDownPageID = "Store Requisition Subform";
     Caption = 'Store Requisition Line New';
-    
+
     fields
     {
         field(1; "Req. No."; Code[10])
@@ -22,7 +22,7 @@ table 50032 "Store Requisition Line New"
                     "Item Category" := ItemRec."Gen. Prod. Posting Group";
                     "Inventory Posting Group" := ItemRec."Inventory Posting Group";
                     ItemRec.SetFilter(ItemRec."Location Filter", '%1', "Store Location");
-                    ItemRec.CalcFields(ItemRec.Inventory,ItemRec."MR Req Qty");
+                    ItemRec.CalcFields(ItemRec.Inventory, ItemRec."MR Req Qty");
                     if ItemRec.Inventory <= 0 then
                         "Procurement Request" := true;
                     //ELSE ERROR('Zero Stock Item Can Not be Requested, Kindly Inform the Store Manager for Order');
@@ -78,19 +78,18 @@ table 50032 "Store Requisition Line New"
                             Error('You can Not Give more than Authorised Quantity');
                 end;
                 StoreLine.SetRange(StoreLine."Item No.", "Item No.");
-                StoreLine.SetRange(StoreLine."Store Location","Store Location");
+                StoreLine.SetRange(StoreLine."Store Location", "Store Location");
                 if StoreLine.FindFirst() then begin
                     ItemRec.Get("Item No.");
                     ItemRec.SetFilter(ItemRec."Location Filter", '%1', "Store Location");
-                    ItemRec.CalcFields(ItemRec.Inventory, ItemRec."MR Approved Qty", ItemRec."MR Pending  Qty",ItemRec."MR Req Qty");
-                    If (xRec."Requested Quantity" <> rec."Requested Quantity") then
-                    begin
+                    ItemRec.CalcFields(ItemRec.Inventory, ItemRec."MR Approved Qty", ItemRec."MR Pending  Qty", ItemRec."MR Req Qty");
+                    If (xRec."Requested Quantity" <> rec."Requested Quantity") then begin
                         "Approved Quantity" := "Requested Quantity";
                         "Issued Quantity" := "Requested Quantity";
-                    end;   
-                    ItemRec.CalcFields(ItemRec.Inventory, ItemRec."MR Approved Qty", ItemRec."MR Pending  Qty",ItemRec."MR Req Qty");
+                    end;
+                    ItemRec.CalcFields(ItemRec.Inventory, ItemRec."MR Approved Qty", ItemRec."MR Pending  Qty", ItemRec."MR Req Qty");
                     "Available Quantity" := (ItemRec.Inventory - (ItemRec."MR Req Qty" /*+ "Requested Quantity"*/));
-                if "Available Quantity" < 0 then "Available Quantity" := 0;
+                    if "Available Quantity" < 0 then "Available Quantity" := 0;
                 end;
                 if (("Requested Quantity" > "Available Quantity") and ("Req. Type" < 5)) then begin
                     "Approved Quantity" := "Available Quantity";
@@ -123,15 +122,15 @@ table 50032 "Store Requisition Line New"
                             if "Approved Quantity" > "Requested Quantity" then Error('Approved Quantity Can not be more than Requested Quantity');
                             "Issued Quantity" := "Approved Quantity";
                             StoreLine.SetRange(StoreLine."Item No.", "Item No.");
-                            StoreLine.SETRANGE(StoreLine."Store Location","Store Location");
+                            StoreLine.SETRANGE(StoreLine."Store Location", "Store Location");
                             if StoreLine.FindFirst() then begin
                                 ItemRec.Get("Item No.");
-                                ItemRec.SetFilter(ItemRec."Location Filter", '%1',"Store Location");
-                                ItemRec.CalcFields(ItemRec.Inventory,ItemRec."MR Req Qty");
+                                ItemRec.SetFilter(ItemRec."Location Filter", '%1', "Store Location");
+                                ItemRec.CalcFields(ItemRec.Inventory, ItemRec."MR Req Qty");
                                 //StoreLine.CalcFields(StoreLine."Pending Approved Qty");
                                 //"Available Quantity" := (ItemRec.Inventory - StoreLine."Pending Approved Qty");
                                 "Available Quantity" := (ItemRec.Inventory - (ItemRec."MR Req Qty"));
-                              end;
+                            end;
                             if "Approved Quantity" > "Available Quantity" then Error('Approved Quantity Can Not be more than Available Quantity');
                         end
                 end;
@@ -148,7 +147,7 @@ table 50032 "Store Requisition Line New"
                         begin
                             ItemRec.Get("Item No.");
                             ItemRec.SetFilter(ItemRec."Location Filter", '%1', "Store Location");
-                            ItemRec.CalcFields(ItemRec.Inventory,ItemRec."MR Req Qty");
+                            ItemRec.CalcFields(ItemRec.Inventory, ItemRec."MR Req Qty");
                             "Available Quantity" := ItemRec.Inventory - (ItemRec."MR Req Qty" - xRec."Issued Quantity");
                             if "Available Quantity" < "Issued Quantity" then Error('You cannot Issue more than Available Quantity');
                             if "Issued Quantity" > "Approved Quantity" then Error('Issued Quantity Can not be more than Approved Quantity');
@@ -164,7 +163,7 @@ table 50032 "Store Requisition Line New"
             trigger OnValidate()
             begin
                 if xrec."Store Location" <> rec."Store Location" then
-                rec.Validate("Requested Quantity");
+                    rec.Validate("Requested Quantity");
             end;
 
         }
@@ -192,8 +191,8 @@ table 50032 "Store Requisition Line New"
                     // OldStLine.SETFILTER(OldStLine."Approved Quantity",'>%1',0);
                     if OldStLine.FindLast() then begin
                         NicsArt."From Date" := OldStLine."Issues Captured Date";
-                        NicsArt."To Date" := CalcDate(NicsArt."Replacement Interval", OldStLine."Req Date");
-                        NicsArt."Last Date Collected" := OldStLine."Req Date";
+                        NicsArt."To Date" := CalcDate(NicsArt."Replacement Interval", OldStLine."Issues Captured Date");
+                        NicsArt."Last Date Collected" := OldStLine."Issues Captured Date";
                         NicsArt.Modify();
                     end;
                     if NicsArt."To Date" <= Today then begin

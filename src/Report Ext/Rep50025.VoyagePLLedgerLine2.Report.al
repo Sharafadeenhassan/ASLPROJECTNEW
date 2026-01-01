@@ -955,7 +955,7 @@ report 50025 "Voyage P&L Ledger Line 2"
         }
         dataitem("Value Entry"; "Value Entry")
         {
-            DataItemTableView = SORTING("Document No.", "Gen. Prod. Posting Group") WHERE("Gen. Prod. Posting Group" = FILTER(<> 'FIS'));
+            DataItemTableView = SORTING("Document No.") WHERE("Gen. Prod. Posting Group" = FILTER(<> 'FIS'));
             column(Table_ValueEntry; 1)
             {
             }
@@ -1177,7 +1177,7 @@ report 50025 "Voyage P&L Ledger Line 2"
     }
 
     requestpage
-    { 
+    {
         SaveValues = true;
 
         layout

@@ -9,42 +9,7 @@ page 50152 "DPS Purch. Req. Qcc Ready"
     layout
     {
         area(Content)
-        {
-            group(General)
-            {
-                Caption = 'General';
-
-                /*field("DPS No."; Rec."DPS No.")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Specifies the value of the DPS No. field.', Comment = '%';
-                }
-                field("Location Code"; Rec."Location Code")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Specifies the value of the Location Code field.', Comment = '%';
-                }
-                field(Approved; Rec.Approved)
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Specifies the value of the Approved field.', Comment = '%';
-                }
-                field(Processed; Rec.Processed)
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Specifies the value of the Store Approved field.', Comment = '%';
-                }
-                field("Req Department"; Rec."Req Department")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Specifies the value of the Req Department field.', Comment = '%';
-                }
-                field("Approved Line items"; Rec."Approved Line items")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Specifies the value of the Approved Line items field.', Comment = '%';
-                }*/
-            }
+        {           
             
             group("Details Process")
             {
@@ -68,7 +33,7 @@ page 50152 "DPS Purch. Req. Qcc Ready"
                 {
                     Provider = "Requested Line";
                     SubPageLink = "Req. Line No." = FIELD("Req. Line No."),
-                              "Req No." = FIELD("Req No.");
+                              "Req No." = FIELD("Req No."),"Puch.Req Line No." = field("Puch.Req Line No.");
                     ApplicationArea = All;
                     Editable = true;
                 }

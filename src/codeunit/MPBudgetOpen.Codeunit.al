@@ -4,10 +4,10 @@ CodeUnit 52007 "MPBudget-Open"
 
     trigger OnRun()
     begin
-        if GetFilter("Budget Filter") = '' then
+        if Rec.GetFilter("Budget Filter") = '' then
             SearchForName := true
         else begin
-            MPBudget.SetFilter(Name, GetFilter("Budget Filter"));
+            MPBudget.SetFilter(Name, Rec.GetFilter("Budget Filter"));
             SearchForName := not MPBudget.Find('-');
             MPBudget.SetRange(Name);
         end;
@@ -18,7 +18,7 @@ CodeUnit 52007 "MPBudget-Open"
                 MPBudget.Description := 'Default Budget';
                 MPBudget.Insert();
             end;
-            SetFilter("Budget Filter", MPBudget.Name);
+            Rec.SetFilter("Budget Filter", MPBudget.Name);
         end;
     end;
 

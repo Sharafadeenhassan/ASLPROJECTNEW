@@ -47,6 +47,7 @@ pageextension 50364 "pageextension50364" extends "Sales Invoice List"
                 RunObject = Page "Fishshop Daily sales";
                 ApplicationArea = All;
             }
+            
         }
     }
 

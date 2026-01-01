@@ -34,6 +34,11 @@ page 50129 "DPS  Requisition Line"
                     ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Description field.', Comment = '%';
                 }
+                field("Unit Of Measure";rec."Unit Of Measure")
+                {
+                    //Editable = False;
+                    ApplicationArea = All;
+                }
                 field("Location Code"; Rec."Location Code")
                 {
                     ApplicationArea = All;

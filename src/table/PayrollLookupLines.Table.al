@@ -6,15 +6,9 @@ table 50003 "Payroll-Lookup Lines."
     {
         field(1; TableId; Code[20])
         {
-            Editable = false;
+            Editable = true;
             NotBlank = true;
-            TableRelation = "Payroll-Lookup Header.";
-
-            trigger OnValidate()
-            begin
-                TableId := xRec.TableId;
-                exit;
-            end;
+            TableRelation = "Payroll-Lookup Header.".TableId;
         }
         field(2; "Lower Amount"; Decimal)
         {
@@ -93,19 +87,25 @@ table 50003 "Payroll-Lookup Lines."
                     if not LookupLines.Find('-') then begin
                         /* This is the first record being created for this tax table */
                         if "Upper Amount" <> 0 then
-                            "Cum. Tax Payable" := (1 / 100) * ("Tax Rate %" *
-                                                  ("Upper Amount" - "Lower Amount"))
+                            if not LookupHeader."Use Slabs" then
+                                "Cum. Tax Payable" := (1 / 100) * ("Tax Rate %" *
+                                                      ("Upper Amount" - "Lower Amount"))
+                            else
+                                "Cum. Tax Payable" := (1 / 100) * ("Tax Rate %" * "Upper Amount")
                     end
                     else begin
-
                         if LookupLines."Lower Amount" = "Lower Amount" then
                             /* We are at the record being edited currently*/
                       LookupLines := Rec;
 
                         if LookupLines."Upper Amount" <> 0 then
-                            LookupLines."Cum. Tax Payable" := (1 / 100) *
-                            (LookupLines."Tax Rate %" * (LookupLines."Upper Amount"
-                                                         - LookupLines."Lower Amount"))
+                            if not LookupHeader."Use Slabs" then
+                                LookupLines."Cum. Tax Payable" := (1 / 100) *
+                                (LookupLines."Tax Rate %" * (LookupLines."Upper Amount"
+                                                            - LookupLines."Lower Amount"))
+                            else
+                                LookupLines."Cum. Tax Payable" := (1 / 100) *
+                                (LookupLines."Tax Rate %" * LookupLines."Upper Amount")
                         else
                             LookupLines."Cum. Tax Payable" := 0;
 
@@ -126,11 +126,18 @@ table 50003 "Payroll-Lookup Lines."
                                 if LookupLines."Upper Amount" = 0 then
                                     LookupLines."Cum. Tax Payable" := 0
                                 else begin
-                                    LookupLines."Cum. Tax Payable" := (1 / 100) *
-                                    (LookupLines."Tax Rate %" * (LookupLines."Upper Amount" -
-                                                                 PrevRec."Upper Amount"));
-                                    LookupLines."Cum. Tax Payable" := LookupLines."Cum. Tax Payable" +
-                                                                       PrevRec."Cum. Tax Payable";
+                                    if not LookupHeader."Use Slabs" then begin
+                                        LookupLines."Cum. Tax Payable" := (1 / 100) *
+                                        (LookupLines."Tax Rate %" * (LookupLines."Upper Amount" -
+                                                                     PrevRec."Upper Amount"));
+                                        LookupLines."Cum. Tax Payable" := LookupLines."Cum. Tax Payable" +
+                                                                       PrevRec."Cum. Tax Payable"
+                                    end else begin
+                                        LookupLines."Cum. Tax Payable" := (1 / 100) *
+                                                (LookupLines."Tax Rate %" * (LookupLines."Upper Amount"));
+                                        LookupLines."Cum. Tax Payable" := LookupLines."Cum. Tax Payable";
+                                    end;
+
                                 end;
                                 if LookupLines."Lower Amount" = "Lower Amount" then
                                     /* We are at the record being edited currently*/

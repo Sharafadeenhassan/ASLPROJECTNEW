@@ -867,7 +867,7 @@ report 99192 "Vessel Performance Consolidax2"
             dataitem(JbLedMark; "Job Ledger Entry")
             {
                 DataItemLink = "Job No." = FIELD("No.");
-                DataItemTableView = SORTING("Job No.", "Posting Date", Type, "No.", "Location Code", "Gen. Prod. Posting Group") WHERE("Location Code" = CONST('CRM-ASL'), "Gen. Prod. Posting Group" = FILTER('FIS' | ''));
+                DataItemTableView = SORTING("Job No.", "Posting Date") WHERE("Location Code" = CONST('CRM-ASL'), "Gen. Prod. Posting Group" = FILTER('FIS' | ''));
                 column(JbLedMark__Entry_No__; "Entry No.")
                 {
                 }
@@ -955,7 +955,7 @@ report 99192 "Vessel Performance Consolidax2"
             dataitem(ValEntMark; "Value Entry")
             {
                 DataItemLink = "Document No." = FIELD("No.");
-                DataItemTableView = SORTING("Document No.", "Gen. Prod. Posting Group") WHERE("Gen. Prod. Posting Group" = FILTER(<> 'FIS'));
+                DataItemTableView = SORTING("Document No.") WHERE("Gen. Prod. Posting Group" = FILTER(<> 'FIS'));
                 column(ValEntMark__Entry_No__; "Entry No.")
                 {
                 }

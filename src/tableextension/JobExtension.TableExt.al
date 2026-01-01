@@ -31,11 +31,20 @@ tableextension 50230 "tableextension50230" extends Job
         modify(Status)
         {
             OptionCaption = 'Budget,Preparation,Voyage Start,Close Job Card';
+            trigger OnBeforeValidate()
+            begin
+                if xRec.Status = xRec.Status::Completed then
+                    if "Arrival Time" = 0D then "Arrival Time" := xRec."Ending Date";
+            end;
+
             trigger OnAfterValidate()
             begin
-                if Rec.Status <> xRec.Status then
-                    if xRec.Status = xRec.Status::Completed then
-                        Rec."Ending Date" := xRec."Ending Date";
+                // Only update ETA (Ending Date) on first closure (from Voyage Start to Completed)
+                // Not on subsequent closures after reopening
+                if (Rec.Status = Rec.Status::Completed) and (xRec.Status = 2) then // Status 2 = Voyage Start
+                    if Rec."Arrival Time" <> 0D then
+                        Rec."Ending Date" := Rec."Arrival Time";
+
             end;
         }
         field(50137; "Task Filter"; Code[10])
@@ -44,6 +53,8 @@ tableextension 50230 "tableextension50230" extends Job
             FieldClass = FlowFilter;
             TableRelation = "Job Task";
         }
+        field(50138; "Arrival Time"; Date)
+        { }
         field(50300; Vessel; Code[10])
         {
             TableRelation = Location WHERE("Location Type" = FILTER(Vessel));

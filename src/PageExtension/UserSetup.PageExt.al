@@ -107,31 +107,31 @@ pageextension 50209 "pageextension50209" extends "User Setup"
             {
                 ApplicationArea = All;
             }
-            field("Allow FT Product"; "Allow FT Product")
+            field("Allow FT Product"; rec."Allow FT Product")
             {
                 ApplicationArea = All;
             }
-            field("Allow Non FT Product"; "Allow Non FT Product")
+            field("Allow Non FT Product"; rec."Allow Non FT Product")
             {
                 ApplicationArea = All;
             }
-            field("FS Cashier"; "FS Cashier")
+            field("FS Cashier"; rec."FS Cashier")
             {
                 ApplicationArea = All;
             }
-            field("FS Suspend Sale"; "FS Suspend Sale")
+            field("FS Suspend Sale"; rec."FS Suspend Sale")
             {
                 ApplicationArea = All;
             }
-            field("FS Cancel Sales"; "FS Cancel Sales")
+            field("FS Cancel Sales"; rec."FS Cancel Sales")
             {
                 ApplicationArea = All;
             }
-            field("Fish Shop Code"; "Fish Shop Code")
-            {
+            field("Fish Shop Code"; rec."Fish Shop Code")
+            { 
                 ApplicationArea = All;
             }
-            field("Fish Shop Terminal"; "Fish Shop Terminal")
+            field("Fish Shop Terminal"; rec."Fish Shop Terminal")
             {
                 ApplicationArea = All;
             }
@@ -147,7 +147,7 @@ pageextension 50209 "pageextension50209" extends "User Setup"
             {
                 ApplicationArea = All;
             }
-            field("Allowed DPS QC Check"; "Allowed DPS QC Check")
+            field("Allowed DPS QC Check"; rec."Allowed DPS QC Check")
             {
                 ApplicationArea = All;
             }

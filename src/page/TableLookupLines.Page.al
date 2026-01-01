@@ -1,16 +1,25 @@
 page 50011 "Table Lookup Lines."
 {
-    PageType = List;
-    SaveValues = true;
+    Caption = 'Table Lookup Sub';
+    PageType = ListPart;
     SourceTable = "Payroll-Lookup Lines.";
-    SourceTableView = SORTING(TableId, "Lower Amount", "Lower Code");
-    Caption = 'Table Lookup Lines.';
+    //SaveValues = true;
+    //SourceTableView = SORTING(TableId, "Lower Amount", "Lower Code");
+    ApplicationArea = All;
+    UsageCategory = Lists;
+    //AutoSplitKey = true;
+    DelayedInsert = true;
     layout
     {
         area(content)
         {
             repeater(Group)
             {
+                field(TableId;rec.TableId)
+                {
+                    ApplicationArea = All;
+                    Visible = false;
+                }
                 field("Lower Amount"; Rec."Lower Amount")
                 {
                     ApplicationArea = All;

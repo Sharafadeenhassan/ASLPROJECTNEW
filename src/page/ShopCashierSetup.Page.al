@@ -75,17 +75,17 @@ page 50107 "Shop Cashier Setup"
                 {
                     ApplicationArea = All;
                 }
-                field("Total Cash";"Total Cash")
+                field("Total Cash";rec."Total Cash")
                 {
                     ApplicationArea = all;
                     Importance = Additional;                
                 }
-                field("Total Transfer";"Total Transfer")
+                field("Total Transfer";rec."Total Transfer")
                 {
                     ApplicationArea = all;
                     Importance = Additional;
                 }
-                field("Total Value card";"Total Value card")
+                field("Total Value card";rec."Total Value card")
                 {
                     ApplicationArea = all;
                     Importance = Additional;

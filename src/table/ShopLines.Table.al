@@ -68,10 +68,11 @@ table 50054 "Shop Lines"
         field(9; Discount; Decimal)
         {
             Caption = 'Discount';
+            Editable = false;
             trigger OnValidate()
             begin
                 "Line Amount Due" := "Line Amount"-Discount;
-            end;
+            end;            
         }
         field(10; "Line Amount Due"; Decimal)
         {
@@ -140,9 +141,23 @@ table 50054 "Shop Lines"
         field(18;"Header Exist";Boolean)
         {
             FieldClass = FlowField;
-            CalcFormula = Exist(ShopHeader WHERE("Invoice No." = FIELD("Invoice No.")));
-            Editable = false;        
+            CalcFormula = Exist(ShopHeader WHERE("Invoice No." = FIELD("Invoice No.")));            
+            Editable = false;                   
         }
+         field(19;"Discount %";Decimal)
+        {
+            MaxValue = 100;
+            MinValue = 0;
+
+            trigger OnValidate()
+            begin
+                if "Discount %" <> 0 then
+                Validate(Discount,("Line Amount" * ("Discount %"/100)))
+                else
+                Validate(Discount,0)
+            end;
+        }
+
     
     }
     keys

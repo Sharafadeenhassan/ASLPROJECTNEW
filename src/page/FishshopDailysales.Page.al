@@ -63,7 +63,7 @@ page 50061 "Fishshop Daily sales"
                 {
                     ApplicationArea = All;
                 }
-                field("Payment Device";"Payment Device")
+                field("Payment Device";rec."Payment Device")
                 {
                     ApplicationArea = All;
                 }

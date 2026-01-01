@@ -8,6 +8,13 @@ pageextension 50248 "pageextension50248" extends "Customer Ledger Entries"
         }
         addafter("Credit Amount")
         {
+           field("Loan ID";rec."Loan ID")
+           {
+               ApplicationArea = Basic, Suite;
+               ToolTip = 'Specifies the Loan ID.';
+               Visible = true;
+               }
+               //***
             //*** field("Credit Amount (LCY)"; "Credit Amount (LCY)")
 
             //***P ApplicationArea = Basic, Suite;

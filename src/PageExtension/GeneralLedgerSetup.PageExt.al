@@ -9,7 +9,7 @@ pageextension 50208 "pageextension50208" extends "General Ledger Setup"
                 ApplicationArea = All;
             }
         }
-        addafter("Use Legacy G/L Entry Locking")
+        addafter("Bank Account Nos.")
         {
             field("LCY Unit"; Rec."LCY Unit")
             {
@@ -90,17 +90,17 @@ pageextension 50208 "pageextension50208" extends "General Ledger Setup"
             {
                 ApplicationArea = All;
             }
-        group(Authority)
+            group(Authority)
+            {
+                Caption = 'Authority';
+
+                field(Administrator; Rec.Administrator)
                 {
-                    Caption = 'Authority';
-
-                    field(Administrator; Administrator)
-                    {
-                        Visible = true;
-                        ApplicationArea = all;
-                    }
-
+                    Visible = true;
+                    ApplicationArea = all;
                 }
+
+            }
         }
     }
 }

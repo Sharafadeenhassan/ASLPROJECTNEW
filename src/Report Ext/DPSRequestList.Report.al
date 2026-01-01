@@ -18,6 +18,16 @@ report 50219 "DPS Request List"
             {}
             column(Location_Code;"Location Code")
             {}
+            column(Base_Date;"Base Date")
+            {}
+            column(Process_Date;"Process Date")
+            {}
+            column(Requisition_Date;"Requisition Date")
+            {}
+            column(Approved_By;"Approved By"){}
+            column(Send_For_Approval_By;"Send For Approval By"){}
+            column(Process_By;"Process By"){}
+
         
         dataitem(DynamicsProcurementRegister; "Dynamics Procurement Register")
         {
@@ -94,15 +104,28 @@ report 50219 "DPS Request List"
             {                
             }
             column(Last_2_Years_Monthly_Average;"Last 2 Years Monthly Average")
-            {}
+            {
+                DecimalPlaces = 1:2;
+            }
             column(Last_2_Years_Consumption;"Last 2 Years Consumption")
-            {}
+            {
+                DecimalPlaces = 1:2;
+            }
             column(PendingQuantity; "Pending Quantity")
             {
             }
             column(PendingRequisition; "Pending Requisition")
             {
             }
+            column(Short_Supplied;"Short Supplied")
+            {}
+            column(Short_Supplied_Quantity;"Short Supplied Quantity")
+            {}
+            column(Remark;Remark)
+            {}
+            column(Qty_Supplied;"Qty Supplied")
+            {}
+
         }
 
         }

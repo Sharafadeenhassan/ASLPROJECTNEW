@@ -1,4 +1,4 @@
-table 50100 "Purchase Variance (Item) XAC"
+table 59100 "Purchase Variance (Item) XAC"
 {
     Caption = 'Purchase Variance (Item) XAC';
     fields

@@ -119,6 +119,7 @@ tableextension 50302 "tableextension50302" extends "Transfer Line"
         #10..20
         */
         //end;
+        
         field(50020; "Lock Line"; Boolean)
         {
             Editable = false;

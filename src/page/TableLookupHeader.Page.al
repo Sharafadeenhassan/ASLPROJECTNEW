@@ -3,6 +3,8 @@ page 50010 "Table Lookup Header."
     PageType = Card;
     SourceTable = "Payroll-Lookup Header.";
     Caption = 'Table Lookup Header.';
+    UsageCategory = Documents;
+    ApplicationArea = All;
     layout
     {
         area(content)
@@ -52,13 +54,17 @@ page 50010 "Table Lookup Header."
                 {
                     ApplicationArea = All;
                 }
+                field("Use Slabs";Rec."Use Slabs")
+                {
+                    ApplicationArea = All;
+                }
             }
             part("Table Lookup Lines."; "Table Lookup Lines.")
             {
                 SubPageLink = TableId = FIELD(TableId);
                 SubPageView = SORTING(TableId, "Lower Amount", "Lower Code");
                 UpdatePropagation = Both;
-                ApplicationArea = All;
+                ApplicationArea = All;                
             }
         }
     }

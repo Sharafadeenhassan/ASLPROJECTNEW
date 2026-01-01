@@ -46,6 +46,11 @@ page 50118 "Purch. Req. Process List"
                 {
                     ApplicationArea = All;
                 }
+                field("Unit Of Measure";rec."Unit Of Measure")
+                {
+                    Editable = False;
+                    ApplicationArea = All;
+                }
                 field(Quantity; Rec.Quantity)
                 {
                     Editable = false;

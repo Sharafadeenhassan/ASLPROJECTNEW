@@ -374,7 +374,7 @@ report 50170 "Receipt Report"
                                         end;
                                     "Account Type"::Customer, "Account Type"::Vendor:
                                         begin
-                                            if "Gen. Posting Type" <> 0 then
+                                            if "Gen. Posting Type" <> "Gen. Posting Type"::" " then
                                                 AddError(
                                                   StrSubstNo(
                                                     '%1 must be " " when %2 is %3.',

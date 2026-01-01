@@ -607,7 +607,7 @@ report 50193 "Vessel Update Job Rev/FS day"
             dataitem("Value Entry"; "Value Entry")
             {
                 DataItemLink = "Document No." = FIELD("No.");
-                DataItemTableView = SORTING("Document No.", "Gen. Prod. Posting Group") WHERE("Gen. Prod. Posting Group" = FILTER(<> 'FIS'));
+                DataItemTableView = SORTING("Document No.") WHERE("Gen. Prod. Posting Group" = FILTER(<> 'FIS'));
                 column(AGVal_Control1000000098; AGVal)
                 {
                 }

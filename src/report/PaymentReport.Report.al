@@ -431,7 +431,7 @@ report 50111 "Payment Report"
                                             if ("Bal. Gen. Bus. Posting Group" <> '') or ("Bal. Gen. Prod. Posting Group" <> '') or
                                                ("Bal. VAT Bus. Posting Group" <> '') or ("Bal. VAT Prod. Posting Group" <> '')
                                             then
-                                                if "Bal. Gen. Posting Type" = 0 then
+                                                if "Bal. Gen. Posting Type" = "Bal. Gen. Posting Type"::" " then
                                                     AddError(StrSubstNo('%1 must be specified.', FieldName("Bal. Gen. Posting Type")));
                                             if ("Bal. Gen. Posting Type" <> "Bal. Gen. Posting Type"::" ") and
                                                ("VAT Posting" = "VAT Posting"::"Automatic VAT Entry")
@@ -451,7 +451,7 @@ report 50111 "Payment Report"
                                         end;
                                     "Bal. Account Type"::Customer, "Bal. Account Type"::Vendor:
                                         begin
-                                            if "Bal. Gen. Posting Type" <> 0 then
+                                            if "Bal. Gen. Posting Type" <> "Bal. Gen. Posting Type"::" " then
                                                 AddError(
                                                   StrSubstNo(
                                                     '%1 must be " " when %2 is %3.',

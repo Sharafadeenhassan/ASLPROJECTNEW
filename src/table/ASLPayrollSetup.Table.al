@@ -103,7 +103,7 @@ table 50000 "ASL Payroll Setup"
         {
             trigger OnValidate()
             begin
-                "Daily Working Hours" := "Monthly Working Days" * 8;
+                "Total Monthly Hours" := "Monthly Working Days" * "Daily Working Hours";
             end;
         }
         field(26; "Productivity Bonus"; Decimal)
@@ -115,6 +115,10 @@ table 50000 "ASL Payroll Setup"
         }
         field(28; "Daily Working Hours"; Integer)
         {
+           trigger OnValidate()
+            begin
+                "Total Monthly Hours" := "Monthly Working Days" * "Daily Working Hours";
+            end; 
         }
         field(29; "Total Taxable ED"; Code[10])
         {
@@ -151,6 +155,7 @@ table 50000 "ASL Payroll Setup"
         }
         field(40; "Total Monthly Hours"; Decimal)
         {
+            Editable = false;
         }
         field(50000; "Basic+Hous+Transp"; Code[10])
         {

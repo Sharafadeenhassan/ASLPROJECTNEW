@@ -25,6 +25,16 @@ tableextension 50300 "tableextension50300" extends "Item Category"
         {
             FieldClass = FlowFilter;
         }
+        field(50387; "Return Quantity"; Decimal)
+        {
+            CalcFormula = Sum("Sales Cr.Memo Line".Quantity WHERE("Shipment Date" = FIELD("Date Filter"),
+                                                                    "Item Category Code" = FIELD(Code),
+                                                                    "Gen. Bus. Posting Group" = CONST('FOREIGN')));
+            DecimalPlaces = 0 : 0;
+            Editable = false;
+            FieldClass = FlowField;
+        }
+
     }
     keys
     {

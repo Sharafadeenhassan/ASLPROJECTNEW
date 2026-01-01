@@ -7,7 +7,7 @@ report 99899 "Transfer To Vessel Test"
     {
         dataitem("Value Entry"; "Value Entry")
         {
-            DataItemTableView = SORTING("Item Ledger Entry Type", "Location Code", "External Document No.", "Gen. Prod. Posting Group", "Item No.", "Posting Date") WHERE("Item Ledger Entry Type" = CONST(Transfer));
+            DataItemTableView = SORTING("Item Ledger Entry Type", "Item No.", "Posting Date") WHERE("Item Ledger Entry Type" = CONST(Transfer));
             RequestFilterFields = "Location Code", "External Document No.", "Gen. Prod. Posting Group";
             column(FORMAT_TODAY_0_4_; Format(Today, 0, 4))
             {

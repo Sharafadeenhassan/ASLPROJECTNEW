@@ -60,6 +60,9 @@ table 50002 "Payroll-Lookup Header."
         {
             OptionMembers = Nearest,Higher,Lower;
         }
+        field(12;"Use Slabs";Boolean)
+        {            
+        }
     }
 
     keys

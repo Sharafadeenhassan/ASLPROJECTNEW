@@ -1,8 +1,9 @@
 page 50012 "Table Lookup Survey."
 {
     Editable = false;
-    PageType = Card;
+    PageType = List;
     SourceTable = "Payroll-Lookup Header.";
+    CardPageId = "Table Lookup Header.";
     UsageCategory = Documents;
     ApplicationArea = All, Basic;
     Caption = 'Table Lookup Survey.';
@@ -33,6 +34,8 @@ page 50012 "Table Lookup Survey."
                 {
                     ApplicationArea = All;
                 }
+                field("Use Slabs";rec."Use Slabs")
+                {}
             }
         }
     }

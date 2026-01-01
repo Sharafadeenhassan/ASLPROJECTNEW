@@ -8,7 +8,7 @@ report 91042 "Daily Break Up By Vessel-y"
     {
         dataitem(Item; Item)
         {
-            DataItemTableView = SORTING("Statistics Group", "Inventory Posting Group") WHERE("Gen. Prod. Posting Group" = CONST('FIS'));
+            DataItemTableView = SORTING("No.") WHERE("Gen. Prod. Posting Group" = CONST('FIS'));
             RequestFilterFields = "Statistics Group", "Inventory Posting Group", "Date Filter", "Variant Filter";
             column(FORMAT_TODAY_0_4_; Format(Today, 0, 4))
             {

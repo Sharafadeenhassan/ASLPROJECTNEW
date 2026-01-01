@@ -610,7 +610,7 @@ report 50210 "Vessel Perf Grpg2 VJ"
             dataitem("Value Entry"; "Value Entry")
             {
                 DataItemLink = "Document No." = FIELD("No.");
-                DataItemTableView = SORTING("Gen. Prod. Posting Group", "Document No.") WHERE("Gen. Prod. Posting Group" = FILTER(<> 'FIS'));
+                DataItemTableView = SORTING("Document No.") WHERE("Gen. Prod. Posting Group" = FILTER(<> 'FIS'));
                 column(AGVal_Control1000000098; AGVal)
                 {
                 }

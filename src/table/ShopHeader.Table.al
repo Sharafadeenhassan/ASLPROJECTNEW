@@ -40,7 +40,7 @@ table 50051 ShopHeader
         {
             Caption = 'Invoice Total';
             FieldClass = FlowField;
-            CalcFormula = Sum("Shop Lines"."Line Amount" WHERE("Invoice No." = field("Invoice No.")));
+            CalcFormula = Sum("Shop Lines"."Line Amount" WHERE("Invoice No." = field("Invoice No."),Code = field("Shop Code")));
             Editable = false;
 
         }
@@ -48,7 +48,7 @@ table 50051 ShopHeader
         {
             Caption = 'Line Discount Amount';
             FieldClass = FlowField;
-            CalcFormula = Sum("Shop Lines".Discount WHERE("Invoice No." = field("Invoice No.")));
+            CalcFormula = Sum("Shop Lines".Discount WHERE("Invoice No." = field("Invoice No."),Code = field("Shop Code")));
             Editable = false;
 
         }
@@ -57,7 +57,7 @@ table 50051 ShopHeader
             Caption = 'Amount Due';
             Description = 'Invoice Total Less Discount';
             FieldClass = FlowField;
-            CalcFormula = Sum("Shop Lines"."Line Amount Due" WHERE("Invoice No." = field("Invoice No.")));
+            CalcFormula = Sum("Shop Lines"."Line Amount Due" WHERE("Invoice No." = field("Invoice No."),"Code" = field("Shop Code")));
             Editable = false;
 
         }
@@ -551,6 +551,7 @@ table 50051 ShopHeader
                     SalesInvLine.Validate("Shortcut Dimension 2 Code", "General Device");
                     SalesInvLine.Validate("Shortcut Dimension 1 Code", ShopSetup.Department);
                     SalesInvLine.Validate(SalesInvLine."Unit Price", SHopSaleLine."Unit Price");
+                    SalesInvLine.Validate(SalesInvLine."Line Discount %",SHopSaleLine."Discount %");
                     SalesInvLine.Modify();
                     SHopSaleLine.Posted := true;
                     SHopSaleLine.Modify();
@@ -560,8 +561,12 @@ table 50051 ShopHeader
             if PostedSaleInv.FindLast() then PDocNo := PostedSaleInv."No.";
         end;
         if rec.Paid then begin
+            SalesSetup.get();
+            if SalesSetup."Auto Post FishShop Payments" then
+            begin
             PostPayment();
             "Payment Ref" := PDocNo;
+            end;
         end;
         "Document No." := PDocNo;
         Post := true;
@@ -641,8 +646,11 @@ table 50051 ShopHeader
             //SalesHeader.SendToPosting(Codeunit::"Sales-Post") ;
         end;
         if rec.Paid then begin
+            SalesSetup.get();
+            if SalesSetup."Auto Post FishShop Payments" then begin            
             PostPayment();
             "Payment Ref" := PDocNo;
+            end;
         end;
         "Cancel No." := PDocNo;
         Cancelled := true;

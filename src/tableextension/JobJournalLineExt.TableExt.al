@@ -358,6 +358,7 @@ tableextension 50241 "Job Journal Line Ext" extends "Job Journal Line"
                     JJLine.Validate("Unit Price", itemC.Points);
                     JJLine.Validate(JJLine."Location Code", JBat.Name);
                     JJLine."Statistics Group" := ItemC."Statistics Group";
+                    JobTask.SetRange("Job No.", JBat."Job No.");
                     if JobTask.FindFirst() then
                         Jobtask_No := JobTask."Job Task No.";
                     JJLine.Validate("Job Task No.", Jobtask_No);
@@ -373,7 +374,7 @@ tableextension 50241 "Job Journal Line Ext" extends "Job Journal Line"
                     JJLine.Validate(JJLine."Shortcut Dimension 2 Code", JBat."Global Dimension 2 Code");
                     JJLine."Phase Code" := JBat."Fishing Ground"; //AA
                     JJLine."Source Code" := JBat."Fishing Ground";
-                    JobTask.SetRange("Job No.", "Job No.");
+                    JobTask.SetRange("Job No.", JBat."Job No.");
                     if JobTask.FindFirst() then
                         Jobtask_No := JobTask."Job Task No.";
                     JJLine.Validate("Job Task No.", Jobtask_No);

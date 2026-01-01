@@ -53,6 +53,26 @@ report 50145 "FishShopSales - Invoice"
             column(DisplayAdditionalFeeNote; DisplayAdditionalFeeNote)
             {
             }
+            column(LocAdd; LocAdd)
+            {
+            }
+            column(LocAdd2; LocAdd2)
+            {
+            }
+            column(LocCity; LocCity)
+            {
+            }
+            column(LocHome; LocHome)
+            {
+            }
+            column(LocEmail; LocEmail)
+            {
+            }
+            column(LocPhone; LocPhone)
+            {
+            }
+            column(FishAddress; FishAddress)
+            { }
             dataitem(CopyLoop; "Integer")
             {
                 DataItemTableView = SORTING(Number);
@@ -260,7 +280,7 @@ report 50145 "FishShopSales - Invoice"
                                     Continue := true;
                                     exit;
                                 end;
-                                
+
                             until DimSetEntry1.Next() = 0;
                         end;
 
@@ -450,7 +470,7 @@ report 50145 "FishShopSales - Invoice"
                                     SalesShipmentBuffer.Find('-')
                                 else
                                     SalesShipmentBuffer.Next;
-                                    //SNo := SNo + 1;
+                                //SNo := SNo + 1;
                             end;
 
                             trigger OnPreDataItem()
@@ -885,11 +905,23 @@ report 50145 "FishShopSales - Invoice"
             trigger OnAfterGetRecord()
             var
                 Handled: Boolean;
+
+
             begin
                 CurrReport.Language := Language.GetLanguageIdOrDefault("Language Code");
 
                 FormatAddressFields("Sales Invoice Header");
                 FormatDocumentFields("Sales Invoice Header");
+                if FishLocation.Get("Sales Invoice Header"."Location Code") then begin
+                    LocAdd := FishLocation.Address;
+                    LocAdd2 := FishLocation."Address 2";
+                    LocCity := FishLocation.City;
+                    LocPhone := FishLocation."Phone No.";
+                    LocHome := FishLocation."Home Page";
+                    LocEmail := FishLocation."E-Mail";
+                    FishAddress := LocAdd +', '+ LocAdd2 + ', '+ LocCity;
+                end;
+
 
                 if not Cust.Get("Bill-to Customer No.") then
                     Clear(Cust);
@@ -1112,7 +1144,15 @@ report 50145 "FishShopSales - Invoice"
         VATPercentageCaptionLbl: Label 'VAT %';
         TotalCaptionLbl: Label 'Total';
         VATBaseCaptionLbl: Label 'VAT Base';
-        SNo : Integer;
+        SNo: Integer;
+        FishLocation: Record Location;
+        LocPhone: Text[30];
+        LocAdd: Text[100];
+        LocAdd2: Text[50];
+        LocCity: Text[30];
+        LocHome: Text[90];
+        LocEmail: Text[80];
+        FishAddress: Text[200];
         VATAmtCaptionLbl: Label 'VAT Amount';
         VATIdentifierCaptionLbl: Label 'VAT Identifier';
         HomePageCaptionLbl: Label 'Home Page';

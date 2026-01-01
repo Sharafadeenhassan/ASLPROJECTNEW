@@ -101,6 +101,11 @@ tableextension 50214 "tableextension50214" extends "Purch. Inv. Line"
         {
             TableRelation = "Purchase Requisition1"."Req No.";
             Editable = false;
+        }        
+        field(50367;"DPS Line No";Integer)
+        {
+            TableRelation = "Dynamics Procurement Register"."Line No." where("DPS Code" = field("DPS No."));
+            Editable = false;
         }
     }
     keys

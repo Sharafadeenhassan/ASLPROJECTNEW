@@ -4,15 +4,15 @@ pageextension 50032 "Item Lookup Ext" extends "Item Lookup"
     {
         addafter(Description)
         {
-            field("FT Product"; "FT Product")
+            field("FT Product"; rec."FT Product")
             {
                 Visible = true;
             }
-            field(Inventory; Inventory)
+            field(Inventory; rec.Inventory)
             {
                 Visible = true;
             }
-            field("CRM / STR"; "CRM / STR")
+            field("CRM / STR"; rec."CRM / STR")
             {
                 Visible = true;
             }

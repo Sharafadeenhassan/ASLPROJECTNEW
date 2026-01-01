@@ -66,11 +66,20 @@ table 50053 "Dynamics Procurement Header"
         {
             Caption = 'Store Approved';
             trigger OnValidate()
+
             begin
-                if "Return To For Process" <> UserId then Error('This Document is not for you to Process');
+                if "2nd Approval Store" <> UserId then Error('This Document is not for you to Process');
                 TestField(Approved, true);
                 //xRec.TestField(xRec.Processed,false);
                 if Processed then begin
+                    DPSReg.Reset();
+                    DPSReg.SetRange(DPSReg."DPS Code", Rec."DPS No.");
+                    if DPSReg.FindFirst() then
+                        repeat
+                            DPSReg."Line Amount" := DPSReg."Approved Order Quantity" * DPSReg."Unit Price";
+                            DPSReg.Approved := True;
+                            DPSReg.Modify()
+                        until DPSReg.Next() = 0;
                     "Process By Name" := UserId;
                     "Process By" := UserId;
                     "Process Date" := Today;
@@ -144,25 +153,30 @@ table 50053 "Dynamics Procurement Header"
             trigger OnValidate()
             begin
                 TestField("Send For Approval", true);
-                if "Sent To For Approval" <> UserId then Error('This Document is not for your Approval');
+                if "1st Approval HOD" <> UserId then Error('This Document is not for your Approval');
 
                 DPSLine.SetRange(DPSLine."DPS Code", rec."DPS No.");
                 DPSLine.SetFilter(DPSLine."HOD Approved Qty", '<=%1', 0);
                 if DPSLine.FindSet() then Error('Line(s) without HOD Approved Quantity Exist Please Input Quantity or Delete Line to Continue');
+                DPSLine.Reset();
                 if Approved then begin
-                    //
                     "Approved By" := UserId;
                     "Approved Time" := CurrentDateTime;
                     "Return Time" := CurrentDateTime;
                     if DPSRec.Get(rec."DPS No.") then begin
                         DPSRec.SetRange(DPSRec."DPS No.", Rec."DPS No.");
-
                         DPSRec.SetRecFilter();
                         MdAppRep.SetTableView(DPSRec);
                         MdAppRep.UseRequestPage(true);
                         MdAppRep.Run();
+                        //Report.run(50219,true,true,rec);
                     end;
-                    //Report.run(50219,true,true,rec);
+                    DPSReg.SetRange(DPSReg."DPS Code", Rec."DPS No.");
+                    if DPSReg.FindFirst() then
+                        repeat
+                            DPSReg."Approved Order Quantity" := DPSReg."HOD Approved Qty";
+                            DPSReg.Modify()
+                        until DPSReg.Next() = 0;
                 end else begin
                     "Approved By" := '';
                     "Approved Time" := 0DT;
@@ -179,10 +193,10 @@ table 50053 "Dynamics Procurement Header"
         field(21; "Send for Approval Time"; DateTime)
         {
         }
-        field(22; "Sent To For Approval"; Code[50])
+        field(22; "1st Approval HOD"; Code[50])
         {
             TableRelation = "User Setup"."User ID" where("Store Req 1st Approval" = const(true),
-                                                "Shortcut Dimension 1 Code"=field("Req Department"));
+                                                "Shortcut Dimension 1 Code" = field("Req Department"));
         }
         field(23; Supplier; Code[20])
         {
@@ -199,7 +213,7 @@ table 50053 "Dynamics Procurement Header"
         field(24; "Supplier Name"; Text[50])
         {
         }
-        field(25; "Return To For Process"; Code[20])
+        field(25; "2nd Approval Store"; Code[20])
         {
             Caption = 'For Store Approval';
             TableRelation = "User Setup"."User ID" where("Store Req Final Approval" = const(true));
@@ -258,7 +272,7 @@ table 50053 "Dynamics Procurement Header"
         field(34; "Requisition Date"; Date)
         {
         }
-        Field(35; "DPS Completed";Boolean)
+        Field(35; "DPS Completed"; Boolean)
         {
 
         }
@@ -276,6 +290,8 @@ table 50053 "Dynamics Procurement Header"
 
     fieldgroups
     {
+        fieldgroup(DropDown; "DPS No.", "Base Date", "Req Department")
+        { }
     }
 
     trigger OnInsert()
@@ -292,6 +308,7 @@ table 50053 "Dynamics Procurement Header"
         ItemRec: Record Item;
         DPSLine: Record "Dynamics Procurement Register";
         LineNo: Integer;
+        DPSReg: Record "Dynamics Procurement Register";
         InventSetup: Record "Inventory Setup";
         NoSeriesMgt: Codeunit NoSeriesManagement;
         UserRec: Record User;
@@ -365,6 +382,10 @@ table 50053 "Dynamics Procurement Header"
                     PurchInvline.Validate(Quantity, ReqLines."Approved Order Quantity");
                     //PurchInvline.VALIDATE(PurchInvline."Direct Unit Cost",ReqLines."Unit Price");
                     //PurchInvline.VALIDATE(PurchInvline."Expected Receipt Date",TODAY);
+                    if ReqLines."Unit Of Measure" <> '' then 
+                    PurchInvLine."Unit of Measure" := ReqLines."Unit Of Measure";
+                    PurchInvLine."DPS Line No" := ReqLines."Line No.";
+                    PurchInvLine."DPS No." := ReqLines."DPS Code";
                     PurchInvline.Modify();
                     ReqLines.processed := true;
                     UserSecID := DATABASE.UserSecurityId();
@@ -399,11 +420,13 @@ table 50053 "Dynamics Procurement Header"
                 Purcreq.Description := DPSRec.Description;
                 Purcreq."Req. Line No." := DPSRec."Line No.";
                 Purcreq."Req Location" := DPSRec."Location Code";
-                Purchreq."Req. By" := "Approved By";
-                Purchreq."Req. Date" := "Approved Time";
+                Purchreq."Req. By" := Rec."Approved By";
+                Purchreq."Req. Date" := rec."Approved Time";
                 Purcreq.Quantity := DPSRec."Approved Order Quantity";
                 Purcreq."Req Department" := rec."Req Department";
                 Purcreq."Puch.Req Line No." := "LineNo.";
+                Purcreq."DPS HOD Qty" := DPSRec."HOD Approved Qty";
+                Purcreq."DPS Req Qty" := DPSRec."Requested Quantity";
                 DPSRec.Validate(DPSRec.processed, true);
                 Purchreq."Store Manager" := rec."Process By";
                 Purcreq.Insert();

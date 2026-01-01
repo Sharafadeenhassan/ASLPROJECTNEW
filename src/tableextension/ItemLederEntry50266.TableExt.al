@@ -24,7 +24,7 @@ tableextension 50266 "Item Ledger entry Ext" extends "Item Ledger Entry"
             FieldClass = FlowField;
             Editable = false;
         }
-        field(50030; "Applied Qty Posistive"; Decimal)
+        field(50030; "Applied Qty Positive"; Decimal)
         {
             CalcFormula = Sum("Item Application Entry".Quantity WHERE("Inbound Item Entry No." = FIELD("Entry No."),
                                                                        "Outbound Item Entry No." = FILTER(<> 0),

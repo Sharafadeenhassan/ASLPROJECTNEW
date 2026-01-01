@@ -1,0 +1,32 @@
+{
+  "objectRanges": [
+    {
+      "from": 50000,
+      "to": 51999,
+      "prefix": "ASL",
+      "description": "ASL Fishing  Management System Objects"
+    }
+  ],
+  "assignedObjects": {
+    "codeunit": "50000-50999",
+    "table": "50000-50999",
+    "page": "50000-50999",
+    "report": "50000-50999",
+    "query": "50000-50999",
+    "xmlport": "50000-50999",
+    "enum": "50000-50999",
+    "enumextension": "50000-51999",
+    "tableextension": "50000-51999",
+    "pageextension": "50000-51999",
+    "reportextension": "50000-51999"
+  },
+  "validateOnSave": true,
+  "showWarnings": true,
+  "checkForConflicts": true,
+  "suppressNotAssignedWarnings": true,
+  "autoAssignIds": true,
+  "autoAssignOnSave": true,
+  "autoAssignOnCompile": true,
+  "warnOnDuplicateIds": true,
+  "warnOnOutOfRangeIds": true
+}

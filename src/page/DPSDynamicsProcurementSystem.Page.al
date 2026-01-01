@@ -27,47 +27,50 @@ page 50120 "Dynamics Procurement System"
                 }
                 field("Location Code"; Rec."Location Code")
                 {
-                    ApplicationArea = All;                    
+                    ApplicationArea = All;
                 }
                 field("Req Department"; rec."Req Department")
                 {
                     ApplicationArea = All;
                 }
-                field("Item Filter"; Rec."Item Filter")
-                {
-                    Importance = Additional;
-                    Visible = false;
-                    ApplicationArea = All;
-                }
-                field("Maxmum Order Period"; Rec."Maxmum Order Period")
-                {
-                    ApplicationArea = All;
-                    Visible = false;
-                }
-                field("Inventory Group Filter"; Rec."Inventory Group Filter")
-                {
-                    Importance = Additional;
-                    ApplicationArea = All;
-                    Visible = false;
-                }
-                field("Suggest Items"; Rec."Suggest Items")
-                {
-                    Importance = Additional;
-                    ApplicationArea = All;
-                    Visible = false;
-                }
-                field("Update Record"; Rec."Update Record")
-                {
-                    Importance = Additional;
-                    ApplicationArea = All;
-                    Visible = false;
-                }
-                field("Gen. Product Posting Group"; Rec."Gen. Product Posting Group")
-                {
-                    Importance = Additional;
-                    ApplicationArea = All;
-                    Visible = false;
-                }
+                /*group(Special)
+                {                 
+                    field("Item Filter"; Rec."Item Filter")
+                    {
+                        Importance = Additional;
+                        Visible = false;
+                        ApplicationArea = All;
+                    }
+                    field("Maxmum Order Period"; Rec."Maxmum Order Period")
+                    {
+                        ApplicationArea = All;
+                        Visible = false;
+                    }
+                    field("Inventory Group Filter"; Rec."Inventory Group Filter")
+                    {
+                        Importance = Additional;
+                        ApplicationArea = All;
+                        Visible = false;
+                    }
+                    field("Suggest Items"; Rec."Suggest Items")
+                    {
+                        Importance = Additional;
+                        ApplicationArea = All;
+                        Visible = false;
+                    }
+                    field("Update Record"; Rec."Update Record")
+                    {
+                        Importance = Additional;
+                        ApplicationArea = All;
+                        Visible = false;
+                    }
+                    field("Gen. Product Posting Group"; Rec."Gen. Product Posting Group")
+                    {
+                        Importance = Additional;
+                        ApplicationArea = All;
+                        Visible = false;
+                    }
+                }*/
             }
             part("Requested Items"; "Dynamics Procurement SubPage")
             {
@@ -79,13 +82,13 @@ page 50120 "Dynamics Procurement System"
             group(Approval)
             {
                 Editable = rec.Processed = false;
-                field("Sent For 1st Approval (HOD)"; Rec."Sent To For Approval")
+                field("Sent For 1st Approval (HOD)"; Rec."1st Approval HOD")
                 {
                     //Caption = 'Send  To for HOD Approval';
                     ApplicationArea = All;
                     Editable = rec."Send For Approval" = false;
                 }
-                field("Sent For 2nd Approval (Store)"; rec."Return To For Process")
+                field("Sent For 2nd Approval (Store)"; rec."2nd Approval Store")
                 {
                     ApplicationArea = All;
                     //Caption = 'Sent To For Store Process';
@@ -147,7 +150,7 @@ page 50120 "Dynamics Procurement System"
                 }
                 group("Generate Order")
                 {
-                    field("Send to StoreKeeper";rec."Send to StoreKeeper")
+                    field("Send to StoreKeeper"; rec."Send to StoreKeeper")
                     {
                         ApplicationArea = all;
                         Editable = rec.Processed = false;
@@ -156,7 +159,7 @@ page 50120 "Dynamics Procurement System"
                     field("Store Approval"; Rec.Processed)
                     {
                         ApplicationArea = All;
-                        Editable = rec."Send to StoreKeeper" <>'';
+                        Editable = rec."Send to StoreKeeper" <> '';
                     }
                     field("Store Approved Date"; Rec."Process Date")
                     {
@@ -168,7 +171,7 @@ page 50120 "Dynamics Procurement System"
                     {
                         ApplicationArea = All;
                         Editable = false;
-                                            }
+                    }
                     field("Store Approved By Name"; Rec."Process By Name")
                     {
                         Visible = false;
@@ -236,13 +239,23 @@ page 50120 "Dynamics Procurement System"
                     DPSRec: Record "Dynamics Procurement Header";
                 begin
                     DPSRec := Rec;
-                    if rec."Sent To For Approval" <> UserId then
+                    if rec."1st Approval HOD" <> UserId then
                         Error('You are not allowed to print This Document');
                     if not DPSRec.Approved then Error('Please Approve this Document Before you Print');
                     Report.Run(50219, true, true, DPSRec);
                 end;
             }
+            action("Print DPS Avg Consumption List")
+            {
+                Image = Print;
+                Promoted = true;
+                ApplicationArea = All;
+                Caption = 'Print DPS Average Consumption List';
+                RunObject = report "DPS AVG Consumption List";
+                //RunPageOnRec = true;   
 
+
+            }
         }
     }
 }

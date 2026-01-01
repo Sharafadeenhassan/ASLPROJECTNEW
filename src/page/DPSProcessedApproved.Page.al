@@ -8,10 +8,11 @@ page 50127 "Processed Approved DPS"
     UsageCategory = Lists;
     ApplicationArea = All, Basic;
     SourceTable = "Dynamics Procurement Header";
-    SourceTableView = SORTING("DPS No.")
+    SourceTableView = SORTING("DPS No.") order(descending)
                       WHERE(Processed = CONST(true),
                             "Send For Approval" = CONST(true),
                             Approved = CONST(true));
+                            
     Caption = 'Processed Approved DPS';
     layout
     {

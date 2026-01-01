@@ -10,29 +10,29 @@ pageextension 50279 "pageextension50279" extends "Inventory Setup"
                 {
                     ApplicationArea = All;
                 }
-                field("DPS No. Series";"DPS No. Series")
+                field("DPS No. Series"; Rec."DPS No. Series")
                 {
                     ApplicationArea = All;
                 }
-                field("Store Req. Add-In No.";"Store Req. Add-In No.")
+                field("Store Req. Add-In No."; Rec."Store Req. Add-In No.")
                 {
                     ApplicationArea = All;
                 }
-                field("Store Req. Compliment No.";"Store Req. Compliment No.")
-                {
-                    ApplicationArea = All;                    
-                }
-                field("Store Req. Invoice No.";"Store Req. Invoice No.")
+                field("Store Req. Compliment No."; Rec."Store Req. Compliment No.")
                 {
                     ApplicationArea = All;
                 }
-                field("Store Req. Purchase No.";"Store Req. Purchase No.")
+                field("Store Req. Invoice No."; Rec."Store Req. Invoice No.")
                 {
                     ApplicationArea = All;
                 }
-                field("Store Req. Transfer No.";"Store Req. Transfer No.")
+                field("Store Req. Purchase No."; Rec."Store Req. Purchase No.")
                 {
-                    ApplicationArea= All;
+                    ApplicationArea = All;
+                }
+                field("Store Req. Transfer No."; Rec."Store Req. Transfer No.")
+                {
+                    ApplicationArea = All;
                 }
                 field("Auto Post Issue Req"; Rec."Auto Post Issue Req")
                 {
@@ -42,7 +42,7 @@ pageextension 50279 "pageextension50279" extends "Inventory Setup"
                 {
                     ApplicationArea = All;
                 }
-                field("Auto Post Job Journal";"Auto Post Job Journal")
+                field("Auto Post Job Journal"; Rec."Auto Post Job Journal")
                 {
                     ApplicationArea = All;
                 }

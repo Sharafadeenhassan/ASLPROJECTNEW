@@ -72,7 +72,7 @@ report 50221 "VI Fish Shop Sales Report"
             }
             dataitem(Item; Item)
             {
-                DataItemTableView = SORTING("SF Cat", "No. 2") WHERE("Gen. Prod. Posting Group" = FILTER('FIS'), "Sales (Qty.)" = FILTER(<> 0), "Location Filter" = FILTER('VIFISHSHOP'));
+                DataItemTableView = SORTING("No.") WHERE("Gen. Prod. Posting Group" = FILTER('FIS'), "Sales (Qty.)" = FILTER(<> 0), "Location Filter" = FILTER('VIFISHSHOP'));
                 RequestFilterFields = "Date Filter";
                 column(Item__Item_Category_Code_; "Item Category Code")
                 {

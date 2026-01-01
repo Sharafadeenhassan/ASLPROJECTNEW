@@ -29,42 +29,6 @@ tableextension 50324 "tableextension50324" extends "Gen. Journal Line"
         {
             TableRelation = Maintenance.Code WHERE(Type = CONST(ITGEN));
         }
-
-        //Unsupported feature: Code Modification on "Amount(Field 13).OnValidate".
-
-        //trigger OnValidate()
-        //Parameters and return type have not been exported.
-        //>>>> ORIGINAL CODE:
-        //begin
-        /*
-        ValidateAmount;
-        */
-        //end;
-        //>>>> MODIFIED CODE:
-        //begin
-        /*
-        //AAA/Jan 2002/Sta
-        if ("External Document No."<>'') and ("Maintenance Code"<>'') and ("FA Posting Type"="FA Posting Type"::Maintenance)then
-        begin
-        if ItemRec.Get("External Document No.") then
-            begin
-              if ItemRec."Costing Method"=ItemRec."Costing Method"::Average then
-              begin
-                ItemRec.SetRange(ItemRec."No.");
-                ItemCostMgt.CalculateAverageCost(ItemRec,AverageCostLCY,AverageCostACY);
-                "Amount (LCY)":=Quantity*AverageCostLCY;
-              end else
-                "Amount (LCY)":=Quantity*ItemRec."Unit Cost";
-            end;
-            if ("Currency Code"<>'') then
-              Amount:= Round(CurrExchRate.ExchangeAmtLCYToFCY("Posting Date","Currency Code","Amount (LCY)","Currency Factor"))
-            else
-              Amount:="Amount (LCY)";
-        end;
-        //AAA/Jan 2002/Sto
-        ValidateAmount;
-        */
-        //end;
         field(50000; "Ready to Post"; Boolean)
         {
         }
@@ -79,46 +43,22 @@ tableextension 50324 "tableextension50324" extends "Gen. Journal Line"
         field(50302; Description1; Text[50])
         {
         }
+        field(50303;"DPS No.";Code[20])
+        {
+          Description = 'Store DPS No from the Dynamic Procurement System';
+        }
     }
-
-    //Unsupported feature: Code Modification on "ExportPaymentFile(PROCEDURE 81)".
-
-    //procedure ExportPaymentFile();
-    //Parameters and return type have not been exported.
-    //>>>> ORIGINAL CODE:
-    //begin
-    /*
-    if not FindSet then
-      Error(NothingToExportErr);
-    SetRange("Journal Template Name","Journal Template Name");
-    SetRange("Journal Batch Name","Journal Batch Name");
-    TestField("Check Printed",false);
-
-    CheckDocNoOnLines;
-    if IsExportedToPaymentFile then
-    #9..12
-      CODEUNIT.Run(BankAcc.GetPaymentExportCodeunitID,Rec)
-    else
-      CODEUNIT.Run(CODEUNIT::"Exp. Launcher Gen. Jnl.",Rec);
-    */
-    //end;
-    //>>>> MODIFIED CODE:
-    //begin
-    /*
-    #1..4
-    #6..15
-    */
-    //end;
-
+   
     procedure "SALAD/IOU"()
+    var LoanRec: Record "Loan.";
     begin
-        /*IF "Reason Code"='SALAD' THEN
+      /*IF "Reason Code"='SALAD' THEN
         BEGIN
           LoanRec.INIT;
           TESTFIELD("Account Type",2);
           LoanRec."Loan ID":='SLD'+"Account No.";
           LoanRec."Staff No.":="Account No.";
-          LoanRec."Loan Type":='SALAD';
+          LoanRec."Loan Type":= 'SALAD';
           LoanRec.Description:=
           LoanRec."Acct. Type":=
           LoanRec."Acct. No.":=

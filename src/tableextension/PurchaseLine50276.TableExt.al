@@ -11,21 +11,7 @@ tableextension 50276 "tableextension50276" extends "Purchase Line"
                     "QtytoReceiveAmount(LCY)" := ROUND(("Qty. to Receive" * "Outstanding Amount (LCY)") / "Outstanding Quantity");
             end;
         }
-        //Unsupported feature: Property Insertion (InitValue) on ""Indirect Cost %"(Field 54)".
-
-        //Unsupported feature: Code Modification on ""Direct Unit Cost"(Field 22).OnValidate".
-
-        //trigger OnValidate()
-        //Parameters and return type have not been exported.
-        //>>>> ORIGINAL CODE:
-        //begin
-        /*
-        Validate("Line Discount %");
-        */
-        //end;
-        //>>>> MODIFIED CODE:
-        //begin
-
+        
         modify("Direct Unit Cost")
         {
             trigger OnAfterValidate()
@@ -38,39 +24,7 @@ tableextension 50276 "tableextension50276" extends "Purchase Line"
             end;
             //SSNL-Jul2020-End
         }
-        //end;
-
-        //Unsupported feature: Property Deletion (MinValue) on ""Indirect Cost %"(Field 54)".
-
-        //Unsupported feature: Code Modification on ""Unit of Measure Code"(Field 5407).OnValidate".
-
-        //trigger OnValidate()
-        //Parameters and return type have not been exported.
-        //>>>> ORIGINAL CODE:
-        //begin
-        /*
-        TestStatusOpen;
-        TestField("Quantity Received",0);
-        TestField("Qty. Received (Base)",0);
-        TestField("Qty. Rcd. Not Invoiced",0);
-        TestField("Return Qty. Shipped",0);
-        TestField("Return Qty. Shipped (Base)",0);
-        if "Unit of Measure Code" <> xRec."Unit of Measure Code" then begin
-          TestField("Receipt No.",'');
-          TestField("Return Shipment No.",'');
-        #10..47
-          "Qty. per Unit of Measure" := 0;
-
-        Validate(Quantity);
-        */
-        //end;
-        //>>>> MODIFIED CODE:
-        //begin
-        /*
-        #1..4
-        #7..50
-        */
-        //end;
+                
         field(50005; "QtytoReceiveAmount(LCY)"; Decimal)
         {
             Description = 'LC';

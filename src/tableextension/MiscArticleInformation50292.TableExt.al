@@ -5,14 +5,16 @@ tableextension 50292 "tableextension50292" extends "Misc. Article Information"
         //Unsupported feature: Code Modification on ""Misc. Article Code"(Field 2).OnValidate".
         modify("Misc. Article Code")
         {
-            trigger onaftervalidate()
+            trigger OnAftervalidate()
             var
                 MiscArticle: Record "Misc. Article";
             begin
+                if MiscArticle.Get("Misc. Article Code") then begin
                 "Mat Type" := MiscArticle."Mat Type";
                 "Item No." := MiscArticle."Item No.";
                 Returnable := MiscArticle.Replaceable;
                 "Replacement Interval" := MiscArticle."Replacement Interval";
+                end;
             end;
         }
         //trigger  Article Code"(Field 2)()

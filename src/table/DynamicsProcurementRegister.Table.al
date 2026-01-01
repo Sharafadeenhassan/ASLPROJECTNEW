@@ -15,6 +15,7 @@ table 50052 "Dynamics Procurement Register"
             trigger OnValidate()
             begin
                 if ItemRec.Get("Item No.") then begin
+                    "Unit Of Measure" := ItemRec."Base Unit of Measure";
                     DPSHeader.Get("DPS Code");
                     if DPSHeader.Approved then Error('This Document has been Approved By HOD You Cannot Change/Add Item');
                     "Location Code" := DPSHeader."Location Code";
@@ -31,6 +32,7 @@ table 50052 "Dynamics Procurement Register"
                     "Inventory Group" := ItemRec."Inventory Posting Group";
                     "Lead Time" := ItemRec."Lead Time Calculation";
                     "Item Category" := ItemRec."Item Category Code";
+                    "Gen Product Group" := ItemRec."Gen. Prod. Posting Group";
                     if ItemRec."Average Consumption Base" <> 0 then
                         "Average Consumption Base" := ItemRec."Average Consumption Base"
                     else
@@ -186,6 +188,15 @@ table 50052 "Dynamics Procurement Register"
                 end else
                     "Available Stock Months" := 0;
                 Validate("Maximum Stock Period", DPSHeader."Maxmum Order Period");
+
+                //Calculate Last Purchase Price
+                PPI.SetCurrentKey(PPI."Posting Date");
+                PPI.SetFilter(PPI."No.", '%1', "Item No.");
+                if PPI.FindLast() then begin
+                    LPPrice := PPI."Unit Cost (LCY)";
+                    LPDate := PPI."Posting Date";
+                    LPInv := PPI."Document No.";
+                end;
             end;
         }
         field(3; Description; Text[50])
@@ -356,7 +367,7 @@ table 50052 "Dynamics Procurement Register"
                     else
                         "Suggested Order Quantity" := 0;
                     "Line Amount" := "Suggested Order Quantity" * "Unit Price";
-                    // validate("Approved Order Quantity","Surgested Order Quantity");
+                    // validate("Approved Order Quantity","Suggested Order Quantity");
                 end;
             end;
         }
@@ -402,7 +413,6 @@ table 50052 "Dynamics Procurement Register"
                     "Line Amount" := "Approved Order Quantity" * "Unit Price";
                     Approved := true;
                     //processed := true;
-
                 end
             end;
         }
@@ -418,17 +428,7 @@ table 50052 "Dynamics Procurement Register"
         }
         field(41; Approved; Boolean)
         {
-            Caption = 'Store Approved';
-            /*
-                     trigger OnValidate()
-                        begin
-                            DPSHeader.Get(rec."DPS Code");
-                            DPSHeader.TestField(DPSHeader."Send For Approval",true);
-                            if Approved then
-                                if "Approved Order Quantity" <= 0 then if Confirm('HOD Approved Qty will be Taking as Approved Quantity',false) then
-                                    Validate(rec."Approved Order Quantity", rec."HOD Approved Qty");                      
-                        end;
-                    */
+            Caption = 'Store Approved';            
         }
         field(42; "Unit Price"; Decimal)
         {
@@ -478,8 +478,8 @@ table 50052 "Dynamics Procurement Register"
                 DPSHeader.Get("DPS Code");
                 if DPSHeader."Send For Approval" then error('You Cannot Change Requested Quantity');
                 if DPSHeader.Approved then Error('This Document has been Approved By HOD You Cannot Change Requested Qty');
-                   rec.validate(Rec."HOD Approved Qty",rec."Requested Quantity");
-            end;     
+                rec.validate(Rec."HOD Approved Qty", rec."Requested Quantity");
+            end;
         }
         field(49; "Req+Ava Qty"; Decimal)
         {
@@ -489,7 +489,7 @@ table 50052 "Dynamics Procurement Register"
                 DPSHeader.Get("DPS Code");
                 if DPSHeader.Approved then Error('This Document has been Approved By HOD You Cannot Change Requested Qty');
                 if "Suggested Order Quantity" = 0 then validate("Suggested Order Quantity", "Requested Quantity");
-                    rec.Validate(rec."Line Amount", rec."HOD Approved Qty" * rec."Unit Price");
+                rec.Validate(rec."Line Amount", rec."HOD Approved Qty" * rec."Unit Price");
                 case rec."Average Consumption Base" of
                     0:
                         if "Last 3 Years Monthly Average" <> 0 then
@@ -580,44 +580,93 @@ table 50052 "Dynamics Procurement Register"
             DecimalPlaces = 0 : 2;
             trigger OnValidate()
             begin
-                IF "HOD Approved Qty" < 0 then Error('Quantity Cannot be Negative'); 
-                rec.Validate("Req+Ava Qty",("HOD Approved Qty" + "Available Quantity"));                 
+                IF "HOD Approved Qty" < 0 then Error('Quantity Cannot be Negative');
+                rec.Validate("Req+Ava Qty", ("HOD Approved Qty" + "Available Quantity"));
             end;
         }
-        field(56;"Security Check";Boolean)
+        field(56; "Security Check"; Boolean)
         {
             Editable = false;
             FieldClass = FlowField;
-            CalcFormula = exist("Purchase Requisition1" where("Req No."=field("DPS Code"),"Req. Line No."= field("Line No."),"Security checked"=const(true)));
-            }
-        field(57;"Qcc Checked";Boolean)
-        {
-            Editable = false;
-             FieldClass = FlowField;
-            CalcFormula = exist("Purchase Requisition1" where("Req No."=field("DPS Code"),"Req. Line No."= field("Line No."),"QCC Check"=const(true)));
+            CalcFormula = exist("Purchase Requisition1" where("Req No." = field("DPS Code"), "Req. Line No." = field("Line No."), "Security checked" = const(true)));
         }
-        field(58;"Ready For GRN";Boolean)
-        {
-            Editable = false;
-             FieldClass = FlowField;
-            CalcFormula = exist("Purchase Requisition1" where("Req No."=field("DPS Code"),"Req. Line No."= field("Line No."),
-            "Security checked"=const(true),"QCC Check" = const(true),"Procurement Mgr. Action"=const(Approved)));
-        }
-        field(59;"PO No.";Code[20])
+        field(57; "Qcc Checked"; Boolean)
         {
             Editable = false;
             FieldClass = FlowField;
-            CalcFormula = lookup("Purchase Requisition1"."Invoice No." where("Req No." =field("DPS Code"),
+            CalcFormula = exist("Purchase Requisition1" where("Req No." = field("DPS Code"), "Req. Line No." = field("Line No."), "QCC Check" = const(true)));
+        }
+        field(58; "Ready For GRN"; Boolean)
+        {
+            Editable = false;
+            FieldClass = FlowField;
+            CalcFormula = exist("Purchase Requisition1" where("Req No." = field("DPS Code"), "Req. Line No." = field("Line No."),
+            "Security checked" = const(true), "QCC Check" = const(true), "Procurement Mgr. Action" = const(Approved)));
+        }
+        field(59; "PO No."; Code[20])
+        {
+            Editable = false;
+            FieldClass = FlowField;
+            CalcFormula = lookup("Purchase Requisition1"."Invoice No." where("Req No." = field("DPS Code"),
                                 "Req. Line No." = field("Line No.")));
             TableRelation = "Purchase Header"."No.";
             ValidateTableRelation = false;
         }
-        field(60;"PI No.";Code[20])
+        field(60; "PI No."; Code[20])
         {
             FieldClass = FlowField;
-            CalcFormula = lookup("Purch. Inv. Header"."No." where ("Order No."= field("PO No.")));
+            CalcFormula = lookup("Purch. Inv. Header"."No." where("Order No." = field("PO No.")));
             Editable = false;
         }
+        field(61; Remark; Text[100])
+        {
+        }
+        field(62; "Qty Supplied"; Decimal)
+        {
+            Editable = false;
+            FieldClass = FlowField;
+            CalcFormula = sum("Purchase Requisition1"."QCC Check Quantity" where("Req No." = field("DPS Code"), "Req. Line No." = field("Line No."),
+                                "QCC Check" = const(true), Process = const(true)));
+        }
+        field(63; "Short Supplied"; Boolean)
+        {
+            Editable = false;
+
+        }
+        field(64; "Short Supplied Quantity"; Decimal)
+        {
+            Editable = false;
+
+        }
+        field(65; "Multiple Supply"; Boolean)
+        {
+            Editable = false;
+        }
+        field(66; "LPPrice"; Decimal)
+        {
+            Editable = false;
+            Description = 'Last Purchase Price';
+        }
+        field(67; "LPDate"; Date)
+        {
+            Editable = false;
+            Description = 'Last Purchase Date';
+        }
+        field(68; "LPInv"; Code[20])
+        {
+            Editable = false;
+            Description = 'Last Purchase Invoice No.';
+        }
+        field(69; "Gen Product Group"; Code[20])
+        {
+            Editable = false;
+        }
+        field(70;"Unit Of Measure";Code[20])
+        {
+            TableRelation = "Item Unit of Measure" where("Item No." = field("Item No."));
+            Description = 'Item Unit of Measure';
+            Editable = false;
+        }        
 
     }
 
@@ -627,6 +676,8 @@ table 50052 "Dynamics Procurement Register"
         {
             Clustered = true;
         }
+        key(Key2;"Item No.")
+        {}
     }
 
     fieldgroups
@@ -639,7 +690,7 @@ table 50052 "Dynamics Procurement Register"
     trigger OnInsert()
     begin
         DPSHeader.Get("DPS Code");
-       if DPSHeader."Send For Approval" then error('You Cannot Insert a new Line Once Document Has been sent for HOD Approval');
+        if DPSHeader."Send For Approval" then error('You Cannot Insert a new Line Once Document Has been sent for HOD Approval');
         DPSHeader.SetFilter(DPSHeader."DPS No.", '%1', "DPS Code");
         if DPSHeader.FindFirst() then begin
             DPSHeader.TestField(DPSHeader."Base Date");
@@ -658,9 +709,8 @@ table 50052 "Dynamics Procurement Register"
 
     trigger OnDelete()
     begin
-        if DPSHeader.Get(rec."DPS Code") then
-        begin
-            DPSHeader.TestField(DPSHeader."Send For Approval",false);
+        if DPSHeader.Get(rec."DPS Code") then begin
+            DPSHeader.TestField(DPSHeader."Send For Approval", false);
             DPSHeader.TestField(DPSHeader.Approved, false);
         end;
 
@@ -680,6 +730,7 @@ table 50052 "Dynamics Procurement Register"
         LeadS: Text;
         StocS: Text;
         Text0001: Label 'Purchase Order No. ''%1'' has been Created for %2 ';
+        PPI: Record "Purch. Inv. Line";
 
     //[Scope('OnPrem')]
     procedure CreatePurchInv()
@@ -727,6 +778,8 @@ table 50052 "Dynamics Procurement Register"
                     PurchInvLine.Validate(PurchInvLine.Type, PurchInvLine.Type::Item);
                     PurchInvLine."Location Code" := ReqLines."Location Code";
                     PurchInvLine.Validate("No.", ReqLines."Item No.");
+                    PurchInvLine."DPS Line No" := ReqLines."Line No.";
+                    PurchInvLine."DPS No." := ReqLines."DPS Code";
                     PurchInvLine.Validate(Quantity, ReqLines."Approved Order Quantity");
                     PurchInvLine.Validate(PurchInvLine."Direct Unit Cost", ReqLines."Unit Price");
                     //PurchInvLine.VALIDATE(PurchInvLine."Expected Receipt Date",TODAY);
@@ -762,6 +815,7 @@ table 50052 "Dynamics Procurement Register"
                 Purcreq.Init();
                 Purcreq.Validate(Purcreq."Req No.", DPSRec."DPS Code");
                 Purcreq.Validate(Purcreq."Item No.", DPSRec."Item No.");
+                Purchreq."Unit Of Measure" := DPSRec."Unit Of Measure";
                 Purcreq.Description := DPSRec.Description;
                 Purcreq."Req. Line No." := DPSRec."Line No.";
                 Purcreq."Req Location" := DPSRec."Location Code";

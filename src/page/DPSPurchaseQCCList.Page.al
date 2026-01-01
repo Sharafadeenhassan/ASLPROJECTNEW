@@ -36,6 +36,11 @@ page 50117 "Purchase Request QCC List"
                     Editable = false;
                     ApplicationArea = All;
                 }
+                field("Unit Of Measure";rec."Unit Of Measure")
+                {
+                    Editable = False;
+                    ApplicationArea = All;
+                }
                 field("Req. By Name"; Rec."Req. By Name")
                 {
                     Editable = false;

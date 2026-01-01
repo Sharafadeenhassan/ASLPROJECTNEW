@@ -8,7 +8,7 @@ pageextension 50315 "pageextension50315" extends "Fixed Asset List"
             {
                 ApplicationArea = FixedAsset;
             }
-            field("Serial No.";"Serial No.")
+            field("Serial No.";rec."Serial No.")
             {
                 ApplicationArea = FixedAssets;
                 ToolTip = 'Specify The Unique Serial No for The Asset e.g Vehicle Registration No.';

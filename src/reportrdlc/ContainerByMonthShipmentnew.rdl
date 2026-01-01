@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DataSource">
+      <ConnectionProperties>
+        <DataProvider>SQL</DataProvider>
+        <ConnectString />
+      </ConnectionProperties>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>1e3eb30f-2424-4027-a1b8-30780ccab077</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+      <Fields>
+        <Field Name="SelltoCustomerNo">
+        </Field>
+        <Field Name="Billtoname">
+        </Field>
+        <Field Name="Order_No">
+        </Field>
+        <Field Name="TL">
+        </Field>
+        <Field Name="FORMAT_TODAY_0_4_">
+        </Field>
+        <Field Name="COMPANYNAME">
+        </Field>
+        <Field Name="CurrReport_PAGENO">
+        </Field>
+        <Field Name="USERID">
+        </Field>
+        <Field Name="Sales_Shipment_Header__GETFILTERS">
+        </Field>
+        <Field Name="CatRange_1_">
+        </Field>
+        <Field Name="CatRange_2_">
+        </Field>
+        <Field Name="CatRange_3_">
+        </Field>
+        <Field Name="CatRange_4_">
+        </Field>
+        <Field Name="CatRange_5_">
+        </Field>
+        <Field Name="CatRange_6_">
+        </Field>
+        <Field Name="CatRange_7_">
+        </Field>
+        <Field Name="CatRange_8_">
+        </Field>
+        <Field Name="CatRange_9_">
+        </Field>
+        <Field Name="CatRange_10_">
+        </Field>
+        <Field Name="CatRange_11_">
+        </Field>
+        <Field Name="CatRange_12_">
+        </Field>
+        <Field Name="CatRanger_1_">
+        </Field>
+        <Field Name="CatRanger_2_">
+        </Field>
+        <Field Name="CatRanger_3_">
+        </Field>
+        <Field Name="CatRanger_4_">
+        </Field>
+        <Field Name="CatRanger_5_">
+        </Field>
+        <Field Name="CatRanger_6_">
+        </Field>
+        <Field Name="CatRanger_7_">
+        </Field>
+        <Field Name="CatRanger_8_">
+        </Field>
+        <Field Name="CatRanger_9_">
+        </Field>
+        <Field Name="CatRanger_10_">
+        </Field>
+        <Field Name="CatRanger_11_">
+        </Field>
+        <Field Name="CatRanger_12_">
+        </Field>
+        <Field Name="Sales_Shipment_Header__Shipment_Month_">
+        </Field>
+        <Field Name="Sales_Shipment_Header__Order_No__">
+        </Field>
+        <Field Name="Sales_Shipment_Header__Order_No___Control1000000014">
+        </Field>
+        <Field Name="Sales_Shipment_Header__Shipped_Quantity_">
+        </Field>
+        <Field Name="Sales_Shipment_Header__Shipped_Quantity_Format">
+        </Field>
+        <Field Name="Sales_Shipment_Header__Shipped_Quantity__Control1000000020">
+        </Field>
+        <Field Name="Sales_Shipment_Header__Shipped_Quantity__Control1000000020Format">
+        </Field>
+        <Field Name="Sales_Shipment_Header__Order_No___Control1000000000">
+        </Field>
+        <Field Name="CatRangeQ_1_">
+        </Field>
+        <Field Name="CatRangeQ_1_Format">
+        </Field>
+        <Field Name="CatRangeQ_2_">
+        </Field>
+        <Field Name="CatRangeQ_2_Format">
+        </Field>
+        <Field Name="CatRangeQ_3_">
+        </Field>
+        <Field Name="CatRangeQ_3_Format">
+        </Field>
+        <Field Name="CatRangeQ_4_">
+        </Field>
+        <Field Name="CatRangeQ_4_Format">
+        </Field>
+        <Field Name="CatRangeQ_5_">
+        </Field>
+        <Field Name="CatRangeQ_5_Format">
+        </Field>
+        <Field Name="CatRangeQ_6_">
+        </Field>
+        <Field Name="CatRangeQ_6_Format">
+        </Field>
+        <Field Name="CatRangeQ_7_">
+        </Field>
+        <Field Name="CatRangeQ_7_Format">
+        </Field>
+        <Field Name="CatRangeQ_8_">
+        </Field>
+        <Field Name="CatRangeQ_8_Format">
+        </Field>
+        <Field Name="CatRangeQ_9_">
+        </Field>
+        <Field Name="CatRangeQ_9_Format">
+        </Field>
+        <Field Name="CatRangeQ_10_">
+        </Field>
+        <Field Name="CatRangeQ_10_Format">
+        </Field>
+        <Field Name="CatRangeQ_11_">
+        </Field>
+        <Field Name="CatRangeQ_11_Format">
+        </Field>
+        <Field Name="CatRangeQ_12_">
+        </Field>
+        <Field Name="CatRangeQ_12_Format">
+        </Field>
+        <Field Name="CatRangeR_1_">
+        </Field>
+        <Field Name="CatRangeR_2_">
+        </Field>
+        <Field Name="CatRangeR_3_">
+        </Field>
+        <Field Name="CatRangeR_4_">
+        </Field>
+        <Field Name="CatRangeR_5_">
+        </Field>
+        <Field Name="CatRangeR_6_">
+        </Field>
+        <Field Name="CatRangeR_7_">
+        </Field>
+        <Field Name="CatRangeR_8_">
+        </Field>
+        <Field Name="CatRangeR_9_">
+        </Field>
+        <Field Name="CatRangeR_10_">
+        </Field>
+        <Field Name="CatRangeR_11_">
+        </Field>
+        <Field Name="CatRangeR_12_">
+        </Field>
+        <Field Name="CatRangerR_1_">
+        </Field>
+        <Field Name="CatRangerR_2_">
+        </Field>
+        <Field Name="CatRangerR_3_">
+        </Field>
+        <Field Name="CatRangerR_4_">
+        </Field>
+        <Field Name="CatRangerR_5_">
+        </Field>
+        <Field Name="CatRangerR_6_">
+        </Field>
+        <Field Name="CatRangerR_7_">
+        </Field>
+        <Field Name="CatRangerR_8_">
+        </Field>
+        <Field Name="CatRangerR_9_">
+        </Field>
+        <Field Name="CatRangerR_10_">
+        </Field>
+        <Field Name="CatRangerR_11_">
+        </Field>
+        <Field Name="CatRangerR_12_">
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+  <ReportSections>
+    <ReportSection>
+      <Body>
+      </Body>
+      <Width>20.34033cm</Width>
+      <Page>
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <ReportParametersLayout>
+    <GridLayoutDefinition>
+      <NumberOfColumns>4</NumberOfColumns>
+      <NumberOfRows>2</NumberOfRows>
+    </GridLayoutDefinition>
+  </ReportParametersLayout>
+  <Code>Public Function BlankZero(ByVal Value As Decimal)
+    if Value = 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankPos(ByVal Value As Decimal)
+    if Value &gt; 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankZeroAndPos(ByVal Value As Decimal)
+    if Value &gt;= 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankNeg(ByVal Value As Decimal)
+    if Value &lt; 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankNegAndZero(ByVal Value As Decimal)
+    if Value &lt;= 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+</Code>
+  <Language>=User!Language</Language>
+  <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
+  <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>17571b62-26af-4970-8b09-d1651217d13b</rd:ReportID>
+</Report>

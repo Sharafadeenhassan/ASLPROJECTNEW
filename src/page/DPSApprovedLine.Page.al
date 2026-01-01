@@ -19,7 +19,7 @@ page 50128 "Approved DPS Line"
             repeater("Item Stock Status")
             {
                 FreezeColumn = "Location Code";
-                field("DPS Code";rec."DPS Code")
+                field("DPS Code"; rec."DPS Code")
                 {
                     ApplicationArea = all;
                 }
@@ -33,6 +33,10 @@ page 50128 "Approved DPS Line"
                     ApplicationArea = All;
                 }
                 field(Description; Rec.Description)
+                {
+                    ApplicationArea = All;
+                }
+                field("Unit Of Measure"; Rec."Unit Of Measure")
                 {
                     ApplicationArea = All;
                 }
@@ -66,12 +70,12 @@ page 50128 "Approved DPS Line"
                 field(Approved; Rec.Approved)
                 {
                     ApplicationArea = All;
-                }                
+                }
                 field("Approved Order Quantity"; Rec."Approved Order Quantity")
                 {
                     Editable = Rec.Approved = FALSE;
                     ApplicationArea = All;
-                }                                
+                }
                 field(processed; Rec.processed)
                 {
                     ApplicationArea = All;
@@ -79,13 +83,13 @@ page 50128 "Approved DPS Line"
                 field("process By"; Rec."process By")
                 {
                     ApplicationArea = All;
-                }                
+                }
                 field("Base Date"; Rec."Base Date")
                 {
                     Editable = false;
                     Visible = false;
                     ApplicationArea = All;
-                }                
+                }
                 field("Last Month Consumption"; Rec."Last Month Consumption")
                 {
                     ApplicationArea = All;

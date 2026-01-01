@@ -1,13 +1,13 @@
 report 50029 "Employee-Bank Acct"
 {
-    // This report prints a salary schedule for employees. The user should enter
-    // the Payroll period and if necessary also the specific Employee number(s) that
-    // are ssrequired to appear in the report. The E/Ds that are to appear in the
-    // schedule MUST be entered.(In this revised edition default EDs have been entered.
-    // The schedule is a matrix of employees on the vertical axis and the required
-    // E/Ds in the Horizontal axis.
-    // The user can specify that the ED.Descriptions appear in the column headers
-    // instead of the ED.Codes.
+   /* Description = 'This report prints a salary schedule for employees. The user should enter
+    the Payroll period and if necessary also the specific Employee number(s) that
+    are required to appear in the report. The E/Ds that are to appear in the
+    schedule MUST be entered.(In this revised edition default EDs have been entered.
+    The schedule is a matrix of employees on the vertical axis and the required
+    E/Ds in the Horizontal axis. The user can specify that the ED.Descriptions appear in the Column headers
+    instead of the ED.Codes.*/
+
     DefaultLayout = RDLC;
     RDLCLayout = './src/reportrdlc/EmployeeBankAcct.rdlc';
     UsageCategory = ReportsAndAnalysis;
@@ -366,9 +366,9 @@ report 50029 "Employee-Bank Acct"
                     if (RequestEDsArray[ArrayIndex]."E/D Code") <> '' then begin
                         RequestEDsArray[ArrayIndex].Get(RequestEDsArray[ArrayIndex]."E/D Code");
                         EDString := CopyStr(RequestEDsArray[ArrayIndex]."Payslip Text", 1, 20);
-                        for i := 1 to 10 do begin
+                        For i := 1 to 10 do begin
                             CharTest := CopyStr(EDString, i, 1);
-                            if CharTest = ' ' then begin
+                            If CharTest = '' then begin
                                 EDText[ArrayIndex, 1] := CopyStr(EDString, 1, 20);
                                 EDText[ArrayIndex, 2] := CopyStr(EDString, i + 1, 10);
                                 i := 10;

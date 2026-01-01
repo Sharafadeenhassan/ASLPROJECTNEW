@@ -4,11 +4,15 @@ pageextension 50021 "Item Categories Ext Page" extends"Item Categories"
     {
         addafter(Description)
         {
-            field("FT Product";"FT Product")
+            field("FT Product";rec."FT Product")
             {
                 ApplicationArea = All;
             }
-            field("Shipped Quantity";"Shipped Quantity")
+            field("Shipped Quantity";Rec."Shipped Quantity")
+            {
+                ApplicationArea = All;
+            }
+            field("Return Quantity";Rec."Return Quantity")
             {
                 ApplicationArea = All;
             }

@@ -1461,6 +1461,24 @@ End Function
         <Field Name="Location_Code">
           <DataField>Location_Code</DataField>
         </Field>
+        <Field Name="Base_Date">
+          <DataField>Base_Date</DataField>
+        </Field>
+        <Field Name="Process_Date">
+          <DataField>Process_Date</DataField>
+        </Field>
+        <Field Name="Requisition_Date">
+          <DataField>Requisition_Date</DataField>
+        </Field>
+        <Field Name="Approved_By">
+          <DataField>Approved_By</DataField>
+        </Field>
+        <Field Name="Send_For_Approval_By">
+          <DataField>Send_For_Approval_By</DataField>
+        </Field>
+        <Field Name="Process_By">
+          <DataField>Process_By</DataField>
+        </Field>
         <Field Name="DPSCode">
           <DataField>DPSCode</DataField>
         </Field>
@@ -1598,6 +1616,24 @@ End Function
         </Field>
         <Field Name="PendingRequisitionFormat">
           <DataField>PendingRequisitionFormat</DataField>
+        </Field>
+        <Field Name="Short_Supplied">
+          <DataField>Short_Supplied</DataField>
+        </Field>
+        <Field Name="Short_Supplied_Quantity">
+          <DataField>Short_Supplied_Quantity</DataField>
+        </Field>
+        <Field Name="Short_Supplied_QuantityFormat">
+          <DataField>Short_Supplied_QuantityFormat</DataField>
+        </Field>
+        <Field Name="Remark">
+          <DataField>Remark</DataField>
+        </Field>
+        <Field Name="Qty_Supplied">
+          <DataField>Qty_Supplied</DataField>
+        </Field>
+        <Field Name="Qty_SuppliedFormat">
+          <DataField>Qty_SuppliedFormat</DataField>
         </Field>
       </Fields>
       <Query>

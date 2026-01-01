@@ -7,7 +7,7 @@ report 50335 "Periodic Landing Report1"
     {
         dataitem("Job Ledger Entry"; "Job Ledger Entry")
         {
-            DataItemTableView = SORTING("Job No.", "Posting Date", Type, "No.", "Location Code", "Gen. Prod. Posting Group") WHERE("Location Code" = CONST('CRM-ASL'), "Gen. Prod. Posting Group" = CONST('FIS'), "Reason Code" = CONST('CATCH'));
+            DataItemTableView = SORTING("Job No.", "Posting Date") WHERE("Location Code" = CONST('CRM-ASL'), "Gen. Prod. Posting Group" = CONST('FIS'), "Reason Code" = CONST('CATCH'));
             RequestFilterFields = "Posting Date";
             column(GroupSort_JobLedgerEntry; "Job Ledger Entry".GroupSort)
             {

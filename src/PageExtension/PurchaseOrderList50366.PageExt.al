@@ -4,11 +4,11 @@ pageextension 50366 "pageextension50366" extends "Purchase Order List"
     {
         addafter("Posting Date")
         {
-            field("Your Reference";"Your Reference")
+            field("Your Reference";rec."Your Reference")
             {
                 ApplicationArea = All;
             }
-            field("Purchase Order Req. No";"Purchase Order Req. No")
+            field("Purchase Order Req. No";rec."Purchase Order Req. No")
             {
                 ApplicationArea = All;
             }

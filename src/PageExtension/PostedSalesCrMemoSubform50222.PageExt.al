@@ -1,5 +1,18 @@
 pageextension 50222 "pageextension50222" extends "Posted Sales Cr. Memo Subform"
 {
+    layout
+    {
+        addafter(Quantity)  
+        {
+            field("Item Category Code";rec."Item Category Code")
+            {
+                ApplicationArea = All;
+                Caption = 'Item Category';
+                ToolTip = 'Item Category';
+                Editable = false;
+            }
+        }
+    }
     actions
     {
         //Unsupported feature: Property Modification (Name) on "Comments(Action 1901743104)".

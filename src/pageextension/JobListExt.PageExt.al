@@ -71,6 +71,10 @@ pageextension 50354 "Job List Ext" extends "Job List"
             {
                 ApplicationArea = All;
             }
+            field("Voyage Ended"; Rec."Voyage Ended")
+            {
+                ApplicationArea = All;
+            }
         }
 
         moveafter("Voyage No."; Description)

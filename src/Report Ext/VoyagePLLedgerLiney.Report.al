@@ -248,7 +248,7 @@ report 70151 "Voyage P&L Ledger Liney"
         }
         dataitem("Job Ledger Entry2"; "Job Ledger Entry")
         {
-            DataItemTableView = SORTING("Job No.", "Entry Type", Type, "Gen. Prod. Posting Group", "No.") WHERE("Gen. Prod. Posting Group" = FILTER(<> 'FIS'), Type = CONST(Item));
+            DataItemTableView = SORTING("Job No.", "Entry Type", Type, "No.") WHERE("Gen. Prod. Posting Group" = FILTER(<> 'FIS'), Type = CONST(Item));
             column(Job_Ledger_Entry2__Total_Price_; "Total Price")
             {
             }

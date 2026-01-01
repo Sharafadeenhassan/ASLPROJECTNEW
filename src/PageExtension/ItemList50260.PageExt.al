@@ -75,7 +75,7 @@ pageextension 50260 "Item List Ext" extends "Item List"
                 Visible = false;
                 ApplicationArea = All;
             }
-            field("FT Product"; "FT Product")
+            field("FT Product"; rec."FT Product")
             {
                 ApplicationArea = All;
             }

@@ -6,40 +6,31 @@ tableextension 50281 "tableextension50281" extends Employee
         {
             Caption = 'Picture';
         }
+        modify(Status)
+        {
+            trigger OnAfterValidate()
+            var ResRec: record Resource;
+ResGet: Boolean ;
 
-        //Unsupported feature: Property Modification (Data type) on ""Emplymt. Contract Code"(Field 27)".
-
-        //Unsupported feature: Code Insertion on ""First Name"(Field 2)".
-
-        //trigger OnValidate()
-        //Parameters and return type have not been exported.
-        //begin
-        /*
-        if ("Search Name" = '') then
-          "Search Name" := "First Name";
-        */
-        //end;
-
-        //Unsupported feature: Code Modification on ""Post Code"(Field 11).OnValidate".
-
-        //trigger OnValidate()
-        //Parameters and return type have not been exported.
-        //>>>> ORIGINAL CODE:
-        //begin
-        /*
-        PostCode.ValidatePostCode(City,"Post Code",County,"Country/Region Code",(CurrFieldNo <> 0) and GuiAllowed);
-        */
-        //end;
-        //>>>> MODIFIED CODE:
-        //begin
-        /*
-        PostCode.ValidatePostCode(City,"Post Code",County,"Country/Region Code",(CurrFieldNo <> 0) and GuiAllowed);
-
-        if PostCode.Get("Post Code") then
-          City := PostCode.City;
-        */
-        //end;
-        field(50000; "Region Code"; Code[10])
+            begin
+                ResGet := false;
+                if Rec."Resource No." = '' then begin
+                ResRec.SetRange(ResRec."No.", 'R' + Rec."No.");
+                    if ResRec.Findfirst then ResGet := True;
+                    Rec."Resource No." := ResRec."No.";                
+                end else
+                if ResRec.Get(Rec."Resource No.") then ResGet := true
+             else exit;                                
+                               
+                if ResGet = True then 
+                begin                
+                    if rec.Status <> rec.Status::Active then ResRec.Blocked := True
+                    else ResRec.Blocked := False;
+                    ResRec.Modify(true);                    
+                end;
+            end;            
+        }
+       field(50000; "Region Code"; Code[10])
         {
             TableRelation = "Business Unit".Code;
         }
@@ -522,80 +513,6 @@ tableextension 50281 "tableextension50281" extends Employee
     keys
     {
     }
-
-    //Unsupported feature: Code Modification on "OnInsert".
-
-    //trigger OnInsert()
-    //>>>> ORIGINAL CODE:
-    //begin
-    /*
-    "Last Modified Date Time" := CurrentDateTime;
-    HumanResSetup.Get;
-    if "No." = '' then begin
-    #4..17
-    DimMgt.UpdateDefaultDim(
-      DATABASE::Employee,"No.",
-      "Global Dimension 1 Code","Global Dimension 2 Code");
-    UpdateSearchName;
-    */
-    //end;
-    //>>>> MODIFIED CODE:
-    //begin
-    /*
-    #1..20
-    "Acct. No" :='EC'+CopyStr("No.",2);
-    "Acct. type":=Rec."Acct. type"::Customer;
-    UpdateSearchName;
-    */
-    //end;
-
-    //Unsupported feature: Code Modification on "OnRename".
-
-    //trigger OnRename()
-    //>>>> ORIGINAL CODE:
-    //begin
-    /*
-    DimMgt.RenameDefaultDim(DATABASE::Employee,xRec."No.","No.");
-    "Last Modified Date Time" := CurrentDateTime;
-    "Last Date Modified" := Today;
-    UpdateSearchName;
-    */
-    //end;
-    //>>>> MODIFIED CODE:
-    //begin
-    /*
-    #1..3
-    "Modified By" := UserId; //Univision Insert 6/11/01
-    UpdateSearchName;
-    */
-    //end;
-
-    //Unsupported feature: Code Modification on "FullName(PROCEDURE 1)".
-
-    //procedure FullName();
-    //Parameters and return type have not been exported.
-    //>>>> ORIGINAL CODE:
-    //begin
-    /*
-    OnBeforeGetFullName(Rec,NewFullName,Handled);
-    if Handled then
-      exit(NewFullName);
-
-    if "Middle Name" = '' then
-      exit("First Name" + ' ' + "Last Name");
-
-    exit("First Name" + ' ' + "Middle Name" + ' ' + "Last Name");
-    */
-    //end;
-    //>>>> MODIFIED CODE:
-    //begin
-    /*
-    #1..5
-      exit("First Name" + ' ' + "Last Name")
-    else
-      exit("First Name" + ' ' + "Middle Name" + ' ' + "Last Name");
-    */
-    //end;
 
     procedure "---------"()
     begin

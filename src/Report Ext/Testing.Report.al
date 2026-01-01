@@ -56,7 +56,7 @@ report 80225 "Testing"
             }
             dataitem(Item; Item)
             {
-                DataItemTableView = SORTING("SF Cat", "No. 2") WHERE("Gen. Prod. Posting Group" = FILTER('FIS'), "Sales (Qty.)" = FILTER(<> 0), "Location Filter" = FILTER('LEKKIFSHOP'));
+                DataItemTableView = SORTING("No.") WHERE("Gen. Prod. Posting Group" = FILTER('FIS'), "Sales (Qty.)" = FILTER(<> 0), "Location Filter" = FILTER('LEKKIFSHOP'));
                 RequestFilterFields = "Date Filter";
                 column(Item__Item_Category_Code_; "Item Category Code")
                 {

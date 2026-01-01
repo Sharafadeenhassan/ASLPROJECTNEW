@@ -26,9 +26,10 @@ table 50045 "Purchase Requisition1"
             begin
                 if ItemRec.Get("Item No.") then
                     Description := ItemRec.Description;
+                    "Unit Of Measure" := ItemRec."Base Unit of Measure";
                 PPI.SetCurrentKey(PPI."Posting Date");
                 PPI.SetFilter(PPI."No.", '%1', "Item No.");
-                
+
                 if PPI.FindLast() then begin
                     "Last Price1" := PPI."Unit Cost (LCY)";
                     "LPrice1 Date" := PPI."Posting Date";
@@ -55,7 +56,7 @@ table 50045 "Purchase Requisition1"
         }
         field(7; "Unit Price"; Decimal)
         {
-            
+
             trigger OnValidate()
             begin
                 if Process then error('You cannot change Unit Price after processing');
@@ -105,10 +106,10 @@ table 50045 "Purchase Requisition1"
         }
         field(18; "Security Check Quantity"; Decimal)
         {
-            
+
             trigger OnValidate()
             begin
-                
+
                 if ("Security Check Quantity" > Quantity) or ("Security Check Quantity" < 0) then
                     Error('Excess Supply or Negative Quantity Not Allowed')
                 else
@@ -139,7 +140,7 @@ table 50045 "Purchase Requisition1"
         {
             trigger OnValidate()
             begin
-                if ("QCC Check Quantity" > "Security Check Quantity")  or ("QCC Check Quantity" < 0) then
+                if ("QCC Check Quantity" > "Security Check Quantity") or ("QCC Check Quantity" < 0) then
                     Error('Quantity More than Security Checked Quantity or Negative Quantity Not Allowed')
                 else
                     "QCC Rejected Quantity" := "Security Check Quantity" - "QCC Check Quantity";
@@ -155,7 +156,7 @@ table 50045 "Purchase Requisition1"
                 if process then begin
                     TestField("Supply By");
                     "Process By" := UserId;
-                  if  UserRec.get(UserSecurityId) then
+                    if UserRec.get(UserSecurityId) then
                         "Process By Name" := UserRec."Full Name";
                     "Process Time" := CurrentDateTime;
                 end;
@@ -250,8 +251,8 @@ table 50045 "Purchase Requisition1"
         {
             trigger OnValidate()
             begin
-                if "QCC Rejected Quantity" > "Security Check Quantity" then 
-                Error('You Cannot reject more than Security Check-In Quantity');
+                if "QCC Rejected Quantity" > "Security Check Quantity" then
+                    Error('You Cannot reject more than Security Check-In Quantity');
             end;
         }
         field(44; "Quantity To Return"; Decimal)
@@ -260,7 +261,8 @@ table 50045 "Purchase Requisition1"
             begin
                 if "Quantity To Return" < "QCC Rejected Quantity" then begin
                     if not Confirm('The Quantity to Return is Not the same as Rejected Quantity. Continue to Return', false) then
-                        Error('Please Check the Qcc Rejected Quantity');
+                        Error('Please Check the Qcc Rejected Quantity') else
+                        Error('Please Review ''Qcc Checked Quantity'' for Update');
                 end else
                     if "Quantity To Return" > "QCC Rejected Quantity" then Error('You can not Return more than Qcc Rejected Quantity');
             end;
@@ -272,7 +274,7 @@ table 50045 "Purchase Requisition1"
         {
             trigger OnValidate()
             begin
-                
+
             end;
         }
         field(47; "Security Returned"; Boolean)
@@ -281,7 +283,7 @@ table 50045 "Purchase Requisition1"
             begin
                 if not Confirm('Hope You have Printed the Waybill', false) then
                     Error('Please make sure you Update Quantity to return for all line then Print Waybill');
-                "Retuned Date" := CurrentDateTime;
+                "returned Date" := CurrentDateTime;
                 UserRec.SetRange("User Name", UserId);
                 if UserRec.FindSet() then
                     "Security Return Name" := UserRec."Full Name";
@@ -293,12 +295,13 @@ table 50045 "Purchase Requisition1"
             begin
                 if "Security Return Quantity" <> "Quantity To Return" then
                     Error('Please put correct Quantity to Return');
+                "Shortage Supplied  Quantity" := "Shortage Supplied  Quantity" + "Security Return Quantity";
             end;
         }
         field(49; "Process Time"; DateTime)
         {
         }
-        field(50; "Retuned Date"; DateTime)
+        field(50; "Returned Date"; DateTime)
         {
         }
         field(51; "Security Return by"; Code[20])
@@ -338,15 +341,40 @@ table 50045 "Purchase Requisition1"
         {
             Editable = false;
         }
-        field(59;"Send To StoreKeeper";Code[30])
+        field(59; "Send To StoreKeeper"; Code[30])
         {
             TableRelation = "User Setup" where(StoreKeeper = const(true));
         }
-        field(60;"Store Manager";code[30])
+        field(60; "Store Manager"; code[30])
         {
             TableRelation = "User Setup"."User ID" where(StoreKeeper = const(true));
         }
-
+        field(61; "DPS Req Qty"; Decimal)
+        {
+            Editable = false;
+        }
+        field(62; "DPS HOD Qty"; Decimal)
+        {
+            Editable = false;
+        }
+        field(65; "Split Supply"; Boolean)
+        {        
+            trigger OnValidate()
+            begin
+                if rec."Shortage Supplied  Quantity" > 0 then
+                    if Confirm('This Action will create Another Copy of the Line with Short Supply Quantity Do You want to Continue', false) then
+                        SplitSupply()
+                    else
+                        Error('Be careful not to Duplicate DPS Item Line.')
+                else
+                    Error('Line Can Not Be Split because there is No Short Supplied Quantity');
+            end;
+        }
+        field(66;"Unit Of Measure";Code[20])
+        {
+            TableRelation = "Item Unit of Measure" where("Item No." = field("Item No."));
+            Description = 'Item Unit of Measure';
+        }
     }
 
     keys
@@ -354,6 +382,10 @@ table 50045 "Purchase Requisition1"
         key(Key1; "Req No.", "Req. Line No.", "Puch.Req Line No.")
         {
             Clustered = true;
+        }
+        Key(Key2; "Item No.")
+        {
+            
         }
     }
 
@@ -381,10 +413,10 @@ table 50045 "Purchase Requisition1"
         PurchInv: Record "Purchase Header";
         PurchInvLine: Record "Purchase Line";
         ReqLines: Record "Purchase Requisition1";
-        DPSLine : Record "Dynamics Procurement Register";
+        DPSLine: Record "Dynamics Procurement Register";
         UserRec: Record User;
         PODate: Date;
-        ReqPODate:Date;
+        ReqPODate: Date;
     begin
         UserRec.SetRange("User Name", UserId);
         if UserRec.FindFirst() then;
@@ -393,23 +425,23 @@ table 50045 "Purchase Requisition1"
         ReqLines.SetFilter(ReqLines."QCC Check Quantity", '<>%1', 0);
         ReqLines.SetFilter(ReqLines."QCC Check", '%1', true);
         ReqLines.SetFilter(ReqLines.Process, '%1', true);
-        ReqLines.SetFilter(ReqLines."Invoice No.",'%1','');
+        ReqLines.SetFilter(ReqLines."Invoice No.", '%1', '');
         if not ReqLines.FindSet() then
             Error('Notting To Process. No Line(s) is Ready for Process')
         else begin
-        PODate := DT2Date(rec."Security Check Time");
+            PODate := DT2Date(rec."Security Check Time");
             PurchSetup.Get();
             DocNo := noseriesmgt.GetNextNo(PurchSetup."Order Nos.", PODate, true);
             PurchInv.Init();
             PurchInv."Document Type" := PurchInv."Document Type"::Order;
             PurchInv.Validate(PurchInv."No.", DocNo);
             PurchInv.Validate("Posting Date", PODate);
-            PurchInv.Validate(PurchInv."Buy-from Vendor No.", "Supply By"); 
+            PurchInv.Validate(PurchInv."Buy-from Vendor No.", "Supply By");
             PurchInv.Insert(true);
-            if Description = '' then 
-            PurchInv."Posting Description" := 'DPS Order for '+ "Req No." 
-            else        
-            PurchInv."Posting Description" := Description;
+            if Description = '' then
+                PurchInv."Posting Description" := 'DPS Order for ' + "Req No."
+            else
+                PurchInv."Posting Description" := Description;
             PurchInv."Your Reference" := "Req No.";
             //PurchInv."Purchase Order Req. No" := "Req No.";
             PurchInv."DPS No." := "Req No.";
@@ -419,46 +451,104 @@ table 50045 "Purchase Requisition1"
             LineNo := 0;
             if ReqLines.FindSet() then
                 repeat
-                ReqPODate := DT2Date(ReqLines."Security Check Time");
-                if ReqPODate =PODate then begin
-                    LineNo += 10000;
-                    PurchInvLine."Document Type" := PurchInvLine."Document Type"::Order;
-                    PurchInvLine."Document No." := DocNo;
-                    PurchInvLine."Line No." := LineNo;
-                    PurchInvLine.Insert(true);
-                    PurchInvLine.Validate(PurchInvLine.Type, PurchInvLine.Type::Item);
-                    PurchInvLine."Location Code" := ReqLines."Req Location";
-                    PurchInvLine.Validate("No.", ReqLines."Item No.");
-                    PurchInvLine.Validate(Quantity, ReqLines."QCC Check Quantity");
-                    PurchInvLine.Validate(PurchInvLine."Direct Unit Cost", ReqLines."Unit Price");
-                    PurchInvLine."External Document No." := ReqLines."Req No.";
-                    //PurchInvLine.Description := (ReqLines.Description + ' '+ ReqLines."Req No.");
-                    PurchInvLine."DPS No." := ReqLines."Req No.";
-                    PurchInvLine."DPS Line No" := ReqLines."Req. Line No.";
-                    PurchInvLine."Req Locked" := true;
-                    //PurchInvLine.VALIDATE(PurchInvLine."Expected Receipt Date",TODAY);
-                    PurchInvLine.Modify();
-                    //ReqLines.Process := true;
-                    UserRec.SetRange("User Name", UserId);
-                    if UserRec.FindSet() then
-                        ReqLines."Process By Name" := UserRec."Full Name";
-                    ReqLines."Process Time" := CurrentDateTime;
-                    ReqLines."Invoice No." := DocNo;
-                    ReqLines.Modify();
-                    if DPSLine.get(ReqLines."Req No.",ReqLines."Req. Line No.") then
-                    begin
-                    DPSLine."Order No." := DocNo;
-                    DPSLine.Modify()
+                    ReqPODate := DT2Date(ReqLines."Security Check Time");
+                    if ReqPODate = PODate then begin
+                        LineNo += 10000;
+                        PurchInvLine."Document Type" := PurchInvLine."Document Type"::Order;
+                        PurchInvLine."Document No." := DocNo;
+                        PurchInvLine."Line No." := LineNo;
+                        PurchInvLine.Insert(true);
+                        PurchInvLine.Validate(PurchInvLine.Type, PurchInvLine.Type::Item);
+                        PurchInvLine."Location Code" := ReqLines."Req Location";
+                        PurchInvLine.Validate("No.", ReqLines."Item No.");
+                        PurchInvLine.Validate(Quantity, ReqLines."QCC Check Quantity");
+                        PurchInvLine.Validate(PurchInvLine."Direct Unit Cost", ReqLines."Unit Price");
+                        PurchInvLine."External Document No." := ReqLines."Req No.";
+                        if ReqLines."Unit Of Measure" <> '' then
+                        PurchInvLine."Unit of Measure Code" := ReqLines."Unit Of Measure";
+                        //PurchInvLine.Description := (ReqLines.Description + ' '+ ReqLines."Req No.");
+                        PurchInvLine."DPS No." := ReqLines."Req No.";
+                        PurchInvLine."DPS Line No" := ReqLines."Req. Line No.";
+                        PurchInvLine."Req Locked" := true;
+                        //PurchInvLine.VALIDATE(PurchInvLine."Expected Receipt Date",TODAY);
+                        PurchInvLine.Modify();
+                        //ReqLines.Process := true;
+                        UserRec.SetRange("User Name", UserId);
+                        if UserRec.FindSet() then
+                            ReqLines."Process By Name" := UserRec."Full Name";
+                        ReqLines."Process Time" := CurrentDateTime;
+                        ReqLines."Invoice No." := DocNo;
+                        ReqLines.Modify();
+                        if DPSLine.get(ReqLines."Req No.", ReqLines."Req. Line No.") then begin
+                            DPSLine."Order No." := DocNo;
+                            DPSLine.Modify()
+                        end;
                     end;
-                end;
                 until ReqLines.Next() = 0;
             "Invoice No." := DocNo;
             PurchInv.Modify();
             Message(Text0001, DocNo, "Supplier Name");
         end;
     end;
+
+    procedure SplitSupply()
+    var
+        ReqDupLine: Record "Purchase Requisition1";
+    begin
+        if Rec."Split Supply" then begin
+            ReqDupLine.Init();
+            ReqDupLine := rec;
+            //ReqDupLine."Req No." := Rec."Req No.";
+            //ReqDupLine."Req. Line No." := rec."Req. Line No.";
+            ReqDupLine."Puch.Req Line No." := Rec."Puch.Req Line No." + 500;
+            ReqDupLine.Validate(ReqDupLine."Item No.", rec."Item No.");
+            ReqDupLine."Unit Of Measure" := Rec."Unit Of Measure";
+            //ReqDupLine."DPS HOD Qty" := rec."DPS HOD Qty";
+            //ReqDupLine."DPS Req Qty" := rec."DPS Req Qty";
+            //ReqDupLine."Req. By" := rec."Req. By";
+            //ReqDupLine."Req. By Name" := rec."Req. By Name";
+            //ReqDupLine."Req. Date" := rec."Req. Date";
+            ReqDupLine."Invoice No." := '';
+            ReqDupLine.Printed := false;
+            ReqDupLine.Process := false;
+            ReqDupLine."Process By" := '';
+            ReqDupLine."Process By Name" := '';
+            ReqDupLine."Procurement Mgr. Action" := 0;
+            ReqDupLine."Process Time" := 0DT;
+            ReqDupLine."QCC Check" := false;
+            ReqDupLine."QCC Check  By" := '';
+            ReqDupLine."QCC Check  Name" := '';
+            ReqDupLine."QCC Check Quantity" := 0;
+            ReqDupLine."QCC Check Time" := 0DT;
+            ReqDupLine."QCC Comment" := '';
+            ReqDupLine."QCC Rejected Quantity" := 0;
+            ReqDupLine.Quantity := (Quantity - "QCC Check Quantity");
+            ReqDupLine."Quantity To Return" := 0;
+            ReqDupLine."Return to Security":= false;
+            ReqDupLine."Returned Date" := 0DT;
+            ReqDupLine."Security Check By" := '';
+            ReqDupLine."Security Check Quantity" := 0;
+            ReqDupLine."Security Check Time" := 0DT;
+            ReqDupLine."Security checked" := false;
+            ReqDupLine."Security Checked By Name" := '';
+            ReqDupLine."Security Comment" := '';
+            ReqDupLine."Security Return by" := '';
+            ReqDupLine."Security Return Name" := '';
+            ReqDupLine."Security Return Quantity" := 0;
+            ReqDupLine."Security Returned" := false;
+            ReqDupLine."Send To StoreKeeper" := '';
+            ReqDupLine."Sent For QCC" := false;
+            ReqDupLine."Sent For Store Mgr Action" := false;
+            ReqDupLine."Sent to Security":= false;
+            ReqDupLine."Time Sent for Store Action" := 0DT;
+            ReqDupLine."Unit Price" := 0;
+            ReqDupLine.Insert();
+        end;
+    end;
+
+
     trigger OnModify()
     begin
-        TestField("Invoice No.",'');
+        TestField("Invoice No.", '');
     end;
 }

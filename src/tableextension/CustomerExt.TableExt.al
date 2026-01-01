@@ -9,6 +9,16 @@ tableextension 50237 "CustomerExt" extends Customer
         //Unsupported feature: Property Modification (OptionString) on ""Shipping Advice"(Field 5750)".
 
         //  }
+        field(50200;"Business Description"; Text[150])
+        {
+            Caption = 'Business Description';
+            DataClassification = CustomerContent;
+        }
+        field(50201; "Tax Registration No."; Code[20])
+        {
+            Caption = 'Tax Registration No.';
+            DataClassification = CustomerContent;
+        }
         field(50300; "Operation Type"; Boolean)
         {
             Description = 'Customer Type is Operation : Customers to be listed on Operation (Job) Card';

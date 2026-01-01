@@ -4,6 +4,8 @@ page 50004 "Payroll ED Survey."
     PageType = Card;
     SourceTable = "Payroll-E/D Codes.";
     Caption = 'Payroll ED Survey.';
+    UsageCategory = Administration;
+    ApplicationArea = All;
     layout
     {
         area(content)

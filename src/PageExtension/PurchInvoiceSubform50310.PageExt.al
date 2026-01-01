@@ -48,6 +48,7 @@ pageextension 50310 "pageextension50310" extends "Purch. Invoice Subform"
                 Visible = false;
             }
 
+
             addfirst(Content)
             {
                 group(Control350)
@@ -55,15 +56,34 @@ pageextension 50310 "pageextension50310" extends "Purch. Invoice Subform"
                     ShowCaption = false;
                 }
             }
-            addafter("Line No.")
+            */
+            layout
             {
-                field("Gen. Prod. Posting Group"; "Gen. Prod. Posting Group")
+            addafter(Description)
+            {
+                field("Gen. Prod. Posting Group"; Rec."Gen. Prod. Posting Group")                
                 {
+                    applicationArea = All;
+                }
+                field("Gen. Bus. posting group"; Rec."Gen. Bus. Posting Group")
+                {
+                    applicationArea = All;
+                    Importance = Additional;
+                }
+                field("DPS No."; Rec."DPS No.")
+                {
+                    applicationArea = All;
+                    Importance = Additional;
+                }
+                Field("DPS Line No."; Rec."DPS Line No")
+                {
+                    applicationArea = All;
+                    Importance = Additional;
                 }
             }
-            moveafter(InvoiceDiscountAmount; Control33)
-            moveafter(FilteredTypeField; "Total Amount Incl. VAT")
-            moveafter("Total VAT Amount"; FilteredTypeField)
+           // moveafter(InvoiceDiscountAmount; Control33)
+           // moveafter(FilteredTypeField; "Total Amount Incl. VAT")
+           // moveafter("Total VAT Amount"; FilteredTypeField)
         }
 
         var
@@ -71,7 +91,9 @@ pageextension 50310 "pageextension50310" extends "Purch. Invoice Subform"
             RefreshMessageEnabled: Boolean;
             RefreshMessageText: Text;
             TypeChosen: Boolean;
-            PurchHeader: Record "Purchase Header"; */
+            PurchHeader: Record "Purchase Header"; 
+
+
 }
 
 //Unsupported feature: Property Insertion (AutoFormatType) on "FilteredTypeField(Control 7)".

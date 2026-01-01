@@ -93,10 +93,6 @@ pageextension 50280 "pageextension50280" extends "Sales Invoice Subform"
             Enabled = RefreshMessageEnabled;
             ShowCaption = false;
 
-            //Unsupported feature: Property Modification (Name) on ""Total Amount Incl. VAT"(Control 9)".
-            //Unsupported feature: Property Modification (SourceExpr) on ""Total Amount Incl. VAT"(Control 9)".
-            //Unsupported feature: Property Insertion (DrillDown) on ""Total Amount Incl. VAT"(Control 9)".
-            //Unsupported feature: Property Insertion (ImplicitType) on ""Total Amount Incl. VAT"(Control 9)".
         }
         modify("IC Partner Code")
         {
@@ -122,14 +118,6 @@ pageextension 50280 "pageextension50280" extends "Sales Invoice Subform"
         {
             Visible = false;
         }
-        /* modify(Control39)
-         {
-             Visible = false;
-         }
-         modify(Control33)
-         {
-             Visible = false;
-         }*/
         modify("Invoice Discount Amount")
         {
             Visible = true;
@@ -162,7 +150,6 @@ pageextension 50280 "pageextension50280" extends "Sales Invoice Subform"
                 RedistributeTotalsOnAfterValidate();
             end;
         }
-
         moveafter("Deferral Code"; "IC Partner Ref. Type")
         moveafter("Variant Code"; Nonstock)
         Moveafter("Variant Code"; "VAT Prod. Posting Group")
@@ -180,16 +167,17 @@ pageextension 50280 "pageextension50280" extends "Sales Invoice Subform"
         moveafter("Bin Code"; "Unit Price")
         moveafter("Invoice Disc. Pct."; "VAT Prod. Posting Group")
         moveafter(Description; Quantity)
+        addafter(Quantity)
+        {
+        field("General Prod. Posting Group"; Rec."Gen. Prod. Posting Group")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the general product posting group for the sales line.';
+                Editable = true;
+            }
 
-        //***p
-        // moveafter("Total Amount Excl. VAT"; "Total Amount Excl. VAT")
-        // moveafter(Control1900000001; "Tax Category")
-        // moveafter(Control19; "Job Task No.")
-        // moveafter(Control18; "Line Discount %")
-        // moveafter(Control14; "Total VAT Amount")
-        // moveafter("Gen. Prod. Posting Group"; "Line Amount")
-        // moveafter("Gen. Bus. Posting Group"; "Deferral Code")
-        // moveafter(Amount; "Job No.")
+        }
+
     }
 
     var
@@ -197,46 +185,6 @@ pageextension 50280 "pageextension50280" extends "Sales Invoice Subform"
         RefreshMessageEnabled: Boolean;
         TypeChosen: Boolean;
 
-    //Unsupported feature: Code Modification on "OnAfterGetCurrRecord".
-
-    //trigger OnAfterGetCurrRecord()
-    //>>>> ORIGINAL CODE:
-    //begin
-    /*
-    GetTotalSalesHeader;
-    CalculateTotals;
-    UpdateEditableOnRow;
-    SetItemChargeFieldsStyle;
-    */
-    //end;
-    //>>>> MODIFIED CODE:
-    //begin
-    /*
-    //EditableCon := RetailPriceField;
-    #1..4
-    */
-    //end;
-
-    //Unsupported feature: Code Modification on "OnInit".
-
-    //trigger OnInit()
-    //Parameters and return type have not been exported.
-    //>>>> ORIGINAL CODE:
-    //begin
-    /*
-    SalesSetup.Get;
-    Currency.InitRoundingPrecision;
-    TempOptionLookupBuffer.FillBuffer(TempOptionLookupBuffer."Lookup Type"::Sales);
-    IsFoundation := ApplicationAreaMgmtFacade.IsFoundationEnabled;
-    */
-    //end;
-    //>>>> MODIFIED CODE:
-    //begin
-    /*
-    EditableCon := true;
-    #1..4
-    */
-    //end;
 
     local procedure RedistributeTotalsOnAfterValidate()
     begin

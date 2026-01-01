@@ -6,10 +6,10 @@ pageextension 50258 "pageextension50258" extends "Recurring Job Jnl."
         {
             Visible = false;
         }
-        /*modify("Line Type")
+        modify("Line Type")
         {
             Visible = false;
-        }*/
+        }
         modify("Posting Date")
         {
             Editable = true;
@@ -26,26 +26,15 @@ pageextension 50258 "pageextension50258" extends "Recurring Job Jnl."
         {
             Visible = false;
             Editable = false;
-        }
-        /* modify(Type)
-         {
-             Visible = false;
-         }*/
+        }        
         modify(Description)
         {
-            //Unsupported feature: Property Modification (Name) on "Description(Control 12)".
-
-            //Unsupported feature: Property Modification (SourceExpr) on "Description(Control 12)".
-
-            //Unsupported feature: Property Modification (ImplicitType) on "Description(Control 12)".
-
             Editable = true;
         }
         modify(Quantity)
         {
             Editable = false;
         }
-
         modify("Total Cost")
         {
             Visible = false;
@@ -59,6 +48,16 @@ pageextension 50258 "pageextension50258" extends "Recurring Job Jnl."
                 ApplicationArea = All;
             }
         }
+        addbefore("External Document No.")
+        {
+            field("Catch Sea Days"; rec."Catch Sea Days")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the recurring method for the job journal line.';
+                Editable = true;
+            }
+        }
+
         addfirst(Control1)
         {
             field(Code1; Rec.Code1)
@@ -199,48 +198,7 @@ pageextension 50258 "pageextension50258" extends "Recurring Job Jnl."
             begin
                 Rec.SetRange(Quantity);
             end;
-        }
-
-        //Unsupported feature: Code Modification on ""P&ost"(Action 56).OnAction".
-
-        //trigger OnAction()
-        //Parameters and return type have not been exported.
-        //>>>> ORIGINAL CODE:
-        //begin
-        /*
-        CODEUNIT.Run(CODEUNIT::"Job Jnl.-Post",Rec);
-        CurrentJnlBatchName := GetRangeMax("Journal Batch Name");
-        CurrPage.Update(false);
-        */
-        //end;
-        //>>>> MODIFIED CODE:
-        //begin
-        /*
-
-        SetFilter(Quantity,'<>0');
-        #1..3
-        */
-        //end;
-
-        //Unsupported feature: Code Modification on ""Post and &Print"(Action 57).OnAction".
-
-        //trigger OnAction()
-        //Parameters and return type have not been exported.
-        //>>>> ORIGINAL CODE:
-        //begin
-        /*
-        CODEUNIT.Run(CODEUNIT::"Job Jnl.-Post+Print",Rec);
-        CurrentJnlBatchName := GetRangeMax("Journal Batch Name");
-        CurrPage.Update(false);
-        */
-        //end;
-        //>>>> MODIFIED CODE:
-        //begin
-        /*
-        SetFilter(Quantity,'<>0');
-        #1..3
-        */
-        //end;
+        }        
         addafter(Reconcile)
         {
             action(ClearCatch)

@@ -7,33 +7,33 @@ pageextension 50207 "Inventory Posting Groups Ext" extends "Inventory Posting Gr
         //***modify(Control1900000007)
          addafter(Description)
          {
-             field("Group Type"; "Group Type")
+             field("Group Type"; Rec."Group Type")
              {
                  ApplicationArea = All;
              }
-             field(Category; Category)
+             field(Category; Rec.Category)
              {
                  ApplicationArea = All;
              }
-             field("Category 2"; "Category 2")
+             field("Category 2"; Rec."Category 2")
              {
                  ApplicationArea = All;
              }
-             field("Statistics Group"; "Statistics Group")
+             field("Statistics Group"; Rec."Statistics Group")
              {
                  Visible = false;
                  ApplicationArea = All;
              }
-             field("Group Code"; "Group Code")
+             field("Group Code"; Rec."Group Code")
              {
                  ApplicationArea = All;
              }
-             field("In Use"; "In Use")
+             field("In Use"; Rec."In Use")
              {
                  Visible = true;
                  ApplicationArea = All;
              }
-             field("S/No."; "S/No.")
+             field("S/No."; Rec."S/No.")
              {
                  Visible = false;
                  ApplicationArea = All;

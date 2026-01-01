@@ -3,32 +3,33 @@ page 50131 "Dynamics Purchase SubPage"
     Caption = 'Dynamics Purchase SubPage';
     PageType = CardPart;
     SourceTable = "Purchase Requisition1";
+    RefreshOnActivate = true;
     layout
     {
-        
+
         area(Content)
         {
-           /* field("DPS No.";rec."Req No.")
-            {
-                ApplicationArea = all;
-            }
-            field("Security Check Date";Rec."Security Check Time")
-            {
-                ApplicationArea = All;
-            }*/
-            field("Item No.";rec."Item No.")
+            /* field("DPS No.";rec."Req No.")
+             {
+                 ApplicationArea = all;
+             }
+             field("Security Check Date";Rec."Security Check Time")
+             {
+                 ApplicationArea = All;
+             }*/
+            field("Item No."; rec."Item No.")
             {
                 Editable = false;
                 Style = Favorable;
                 StyleExpr = rec.Process;
             }
-            field(Description;Description)
+            field(Description; rec.Description)
             {
                 Editable = false;
             }
             group(Approvals)
             {
-                Editable = "Sent to Security" = false;
+                Editable = rec."Sent to Security" = false;
                 Caption = 'Approvals';
                 field("Supply By"; Rec."Supply By")
                 {
@@ -41,7 +42,7 @@ page 50131 "Dynamics Purchase SubPage"
             }
             group(Security)
             {
-                Editable = "Sent For QCC" = false;
+                Editable = rec."Sent For QCC" = false;
                 field("Security Check By"; Rec."Security Check By")
                 {
                     ApplicationArea = All;
@@ -66,7 +67,7 @@ page 50131 "Dynamics Purchase SubPage"
                 }
                 field("Security checked"; Rec."Security checked")
                 {
-                   // Importance = Additional;
+                    // Importance = Additional;
                     ApplicationArea = All;
                     Editable = rec."Sent For QCC" = false;
 
@@ -115,16 +116,16 @@ page 50131 "Dynamics Purchase SubPage"
                     //Importance = Additional;
                     ApplicationArea = All;
                 }
-                field("Store Manager";"Store Manager")
+                field("Store Manager"; rec."Store Manager")
                 {
                     ApplicationArea = All;
                     //Importance = Additional;
                 }
-                field("Sent For Store Mgr Action";"Sent For Store Mgr Action")
+                field("Sent For Store Mgr Action"; rec."Sent For Store Mgr Action")
                 {
                     Editable = rec."QCC Check";
                     Importance = Standard;
-                    ApplicationArea = All;   
+                    ApplicationArea = All;
                 }
             }
             group("Return Security")
@@ -195,10 +196,17 @@ page 50131 "Dynamics Purchase SubPage"
     }
     trigger OnAfterGetRecord()
     begin
+        //CurrPage.Update();
         if Rec."Invoice No." <> '' then
-        CurrPage.Editable := false
+            CurrPage.Editable := false
         else
-        CurrPage.Editable := true;
+            CurrPage.Editable := true;
     end;
+
+   /* trigger OnAfterGetCurrRecord()
+    begin
+        CurrPage.Update();
+    end;
+    */
 }
 

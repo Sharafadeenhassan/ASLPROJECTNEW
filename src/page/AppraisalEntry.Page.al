@@ -669,8 +669,9 @@ page 50028 "Appraisal Entry"
                         RunPageLink = Type = FILTER(Movement | "Invt. Put-away" | "Invt. Pick"),
                                       "No. of Lines" = FILTER(> 0),
                                       "Source Type Filter" = CONST(1),
-                                      "Source Subtype Filter" = FIELD("Document Type"),
                                       "Source No. Filter" = FIELD("No.");
+                        ObsoleteState = Pending;
+                        ObsoleteReason = 'Removed Source Subtype Filter to avoid implicit enum conversion';
                         Visible = true;
                         ApplicationArea = All;
                     }

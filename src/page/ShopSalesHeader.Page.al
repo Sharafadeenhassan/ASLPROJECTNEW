@@ -102,7 +102,7 @@ page 50088 "Shop Sales Header"
                         trigger OnValidate()
 
                         begin
-                            case PayMode OF
+                            case rec.PayMode OF
                                 0:
                                     begin
                                         CashPay := true;
@@ -300,7 +300,7 @@ page 50088 "Shop Sales Header"
                 {
                     ApplicationArea = All;
                     Importance = Additional;
-                    Editable = Cancelled = false;
+                    Editable = rec.Cancelled = false;
                 }
                 field(Cancelled; rec.Cancelled)
                 {
@@ -415,7 +415,7 @@ page 50088 "Shop Sales Header"
         Rec.Validate("Shop Code", UserRec."Fish Shop Code");
         Rec.Validate("Terminal No.", UserRec."Fish Shop Terminal");
         // end;
-        Rec.Validate(PayMode, PayMode::Cash);
+        Rec.Validate(PayMode, rec.PayMode::Cash);
         CashPay := true;
         // Rec.Insert(true);
         //CurrPage.Update(true);

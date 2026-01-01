@@ -22,8 +22,8 @@ pageextension 50353 "pageextension50353" extends "Job Card"
         {
             field("Fishing Country Code"; rec."Fishing Country Code") { ApplicationArea = all; }
             field("Voyage Ended"; rec."Voyage Ended") { ApplicationArea = all; }
-            field(ETA; rec."Starting Date") { ApplicationArea = all; }
-            field(ETD; rec."Ending Date") { ApplicationArea = all; }
+            // field(ETA; rec."Starting Date") { ApplicationArea = all; }
+            //field(ETD; rec."Ending Date") { ApplicationArea = all; }
             field("Voyage Sea Days"; rec."Voyage Sea Days") { ApplicationArea = all; }
         }
         addafter(Blocked)
@@ -35,7 +35,7 @@ pageextension 50353 "pageextension50353" extends "Job Card"
         }
         addfirst(Posting)
         {
-            field(Control170; Rec."Lost Days")
+            field("Lost Days"; Rec."Lost Days")
             {
                 ApplicationArea = All;
             }
@@ -161,146 +161,144 @@ pageextension 50353 "pageextension50353" extends "Job Card"
 
         moveafter("Bill-to Name"; "Bill-to Post Code", "Bill-to City", "Bill-to Country/Region Code", "Bill-to Contact", "Last Date Modified", "Project Manager")
 
-        addafter("Bill-to Name")
+        // addafter("Calc. Recog. Costs G/L Amount")
+        addafter(Posted)
         {
-            part(JobTaskLines1; "Job Task Lines Subform")
+            group("Other Details")
             {
-                ApplicationArea = Jobs;
-                Caption = 'Tasks';
-                SubPageLink = "Job No." = FIELD("No.");
-                SubPageView = SORTING("Job Task No.")
-                              ORDER(Ascending);
+                field("Ves Age"; Rec."Ves Age")
+                {
+                    ApplicationArea = All;
+                }
+                field("Nxt Ovh"; Rec."Nxt Ovh")
+                {
+                    ApplicationArea = All;
+                }
+                field("Lst Ovh"; Rec."Lst Ovh")
+                {
+                    ApplicationArea = All;
+                }
+                field("Nxt Ddk"; Rec."Nxt Ddk")
+                {
+                    ApplicationArea = All;
+                }
+                field("Brnd Pk"; Rec."Brnd Pk")
+                {
+                    ApplicationArea = All;
+                }
+                field("Inner P"; Rec."Inner P")
+                {
+                    ApplicationArea = All;
+                }
+                field(Grades; Rec.Grades)
+                {
+                    ApplicationArea = All;
+                }
+                field(xx1; Rec.xx1)
+                {
+                    ApplicationArea = All;
+                }
+                field(Deratg; Rec.Deratg)
+                {
+                    ApplicationArea = All;
+                }
+                field("Crab CW"; Rec."Crab CW")
+                {
+                    ApplicationArea = All;
+                }
+                field("WT GL/W"; Rec."WT GL/W")
+                {
+                    ApplicationArea = All;
+                }
+                field("Rad Tel"; Rec."Rad Tel")
+                {
+                    ApplicationArea = All;
+                }
+                field("R Flare"; Rec."R Flare")
+                {
+                    ApplicationArea = All;
+                }
+                field("Str Lic"; Rec."Str Lic")
+                {
+                    ApplicationArea = All;
+                }
+                field("Life Rf"; Rec."Life Rf")
+                {
+                    ApplicationArea = All;
+                }
             }
-        }
-        addafter("Calc. Recog. Costs G/L Amount")
-        {
-            field("Ves Age"; Rec."Ves Age")
+            group(Others)
             {
-                ApplicationArea = All;
-            }
-            field("Nxt Ovh"; Rec."Nxt Ovh")
-            {
-                ApplicationArea = All;
-            }
-            field("Lst Ovh"; Rec."Lst Ovh")
-            {
-                ApplicationArea = All;
-            }
-            field("Nxt Ddk"; Rec."Nxt Ddk")
-            {
-                ApplicationArea = All;
-            }
-            field("Brnd Pk"; Rec."Brnd Pk")
-            {
-                ApplicationArea = All;
-            }
-            field("Inner P"; Rec."Inner P")
-            {
-                ApplicationArea = All;
-            }
-            field(Grades; Rec.Grades)
-            {
-                ApplicationArea = All;
-            }
-            field(xx1; Rec.xx1)
-            {
-                ApplicationArea = All;
-            }
-            field(Deratg; Rec.Deratg)
-            {
-                ApplicationArea = All;
-            }
-            field("Crab CW"; Rec."Crab CW")
-            {
-                ApplicationArea = All;
-            }
-            field("WT GL/W"; Rec."WT GL/W")
-            {
-                ApplicationArea = All;
-            }
-            field("Rad Tel"; Rec."Rad Tel")
-            {
-                ApplicationArea = All;
-            }
-            field("R Flare"; Rec."R Flare")
-            {
-                ApplicationArea = All;
-            }
-            field("Str Lic"; Rec."Str Lic")
-            {
-                ApplicationArea = All;
-            }
-            field("Life Rf"; Rec."Life Rf")
-            {
-                ApplicationArea = All;
-            }
-            field("Fsh Ins"; Rec."Fsh Ins")
-            {
-                ApplicationArea = All;
-            }
-            field("Fsh Dst"; Rec."Fsh Dst")
-            {
-                ApplicationArea = All;
-            }
-            field("Ins Sur"; Rec."Ins Sur")
-            {
-                ApplicationArea = All;
-            }
-            field("Dst Sur"; Rec."Dst Sur")
-            {
-                ApplicationArea = All;
-            }
-            field("Pow Ext"; Rec."Pow Ext")
-            {
-                ApplicationArea = All;
-            }
-            field("Fom Ext"; Rec."Fom Ext")
-            {
-                ApplicationArea = All;
-            }
-            field("CO2 Ext"; Rec."CO2 Ext")
-            {
-                ApplicationArea = All;
-            }
-            field(Parchut; Rec.Parchut)
-            {
-                ApplicationArea = All;
-            }
-            field("E.U. No"; Rec."E.U. No")
-            {
-                ApplicationArea = All;
-            }
-            field(NoCatchExist; Rec.NoCatchExist)
-            {
-                ApplicationArea = All;
-            }
-            field("Gen. Product PG Filter"; Rec."Gen. Product PG Filter")
-            {
-                ApplicationArea = All;
-            }
-            field(AvgPtSortBay; Rec.AvgPtSortBay)
-            {
-                ApplicationArea = All;
-            }
-            field("Comsumed Value"; Rec."Comsumed Value")
-            {
-                ApplicationArea = All;
-            }
-            field("Product Quantity"; Rec."Product Quantity")
-            {
-                ApplicationArea = All;
-            }
-            field("Kilo Actual"; Rec."Kilo Actual")
-            {
-                ApplicationArea = All;
-            }
-            field(Checked; Rec.Checked)
-            {
-                ApplicationArea = All;
-            }
-            field("Revenue per Sea Day"; Rec."Revenue per Sea Day")
-            {
-                ApplicationArea = All;
+
+                field("Fsh Ins"; Rec."Fsh Ins")
+                {
+                    ApplicationArea = All;
+                }
+                field("Fsh Dst"; Rec."Fsh Dst")
+                {
+                    ApplicationArea = All;
+                }
+                field("Ins Sur"; Rec."Ins Sur")
+                {
+                    ApplicationArea = All;
+                }
+                field("Dst Sur"; Rec."Dst Sur")
+                {
+                    ApplicationArea = All;
+                }
+                field("Pow Ext"; Rec."Pow Ext")
+                {
+                    ApplicationArea = All;
+                }
+                field("Fom Ext"; Rec."Fom Ext")
+                {
+                    ApplicationArea = All;
+                }
+                field("CO2 Ext"; Rec."CO2 Ext")
+                {
+                    ApplicationArea = All;
+                }
+                field(Parchut; Rec.Parchut)
+                {
+                    ApplicationArea = All;
+                }
+                field("E.U. No"; Rec."E.U. No")
+                {
+                    ApplicationArea = All;
+                }
+                field(NoCatchExist; Rec.NoCatchExist)
+                {
+                    ApplicationArea = All;
+                }
+                field("Gen. Product PG Filter"; Rec."Gen. Product PG Filter")
+                {
+                    ApplicationArea = All;
+                }
+                field(AvgPtSortBay; Rec.AvgPtSortBay)
+                {
+                    ApplicationArea = All;
+                }
+                field("Comsumed Value"; Rec."Comsumed Value")
+                {
+                    ApplicationArea = All;
+                }
+                field("Product Quantity"; Rec."Product Quantity")
+                {
+                    ApplicationArea = All;
+                }
+                field("Kilo Actual"; Rec."Kilo Actual")
+                {
+                    ApplicationArea = All;
+                }
+                field(Checked; Rec.Checked)
+                {
+                    ApplicationArea = All;
+                }
+                field("Revenue per Sea Day"; Rec."Revenue per Sea Day")
+                {
+                    ApplicationArea = All;
+                }
+
             }
         }
 
@@ -311,13 +309,17 @@ pageextension 50353 "pageextension50353" extends "Job Card"
                 Caption = 'Captain Name';
                 ApplicationArea = All;
             }
-            field(Captain97940; Rec.Captain)
+            /*    field(Captain97940; Rec.Captain)
+                {
+                    ApplicationArea = All;
+                }*/
+            field(Complete; Rec.Complete)
             {
                 ApplicationArea = All;
             }
-            field(Complete54269; Rec.Complete)
+            field("Arrival Time"; Rec."Arrival Time")
             {
-                ApplicationArea = All;
+                
             }
         }
         addafter("Starting Date")
@@ -337,7 +339,7 @@ pageextension 50353 "pageextension50353" extends "Job Card"
         moveafter("Starting Date"; "Creation Date")
         moveafter("% Invoiced"; Duration)
 
-        moveafter(ETA; "Starting Date")
+        // moveafter(ETA; "Starting Date")
         moveafter("Voyage Ended"; "Ending Date")
         moveafter("Sea Days"; Blocked)
 
@@ -347,8 +349,9 @@ pageextension 50353 "pageextension50353" extends "Job Card"
         modify(Control56) { Visible = false; }
         modify("Person Responsible") { Importance = Promoted; }
         modify("Creation Date")
+
         {
-            Caption = 'ETA';
+            //Caption = 'ETA';
             Importance = Promoted;
         }
         modify(Status)
@@ -505,7 +508,7 @@ pageextension 50353 "pageextension50353" extends "Job Card"
         }
         addfirst("&Job")
         {
-            action("Lost Days")
+            action("Lost Day")
             {
                 Caption = 'Lost Days';
                 Image = TaskList;

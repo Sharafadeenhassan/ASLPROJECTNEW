@@ -56,6 +56,10 @@ page 50122 "Purch Request Mgr Action Sheet"
                 {
                     ApplicationArea = All;
                 }
+                field("Unit Of Measure";rec."Unit Of Measure")
+                {
+                    ApplicationArea = All;
+                }
                 field(Quantity; Rec.Quantity)
                 {
                     ApplicationArea = All;
@@ -176,8 +180,12 @@ page 50122 "Purch Request Mgr Action Sheet"
                 {
                     ApplicationArea = All;
                 }
+                field("Split Supply";rec."Split Supply")
+                {
+                    ApplicationArea = All;
+                }
 
-                field("Send To StoreKeeper"; "Send To StoreKeeper")
+                field("Send To StoreKeeper"; rec."Send To StoreKeeper")
                 {
 
                 }

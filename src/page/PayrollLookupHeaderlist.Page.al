@@ -2,6 +2,9 @@ page 50135 "Payroll-Lookup Header list"
 {
     SourceTable = "Payroll-Lookup Header.";
     Caption = 'Payroll-Lookup Header list';
+    CardPageId = "Table Lookup Header.";
+    UsageCategory = Lists;
+    ApplicationArea = all;
     layout
     {
         area(content)

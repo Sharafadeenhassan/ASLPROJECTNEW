@@ -2401,116 +2401,10 @@ Cstr(Fields!HomePageCaption.Value)
       <Width>6.99926cm</Width>
       <Page>
         <PageHeader>
-          <Height>5.92057cm</Height>
+          <Height>6.55557cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
-            <Textbox Name="Textbox20">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>(A Division of Atlantic Shrimpers Ltd.)</Value>
-                      <Style>
-                        <FontSize>8pt</FontSize>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Center</TextAlign>
-                  </Style>
-                </Paragraph>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>Kirikiri Lagos</Value>
-                      <Style>
-                        <FontSize>8pt</FontSize>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Center</TextAlign>
-                  </Style>
-                </Paragraph>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>fishshop@primstar.com</Value>
-                      <Style>
-                        <FontSize>8pt</FontSize>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Center</TextAlign>
-                  </Style>
-                </Paragraph>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>www.primstar.com/ www.thefishshop.com.ng</Value>
-                      <Style>
-                        <FontSize>8pt</FontSize>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Center</TextAlign>
-                  </Style>
-                </Paragraph>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>PH: 08037276546</Value>
-                      <Style>
-                        <FontSize>8pt</FontSize>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Center</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox20</rd:DefaultName>
-              <Top>1.70197cm</Top>
-              <Left>0.01882cm</Left>
-              <Height>2.0605cm</Height>
-              <Width>6.95704cm</Width>
-              <Style>
-                <Border>
-                  <Style>Solid</Style>
-                </Border>
-                <TopBorder>
-                  <Color>Black</Color>
-                  <Style>Solid</Style>
-                  <Width>1pt</Width>
-                </TopBorder>
-                <BottomBorder>
-                  <Color>Black</Color>
-                  <Style>Solid</Style>
-                  <Width>1pt</Width>
-                </BottomBorder>
-                <LeftBorder>
-                  <Color>Black</Color>
-                  <Style>Solid</Style>
-                  <Width>1pt</Width>
-                </LeftBorder>
-                <RightBorder>
-                  <Color>Black</Color>
-                  <Style>Solid</Style>
-                  <Width>1pt</Width>
-                </RightBorder>
-                <VerticalAlign>Top</VerticalAlign>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
             <Textbox Name="SalesInvoiceNo">
               <KeepTogether>true</KeepTogether>
               <Paragraphs>
@@ -2530,10 +2424,10 @@ Cstr(Fields!HomePageCaption.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>4.00942cm</Top>
+              <Top>4.58798cm</Top>
+              <Left>0.0715cm</Left>
               <Height>11pt</Height>
               <Width>2.769cm</Width>
-              <ZIndex>1</ZIndex>
               <Style>
                 <VerticalAlign>Top</VerticalAlign>
               </Style>
@@ -2556,11 +2450,11 @@ Cstr(Fields!HomePageCaption.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>5.15242cm</Top>
-              <Left>0.04153cm</Left>
+              <Top>5.73098cm</Top>
+              <Left>0.11303cm</Left>
               <Height>11pt</Height>
               <Width>2.79897cm</Width>
-              <ZIndex>2</ZIndex>
+              <ZIndex>1</ZIndex>
               <Style>
                 <VerticalAlign>Top</VerticalAlign>
               </Style>
@@ -2583,11 +2477,11 @@ Cstr(Fields!HomePageCaption.Value)
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>4.58798cm</Top>
-              <Left>0.04145cm</Left>
+              <Top>5.16654cm</Top>
+              <Left>0.11295cm</Left>
               <Height>11pt</Height>
               <Width>2.78205cm</Width>
-              <ZIndex>3</ZIndex>
+              <ZIndex>2</ZIndex>
               <Style>
                 <VerticalAlign>Top</VerticalAlign>
               </Style>
@@ -2612,7 +2506,7 @@ Cstr(Fields!HomePageCaption.Value)
               <Left>0.01632in</Left>
               <Height>7.86167mm</Height>
               <Width>40mm</Width>
-              <ZIndex>4</ZIndex>
+              <ZIndex>3</ZIndex>
               <Style />
             </Rectangle>
             <Image Name="CompanyInfo2Picture1">
@@ -2623,7 +2517,7 @@ Cstr(Fields!HomePageCaption.Value)
               <Left>1.59112in</Left>
               <Height>7.86167mm</Height>
               <Width>23.5133mm</Width>
-              <ZIndex>5</ZIndex>
+              <ZIndex>4</ZIndex>
               <Visibility>
                 <Hidden>=iif(IsNothing(Fields!CompanyInfo2Picture.Value) = TRUE,TRUE,FALSE)</Hidden>
               </Visibility>
@@ -2638,7 +2532,7 @@ Cstr(Fields!HomePageCaption.Value)
               <Left>1.59112in</Left>
               <Height>7.86167mm</Height>
               <Width>23.6744mm</Width>
-              <ZIndex>6</ZIndex>
+              <ZIndex>5</ZIndex>
               <Visibility>
                 <Hidden>=iif(IsNothing(Fields!CompanyInfo1Picture.Value)= TRUE,TRUE,FALSE)</Hidden>
               </Visibility>
@@ -2654,6 +2548,7 @@ Cstr(Fields!HomePageCaption.Value)
                     <TextRun>
                       <Value>THE FISH SHOP</Value>
                       <Style>
+                        <FontFamily>Times New Roman</FontFamily>
                         <FontSize>16pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
@@ -2663,13 +2558,27 @@ Cstr(Fields!HomePageCaption.Value)
                     <TextAlign>Center</TextAlign>
                   </Style>
                 </Paragraph>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>(A Division of Atlantic Shrimpers Ltd.)</Value>
+                      <Style>
+                        <FontFamily>Times New Roman</FontFamily>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox2</rd:DefaultName>
-              <Top>0.82144cm</Top>
+              <Top>0.54627cm</Top>
               <Left>0.01882cm</Left>
-              <Height>1.2985cm</Height>
+              <Height>1.25617cm</Height>
               <Width>6.95695cm</Width>
-              <ZIndex>7</ZIndex>
+              <ZIndex>6</ZIndex>
               <Style>
                 <Border>
                   <Style>Solid</Style>
@@ -2718,11 +2627,11 @@ Cstr(Fields!HomePageCaption.Value)
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>ExecutionTime</rd:DefaultName>
-              <Top>4.02908cm</Top>
-              <Left>4.32012cm</Left>
+              <Top>4.60764cm</Top>
+              <Left>4.39162cm</Left>
               <Height>0.3684cm</Height>
               <Width>2.08877cm</Width>
-              <ZIndex>8</ZIndex>
+              <ZIndex>7</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -2750,15 +2659,191 @@ Cstr(Fields!HomePageCaption.Value)
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>UserID</rd:DefaultName>
-              <Top>4.58798cm</Top>
-              <Left>4.35187cm</Left>
+              <Top>5.16654cm</Top>
+              <Left>4.42337cm</Left>
               <Height>0.38806cm</Height>
               <Width>2.05702cm</Width>
+              <ZIndex>8</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="CompanyAddr1">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=First(Fields!CompanyAddr1.Value, "DataSet_Result")</Value>
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>CompanyAddr1</rd:DefaultName>
+              <Top>5.73099cm</Top>
+              <Left>4.38103cm</Left>
+              <Height>0.64819cm</Height>
+              <Width>2.5cm</Width>
               <ZIndex>9</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
                 </Border>
+                <VerticalAlign>Top</VerticalAlign>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="LocHome">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=First(Fields!LocHome.Value, "DataSet_Result")</Value>
+                      <Style>
+                        <FontFamily>Times New Roman</FontFamily>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>LocHome</rd:DefaultName>
+              <Top>2.9848cm</Top>
+              <Left>0.04153cm</Left>
+              <Height>0.6cm</Height>
+              <Width>6.95773cm</Width>
+              <ZIndex>10</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <VerticalAlign>Top</VerticalAlign>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="LocEmail">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=First(Fields!LocEmail.Value, "DataSet_Result")</Value>
+                      <Style>
+                        <FontFamily>Times New Roman</FontFamily>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>LocEmail</rd:DefaultName>
+              <Top>2.54355cm</Top>
+              <Left>0.04153cm</Left>
+              <Height>0.44125cm</Height>
+              <Width>6.93424cm</Width>
+              <ZIndex>11</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <VerticalAlign>Top</VerticalAlign>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="LocPhone">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=First(Fields!LocPhone.Value, "DataSet_Result")</Value>
+                      <Style>
+                        <FontFamily>Times New Roman</FontFamily>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>LocPhone</rd:DefaultName>
+              <Top>3.62008cm</Top>
+              <Left>0.01882cm</Left>
+              <Height>0.45183cm</Height>
+              <Width>6.98044cm</Width>
+              <ZIndex>12</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <VerticalAlign>Top</VerticalAlign>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="FishAddress">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=First(Fields!FishAddress.Value, "DataSet_Result")</Value>
+                      <Style>
+                        <FontFamily>Times New Roman</FontFamily>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>FishAddress</rd:DefaultName>
+              <Top>1.83772cm</Top>
+              <Height>0.6cm</Height>
+              <Width>6.99926cm</Width>
+              <ZIndex>13</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <VerticalAlign>Top</VerticalAlign>
                 <PaddingLeft>2pt</PaddingLeft>
                 <PaddingRight>2pt</PaddingRight>
                 <PaddingTop>2pt</PaddingTop>
@@ -2913,6 +2998,27 @@ End Function</Code>
         </Field>
         <Field Name="DisplayAdditionalFeeNote">
           <DataField>DisplayAdditionalFeeNote</DataField>
+        </Field>
+        <Field Name="LocAdd">
+          <DataField>LocAdd</DataField>
+        </Field>
+        <Field Name="LocAdd2">
+          <DataField>LocAdd2</DataField>
+        </Field>
+        <Field Name="LocCity">
+          <DataField>LocCity</DataField>
+        </Field>
+        <Field Name="LocHome">
+          <DataField>LocHome</DataField>
+        </Field>
+        <Field Name="LocEmail">
+          <DataField>LocEmail</DataField>
+        </Field>
+        <Field Name="LocPhone">
+          <DataField>LocPhone</DataField>
+        </Field>
+        <Field Name="FishAddress">
+          <DataField>FishAddress</DataField>
         </Field>
         <Field Name="HomePage">
           <DataField>HomePage</DataField>

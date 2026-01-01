@@ -68,7 +68,7 @@ page 50087 "Dynamic Purchase Requisition"
                 {
                     Provider = "Requested Line";
                     SubPageLink = "Req. Line No." = FIELD("Req. Line No."),
-                              "Req No." = FIELD("Req No.");
+                              "Req No." = FIELD("Req No."), "Puch.Req Line No." = field("Puch.Req Line No.");
                     ApplicationArea = All;
                     Editable = true;
                 }

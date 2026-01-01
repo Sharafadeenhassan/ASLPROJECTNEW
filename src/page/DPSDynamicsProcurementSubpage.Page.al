@@ -19,7 +19,7 @@ page 50119 "Dynamics Procurement SubPage"
                     Visible = false;
                     ApplicationArea = All;
                 }
-                field("DPS Code";"DPS Code")
+                field("DPS Code";rec."DPS Code")
                 {
                     ApplicationArea = All;
                 }
@@ -36,6 +36,12 @@ page 50119 "Dynamics Procurement SubPage"
                     StyleExpr = rec."Security Check";
                     Style = Favorable;
                     ApplicationArea = All;
+                }
+                field("Unit Of Measure";Rec."Unit Of Measure")
+                {
+                    ApplicationArea = All;
+                    Importance = Additional;
+                    Editable = false;
                 }
                 field("Location Code"; Rec."Location Code")
                 {
@@ -212,6 +218,11 @@ page 50119 "Dynamics Procurement SubPage"
                     Visible = false;
                 }
                 field("Last 5 Years Monthly Average"; Rec."Last 5 Years Monthly Average")
+                {
+                    ApplicationArea = All;
+                    Importance = Additional;
+                }
+                field(Remark;rec.Remark)
                 {
                     ApplicationArea = All;
                     Importance = Additional;

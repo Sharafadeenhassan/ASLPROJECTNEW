@@ -31,7 +31,7 @@ page 50000 "Payroll Menu"
         }
     }
 
-    actions
+ actions
     {
         area(navigation)
         {
@@ -69,7 +69,7 @@ page 50000 "Payroll Menu"
                 action("Posting Groups")
                 {
                     Caption = 'Posting Groups';
-                    RunObject = Page "Posting Group Header.";
+                    RunObject = Page 50141;
                     ApplicationArea = All;
                 }
             }

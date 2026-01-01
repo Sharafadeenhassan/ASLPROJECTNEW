@@ -1,8 +1,8 @@
-table 60016 "Leave Categories NU*"
+table 50361 "Leave Categories NU*"
 {
     DrillDownPageID = "Leave Categories";
     LookupPageID = "Leave Categories";
-    Caption = 'Leave Categories NU*';
+    Caption = 'Leave Categories ';
     fields
     {
         field(1; "Code"; Code[30])

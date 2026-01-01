@@ -9,7 +9,7 @@ report 50092 "Voyage Consumption2"
     {
         dataitem("Job Ledger Entry"; "Job Ledger Entry")
         {
-            DataItemTableView = SORTING("Job No.", "Entry Type", Type, "Gen. Prod. Posting Group", "No.") WHERE("Entry Type" = CONST(Usage), Type = CONST(Item), "Gen. Prod. Posting Group" = FILTER(<> 'FIS'));
+            DataItemTableView = SORTING("Job No.", "Entry Type", Type, "No.") WHERE("Entry Type" = CONST(Usage), Type = CONST(Item), "Gen. Prod. Posting Group" = FILTER(<> 'FIS'));
             RequestFilterFields = "Job No.", "Entry Type", Type, "Gen. Prod. Posting Group", "No.";
             column(FORMAT_TODAY_0_4_; Format(Today, 0, 4))
             {

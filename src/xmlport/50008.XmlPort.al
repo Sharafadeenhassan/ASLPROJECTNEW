@@ -1,7 +1,7 @@
-xmlport 90994 "50008"
+xmlport 90994 "Payroll Employee Group Import"
 {
     Format = VariableText;
-    Caption = '50008';
+    Caption = 'Payroll Employee Group Import';
     schema
     {
         textelement(Rootnode)

@@ -1,10 +1,11 @@
 enumextension 50002 "JobStatusExt" extends "Job Status"
 {
-    /* value(4; Budget) {}
-     value(5; Preparation) {}
-     value(6; "Voyage Start") {}
-     value(7; "Close Job Card") {}
-     */
+    /*
+     value(0; Budget) {}
+     value(1; Preparation) {}
+     value(2; "Voyage Start") {}
+     value(3; "Close Job Card") {}
+    */
 }
 
 //Open = Order   (Change Open option on Standard to Order)

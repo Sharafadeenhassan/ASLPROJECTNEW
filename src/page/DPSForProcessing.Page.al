@@ -20,7 +20,7 @@ page 50126 "Approved DPS For Processing"
         {
             repeater(Group)
             {
-                
+
                 field("DPS No."; Rec."DPS No.")
                 {
                     ApplicationArea = All;
@@ -33,10 +33,10 @@ page 50126 "Approved DPS For Processing"
                 {
                     ApplicationArea = All;
                 }
-                field("Req Department";rec."Req Department")
+                field("Req Department"; rec."Req Department")
                 {
                     ApplicationArea = All;
-                }                
+                }
                 field("2nd Approved (Store)"; Rec.Processed)
                 {
                     ApplicationArea = All;
@@ -52,7 +52,7 @@ page 50126 "Approved DPS For Processing"
                 field("2nd Approved (Store) By Name"; Rec."Process By Name")
                 {
                     ApplicationArea = All;
-                }               
+                }
                 field("For 1st Approval (HOD)"; Rec."Send For Approval")
                 {
                     ApplicationArea = All;
@@ -75,7 +75,7 @@ page 50126 "Approved DPS For Processing"
 
     trigger OnOpenPage()
     begin
-        Rec.SetFilter("Return To For Process", UserId);
+        Rec.SetFilter("2nd Approval Store", UserId);
         Rec.FilterGroup(2);
     end;
 }

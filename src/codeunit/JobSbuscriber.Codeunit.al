@@ -10,7 +10,7 @@ codeunit 50037 "JobSbuscriber"
         if Job.Vessel <> '' then
             Job."Ending Date" := CalcDate('+50D', Today);
         Job."Creation Date" := Today;
-       // Job."Creation Date" := Today;
+        // Job."Creation Date" := Today;
         Job."Last Date Modified" := Job."Creation Date";
         if (Job."Project Manager" <> '') and (Job.Status = Job.Status::"Open") then;
         //Job.AddToMyJobs(Job."Project Manager"); //Revisit
@@ -43,10 +43,27 @@ codeunit 50037 "JobSbuscriber"
     local procedure UpdateVoyageDate(var rec: Record Job)
     var
         Loc: Record Location;
+        xRec: Record Job;
     begin
-        if (rec."Ending Date" <> 0D) and (rec."Starting Date" <> 0D) then
-            rec."Sea Days" := rec."Ending Date" - rec."Starting Date";
-        if rec.Vessel <> '' then
+        // Get previous record state
+        if not xRec.Get(rec."No.") then
+            exit;
+
+        // Always allow Sea Days recalculation if dates are manually changed
+        // But prevent automatic recalculation on status change to Completed (unless from Voyage Start)
+        if (rec."Ending Date" <> 0D) and (rec."Starting Date" <> 0D) then begin
+            // Only update Sea Days if:
+            // 1. Status is not Completed, OR
+            // 2. We're closing from Voyage Start (first closure), OR
+            // 3. User manually changed the dates (dates changed but status didn't)
+            if (rec.Status <> rec.Status::Completed) or
+               (xRec.Status = 2) or // Status 2 = Voyage Start (first closure)
+               ((rec."Ending Date" <> xRec."Ending Date") or (rec."Starting Date" <> xRec."Starting Date")) then
+                rec."Sea Days" := rec."Ending Date" - rec."Starting Date";
+        end;
+
+        // Update vessel location dates only on first closure or if not completed
+        if ((rec.Status <> rec.Status::Completed) or (xRec.Status = 2)) and (rec.Vessel <> '') then
             if Loc.Get(rec.Vessel) then begin
                 Loc.ETD := rec."Starting Date";
                 Loc.ETA := rec."Ending Date";
@@ -67,153 +84,27 @@ codeunit 50037 "JobSbuscriber"
     begin
         GenSetup.Get();
         if UserId <> GenSetup.Administrator then
-            if Rec.Status < xRec.Status then
-            Error('Sorry You Need Administrator to Go Back to previous Status');
-                exit;
-        // {
-        //  IF Rec.Status < xRec.Status THEN
-        //         ERROR(Text001);
-        //     ChangeJobStatus :=
-        //       CONFIRM(
-        //         Text002 +
-        //         Text003, FALSE,
-        //         rec.FieldCaption(Rec.Status));
-        //     IF NOT ChangeJobStatus THEN BEGIN
-        //         Rec.Status := xRec.Status;
-        //         EXIT;
-        //     END;
-        // //  }
-        //  if (Status = Status::"Close Job Card") and (CopyStr(Job."No.",1,1)='J') then
-        //    TestField("Voyage Ended",true);
-        // if xRec.Status <> Status then
-        // begin
-        // end;
+            if Rec.Status.AsInteger() < xRec.Status.AsInteger() then
+                Error('Sorry You Need Administrator to Go Back to previous Status');
+        exit;
+    end;
+
+    /* [EventSubscriber(ObjectType::Table, Database::Job, 'OnBeforeChangeJobCompletionStatus', '', True, True)]
+     local procedure OnBeforeChangeJobCompletionStatus(var Job: Record Job; var IsHandled: Boolean)
+     begin
+         if Job."Arrival Time" <> 0D then Job."Ending Date" := Job."Arrival Time";
+         IsHandled := true;
+     end;
+ */
+    [EventSubscriber(ObjectType::Table, Database::Job, 'OnAfterChangeJobCompletionStatus', '', True, True)]
+    local procedure OnAfterChangeJobCompletionStatus(var Job: Record Job)
+    var
+        xRec: Record Job;
+    begin
+        // Only update Ending Date on first closure from Voyage Start (Status 2)
+        xRec.Get(Job."No.");
+        if (xRec.Status = 2) and (Job."Arrival Time" <> 0D) then // Status 2 = Voyage Start
+            Job."Ending Date" := Job."Arrival Time";
+        //IsHandled := true;
     end;
 }
-
-// OnValidate Status
-//>>>> MODIFIED CODE:
-//begin
-/*
-GenSetup.Get;
-if UserId<>GenSetup.Administrator then
-begin
-  if Status = xRec.Status then
-   exit;
-{
- IF Status < xRec.Status THEN
-   ERROR(Text001);
-
- ChangeJobStatus :=
-   CONFIRM(
-     Text002+
-     Text003,FALSE,
-     FIELDCAPTION(Status));
-
- IF NOT ChangeJobStatus THEN
- BEGIN
-   Status := xRec.Status;
-   EXIT;
- END;
- }
- if (Status = Status::"Close Job Card") and (CopyStr(Job."No.",1,1)='J') then
-   TestField("Voyage Ended",true);
-if xRec.Status <> Status then
-begin
-#2..11
-  if JobPlanningLine.FindSet then
-  begin
-#13..20
-end;
-*/
-//end;
-
-//OnValidate
-//""Person Responsible"(Field 20)".
-
-//trigger OnValidate()
-//Parameters and return type have not been exported.
-//begin
-/*
-if "Person Responsible" = '' then
-  exit;
-
-SetRange("Person Responsible",Res."No.");
-if Res.Get("Person Responsible") then
-  Validate(Captain, Res.Name);
-
-JobTask.SetRange(JobTask."Job No.","No.");
-JobTask.SetRange(JobTask."Job Task No.",'temp');
-if JobTask.FindFirst then begin
-  InitPlanningLines;
-end else begin
-  JobTask.Init;
-  JobTask."Job No." := "No.";
-  JobTask."Job Task No." := 'temp';
-  JobTask."Job Task Type" := JobTask."Job Task Type"::Posting;
-  JobTask."Job Posting Group" := 'OPERATION';
-  JobTask.Description := Description;
-  JobTask.Insert(true);
-  InitPlanningLines;
-end;
-*/
-//end;
-
-//Unsupported feature: Code Modification on ""Apply Usage Link"(Field 1025).OnValidate".
-
-//trigger OnValidate()
-//Parameters and return type have not been exported.
-//>>>> ORIGINAL CODE:
-//begin
-/*
-if "Apply Usage Link" then begin
-  JobLedgerEntry.SetCurrentKey("Job No.");
-  JobLedgerEntry.SetRange("Job No.","No.");
-  JobLedgerEntry.SetRange("Entry Type",JobLedgerEntry."Entry Type"::Usage);
-  if JobLedgerEntry.FindFirst then begin
-    JobUsageLink.SetRange("Entry No.",JobLedgerEntry."Entry No.");
-    if JobUsageLink.IsEmpty then
-      Error(ApplyUsageLinkErr,TableCaption);
-  end;
-#10..18
-      JobPlanningLine.Modify(true);
-    until JobPlanningLine.Next = 0;
-end;
-*/
-//end;
-//>>>> MODIFIED CODE:
-//begin
-/*
-#1..5
-    //JobUsageLink.SETRANGE("Entry No.",JobLedgerEntry."Entry No.");
-#7..21
-*/
-//end;
-
-//Unsupported feature: Code Modification on "OnModify".
-
-//trigger OnModify()
-//>>>> ORIGINAL CODE:
-//begin
-/*
-"Last Date Modified" := Today;
-
-if (("Project Manager" <> xRec."Project Manager") and (xRec."Project Manager" <> '')) or (Status <> Status::Open) then
-  RemoveFromMyJobs;
-
-if ("Project Manager" <> '') and (xRec."Project Manager" <> "Project Manager") then
-  if Status = Status::Open then
-    AddToMyJobs("Project Manager");
-*/
-//end;
-//>>>> MODIFIED CODE:
-//begin
-/*
-"Last Date Modified" := Today;
-
-if (("Project Manager" <> xRec."Project Manager") and (xRec."Project Manager" <> '')) or (Status <> Status::"Voyage Start") then
-#4..6
-  if Status = Status::"Voyage Start" then
-    AddToMyJobs("Project Manager");
-*/
-//end;

@@ -21,5 +21,9 @@ tableextension 50262 "tableextension50262" extends "Sales & Receivables Setup"
         {
             TableRelation = "G/L Account"."No." WHERE("Account Type" = CONST(Posting));
         }
+        field(50016; "Auto Post FishShop Payments";Boolean)
+        {
+            
+        }
     }
 }

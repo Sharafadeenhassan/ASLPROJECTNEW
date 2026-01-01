@@ -4,7 +4,7 @@ page 50029 "Appraisal Entry Subform."
     Caption = 'Appraisal Entry Subform';
     DelayedInsert = true;
     MultipleNewLines = true;
-    PageType = Card;
+    PageType = ListPart;
     SourceTable = "Sales Line";
     SourceTableView = WHERE("Document Type" = FILTER("Return Order"));
 
@@ -80,7 +80,7 @@ page 50029 "Appraisal Entry Subform."
 
     actions
     {
-        area(navigation)
+        area(processing)
         {
             group("&Line")
             {
@@ -200,9 +200,6 @@ page 50029 "Appraisal Entry Subform."
                     end;
                 }
             }
-        }
-        area(processing)
-        {
             group("F&unctions")
             {
                 Caption = 'F&unctions';
@@ -428,12 +425,6 @@ page 50029 "Appraisal Entry Subform."
     end;
 
     [Scope('OnPrem')]
-    procedure OpenItemTrackingLines()
-    begin
-        Rec.OpenItemTrackingLines();
-    end;
-
-    [Scope('OnPrem')]
     procedure OpenPurchOrderForm()
     var
         PurchHeader: Record "Purchase Header";
@@ -446,18 +437,6 @@ page 50029 "Appraisal Entry Subform."
     end;
 
     [Scope('OnPrem')]
-    procedure ShowDimensions()
-    begin
-        Rec.ShowDimensions();
-    end;
-
-    [Scope('OnPrem')]
-    procedure ShowItemSub()
-    begin
-        Rec.ShowItemSub();
-    end;
-
-    [Scope('OnPrem')]
     procedure ShowNonstockItems()
     begin
         Rec.ShowNonstock();
@@ -467,7 +446,7 @@ page 50029 "Appraisal Entry Subform."
     /// ShowReservation.
     /// </summary>
     [Scope('OnPrem')]
-    procedure ShowReservation()
+    procedure ShowReservationCustom()
     begin
         OnBeforeShowReservation();
 

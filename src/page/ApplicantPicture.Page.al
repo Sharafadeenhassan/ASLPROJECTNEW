@@ -58,7 +58,7 @@ page 50024 "Applicant Picture"
 
                     trigger OnAction()
                     begin
-                        if Picture.HasValue then
+                        if Rec.Picture.HasValue then
                             if Confirm('Do you want to delete the picture of %1 %2?', false, Rec.TableName, Rec."No.") then begin
                                 Clear(Rec.Picture);
                                 CurrPage.SaveRecord();

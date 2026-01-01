@@ -1,5 +1,5 @@
 # ASLPROJECTNEW
-ASL Transport Management System
+ASL Fishing Operation Management System
 Collaboration with TLK
 Next Step
 Further Step 3
@@ -9,7 +9,7 @@ This is our latest Branch for SS
 This is another change to my initial commit
 This is a new line May 28, 2022.
 
-Upadate Check
+Update Check
 Dec 15, 2022
 
 Dec 18, 2022

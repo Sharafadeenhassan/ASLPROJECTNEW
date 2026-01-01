@@ -1,6 +1,7 @@
 table 50011 "Payroll-Posting Group Header."
 {
     Caption = 'Payroll-Posting Group Header.';
+    LookupPageId = 50141;
     // Created           : FTN, 143/93
     // File name         : KI03 P.Booking Grps.
     // Comments          : The Header card that is to be used to enter booking

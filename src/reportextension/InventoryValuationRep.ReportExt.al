@@ -1,9 +1,9 @@
 report 50195 " ASL Inventory Valuation"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = './InventoryValuation.rdlc';
+    RDLCLayout = './src/reportrdlc/ASLInventoryValuation.rdl';
     ApplicationArea = Basic, Suite;
-    Caption = 'Inventory Valuation';
+    Caption = ' ASL Inventory Valuation';
     EnableHyperlinks = true;
     UsageCategory = ReportsAndAnalysis;
     DataAccessIntent = ReadOnly;
@@ -112,6 +112,7 @@ report 50195 " ASL Inventory Valuation"
             column(StartingExpectedValue; StartingExpectedValue)
             {
                 AutoFormatType = 1;
+                
             }
             column(StartingExpectedQty; StartingExpectedQty)
             {
@@ -210,14 +211,28 @@ report 50195 " ASL Inventory Valuation"
                 ValueEntry.Reset();
                 ValueEntry.SetRange("Item No.", "No.");
                 ValueEntry.SetFilter("Variant Code", GetFilter("Variant Filter"));
-                ValueEntry.SetFilter("Location Code", GetFilter("Location Filter"));
+               // ValueEntry.SetFilter("Location Code", GetFilter("Location Filter"));
+                LocFilter := GetFilter("Location Filter");
                 ValueEntry.SetFilter("Global Dimension 1 Code", GetFilter("Global Dimension 1 Filter"));
                 ValueEntry.SetFilter("Global Dimension 2 Code", GetFilter("Global Dimension 2 Filter"));
                 OnItemOnAfterGetRecordOnAfterValueEntrySetInitialFilters(ValueEntry, Item);
 
                 if StartDate > 0D then begin
-                    ValueEntry.SetRange("Posting Date", 0D, CalcDate('<-1D>', StartDate));
+                    ValueEntry.SetRange("Posting Date", 0D, CalcDate('<-1D>', StartDate));                    
                     ValueEntry.CalcSums("Item Ledger Entry Quantity", "Cost Amount (Actual)", "Cost Amount (Expected)", "Invoiced Quantity");
+                    if LocFilter <> '' then
+                    begin
+                        AllTotQty := ValueEntry."Item Ledger Entry Quantity";
+                        AllTotVal := ValueEntry."Cost Amount (Actual)";
+                        if AllTotQty <> 0 then
+                        AllLocUnit := AllTotVal/AllTotQty;
+                        ValueEntry.SetFilter("Location Code", GetFilter("Location Filter"));
+                        ValueEntry.CalcSums("Item Ledger Entry Quantity", "Cost Amount (Actual)", "Cost Amount (Expected)", "Invoiced Quantity");
+
+                    end;
+                    if LocFilter <> '' then
+                    StartingInvoicedValue := StartingInvoicedQty * AllLocUnit;
+
                     AssignAmounts(ValueEntry, StartingInvoicedValue, StartingInvoicedQty, StartingExpectedValue, StartingExpectedQty, 1);
                     IsEmptyLine := IsEmptyLine and ((StartingInvoicedValue = 0) and (StartingInvoicedQty = 0));
                     if ShowExpected then
@@ -260,20 +275,17 @@ report 50195 " ASL Inventory Valuation"
                     IsEmptyLine := IsEmptyLine and ((IncreaseExpectedValue = 0) and (IncreaseExpectedQty = 0));
                     IsEmptyLine := IsEmptyLine and ((DecreaseExpectedValue = 0) and (DecreaseExpectedQty = 0));
                 end;
-
                 ValueEntry.SetRange("Posting Date", 0D, EndDate);
                 ValueEntry.SetRange("Item Ledger Entry Type");
                 ValueEntry.CalcSums("Cost Posted to G/L", "Expected Cost Posted to G/L");
                 ExpCostPostedToGL += ValueEntry."Expected Cost Posted to G/L";
                 InvCostPostedToGL += ValueEntry."Cost Posted to G/L";
-
                 StartingExpectedValue += StartingInvoicedValue;
                 IncreaseExpectedValue += IncreaseInvoicedValue;
                 DecreaseExpectedValue += DecreaseInvoicedValue;
                 CostPostedToGL := ExpCostPostedToGL + InvCostPostedToGL;
-
                 IsHandled := false;
-                OnAfterGetRecordItemOnBeforeSkipEmptyLine(Item, StartingInvoicedQty, IncreaseInvoicedQty, DecreaseInvoicedQty, IsHandled);
+                OnAfterGetRecordItemOnBeforeSkipEmptyLine(Item,StartingInvoicedQty, IncreaseInvoicedQty, DecreaseInvoicedQty, IsHandled);
                 if not IsHandled then
                     if IsEmptyLine then
                         CurrReport.Skip();
@@ -384,6 +396,10 @@ report 50195 " ASL Inventory Valuation"
         CostPostedToGL: Decimal;
         ExpCostPostedToGL: Decimal;
         IsEmptyLine: Boolean;
+        AllLocUnit : Decimal;
+        LocFilter : Text[100];
+        AllTotQty : Decimal;
+        AllTotVal : Decimal;
 
     local procedure AssignAmounts(ValueEntry: Record "Value Entry"; var InvoicedValue: Decimal; var InvoicedQty: Decimal; var ExpectedValue: Decimal; var ExpectedQty: Decimal; Sign: Decimal)
     begin

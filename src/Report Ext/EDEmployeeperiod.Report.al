@@ -6,6 +6,8 @@ report 50066 "E/D-Employee-period"
     DefaultLayout = RDLC;
     RDLCLayout = './src/reportrdlc/EDEmployeeperiod.rdlc';
     Caption = 'E/D-Employee-period';
+    ApplicationArea = All;
+    UsageCategory = ReportsAndAnalysis;
     dataset
     {
         dataitem("Payroll-E/D Codes."; "Payroll-E/D Codes.")

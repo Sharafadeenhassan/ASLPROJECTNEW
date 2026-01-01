@@ -130,31 +130,31 @@ page 50090 "Shop Sales List"
                     Visible = false;
                     Importance = Additional;
                 }
-                field(Paid;Paid)
+                field(Paid;rec.Paid)
                 {
                     Caption = 'Paid Invoice';
                     ToolTip = 'This Invoice is fully Settled';
                     Visible = false;
                     Importance = Additional;
                 }
-                field(Post;Post)
+                field(Post;rec.Post)
                 {
                     Caption = 'Posted Invoice';
                     ToolTip = 'This invoice is Paid and Posted';
                     Visible = false;
                     Importance = Additional;
                 }
-                field(Suspended;Suspended)
+                field(Suspended;rec.Suspended)
                 {
                     Visible = false;
                     Importance = Additional;
                 }
-                field("Suspended By";"Suspended By")
+                field("Suspended By";rec."Suspended By")
                 {
                     Visible = false;
                      Importance = Additional;
                 }
-                field(Cancelled;Cancelled)
+                field(Cancelled;rec.Cancelled)
                 {
                     Visible = false;
                      Importance = Additional;

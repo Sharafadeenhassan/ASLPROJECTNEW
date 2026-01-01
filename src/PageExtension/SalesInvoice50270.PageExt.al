@@ -84,8 +84,51 @@ pageextension 50270 "pageextension50270" extends "Sales Invoice"
                 }
             }
         }
+    //
+        addlast(Processing)
+        {
+            action(ExportInvoiceJson)
+            {
+                Caption = 'Export Invoice JSON';
+                Image = Export;
+                ApplicationArea = All;
+
+                trigger OnAction()
+                var
+                    ExportBuffer: Record "JSON Export Buffer";
+                    JsonBuilder: Codeunit "Sales Invoice JSON Builder";
+                    OutStream: OutStream;
+                    JsonText: Text;
+                begin
+                    JsonText := JsonBuilder.BuildSalesInvoiceJson(Rec);
+                    ExportBuffer.Init();
+                    ExportBuffer.ID := 1;
+                    ExportBuffer.FileName := 'Invoice_' + Rec."No." + '.json';
+                    ExportBuffer.Content.CreateOutStream(OutStream);
+                    OutStream.WriteText(JsonText);
+                    ExportBuffer.Insert();
+
+                    DownloadFromRecord(ExportBuffer); // ✅ Now this works
+                end;
+            }
+        }
     }
+
+    procedure DownloadFromRecord(Buffer: Record "JSON Export Buffer")
+    var
+        InStream: InStream;
+        FileName: Text;
+    begin
+        Buffer.Content.CreateInStream(InStream);
+        FileName := Buffer.FileName;
+        DownloadFromStream(InStream, Buffer.FileName, 'application/json','*.json',FileName);
+    end;
+
 }
+    
+
+ 
+
 
 //var
 

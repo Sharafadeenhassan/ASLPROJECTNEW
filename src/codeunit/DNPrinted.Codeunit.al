@@ -6,15 +6,15 @@ codeunit 50006 "DN-Printed"
     begin
         Rec.Find();
         if Usersetup.Get(UserId) then begin
-            if "No. Of DN Printed" = 0 then begin
+            if rec."No. Of DN Printed" = 0 then begin
                 if Usersetup."Print DN" then begin
-                    "No. Of DN Printed" := "No. Of DN Printed" + 1;
+                    rec."No. Of DN Printed" := rec."No. Of DN Printed" + 1;
                     Rec.Status := Rec.Status::Released;
                 end else
                     Error('You Are Not Allowed to Print Delivery Note');
             end else
                 if Usersetup."Reprint DN" then begin
-                    "No. Of DN Printed" := "No. Of DN Printed" + 1;
+                    rec."No. Of DN Printed" := rec."No. Of DN Printed" + 1;
                     Rec.Status := Rec.Status::Released;
                 end else
                     Error('You Are Not Allowed to Re-Print Delivery Note');

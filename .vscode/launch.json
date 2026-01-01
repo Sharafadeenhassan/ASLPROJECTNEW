@@ -11,26 +11,22 @@
             "authentication": "Windows",
             "port": 6049,
             "startupObjectId": 50010,
-            "startupObjectType": "Report", // "Page", //  
+            "startupObjectType": "Report",
             "breakOnError": true,
             "launchBrowser": true,
             "enableLongRunningSqlStatements": true,
             "enableSqlInformationDebugger": true,
             "tenant": "default"
+        },
+        {
+            "name": "AL: Generated Snapshot request",
+            "request": "snapshotInitialize",
+            "type": "al",
+            "environmentType": "Production",
+            "environmentName": "Production",
+            "breakOnNext": "WebClient",
+            "executionContext": "DebugAndProfile",
+            "tenant": "b66495cf-efa9-4c8d-ab9e-b3d89a6234ad"
         }
-        // ,
-        // {
-        //     "name": "Microsoft cloud sandbox",
-        //     "request": "launch",
-        //     "type": "al",
-        //     "environmentType": "Sandbox",
-        //     "environmentName": "sandbox",
-        //     "startupObjectId": 22,,
-        //     "startupObjectType": "Page",
-        //     "breakOnError": true,
-        //     "launchBrowser": true,
-        //     "enableLongRunningSqlStatements": true,
-        //     "enableSqlInformationDebugger": true
-        // }
     ]
 }

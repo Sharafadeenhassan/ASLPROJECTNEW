@@ -41,6 +41,11 @@ page 50115 "Purchase Request List"
                 {
                     ApplicationArea = All;
                 }
+                field("Unit Of Measure";rec."Unit Of Measure")
+                {
+                    //Editable = False;
+                    ApplicationArea = All;
+                }
                 field(Quantity; Rec.Quantity)
                 {
                     ApplicationArea = All;

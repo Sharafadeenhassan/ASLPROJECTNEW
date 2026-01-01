@@ -55,6 +55,12 @@ page 50094 "Shop Sales Sub"
                     ToolTip = 'Specifies the value of the Line Amount field.', Comment = '%';
                     Editable = false;
                 }
+                field("Discount %";Rec."Discount %")
+                {
+                   ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Discount % field.', Comment = '%';
+                    Visible = false; 
+                }
                 field(Discount; Rec.Discount)
                 {
                     ApplicationArea = All;
@@ -76,7 +82,7 @@ page 50094 "Shop Sales Sub"
                     ApplicationArea = All;
                     ToolTip = 'Specifies the value of the General Device field.', Comment = '%';
                 }
-                field("Restore Header";"Restore Header")
+                field("Restore Header";Rec."Restore Header")
                 {
 
                 }

@@ -96,5 +96,15 @@ tableextension 50217 "tableextension50217" extends "Purch. Cr. Memo Line"
         field(50360; "Original Purc. Order No."; Code[20])
         {
         }
+        field(50366;"DPS No.";Code[20])
+        {
+            TableRelation = "Purchase Requisition1"."Req No.";
+            Editable = false;
+        }
+        field(50367;"DPS Line No";Integer)
+        {
+            TableRelation = "Dynamics Procurement Register"."Line No." where("DPS Code" = field("DPS No."));
+            Editable = false;
+        }
     }
 }

@@ -21,7 +21,7 @@ pageextension 50211 "pageextension50211" extends "Comment Sheet"
             {
                 ApplicationArea = All;
             }
-            field("Comment Temp"; "Comment Temp")
+            field("Comment Temp"; rec."Comment Temp")
             {
                 ApplicationArea = All;
                 Caption = 'ASL Comment';

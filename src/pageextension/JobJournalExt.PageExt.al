@@ -28,7 +28,7 @@ pageextension 50242 "Job Journal Ext" extends "Job Journal"
             {
                 ApplicationArea = all;
             }
-            field("Task Code";"Task Code")
+            field("Task Code";rec."Task Code")
             {
                 ApplicationArea = All;
             }
@@ -43,7 +43,7 @@ pageextension 50242 "Job Journal Ext" extends "Job Journal"
             field(Catch; Rec.Catch) { ApplicationArea = All; }
             field("Stock Position Calc."; Rec."Stock Position Calc.") { ApplicationArea = All; }
             field("Posting Group"; Rec."Posting Group") { ApplicationArea = All; }
-            field("Catch Sea Days";"Catch Sea Days"){ApplicationArea = All;}
+            field("Catch Sea Days";rec."Catch Sea Days"){ApplicationArea = All;}
         }
         addafter("Gen. Prod. Posting Group")
         {

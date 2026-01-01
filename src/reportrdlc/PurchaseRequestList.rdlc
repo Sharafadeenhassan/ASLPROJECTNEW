@@ -1348,6 +1348,24 @@ End Function
         <Field Name="QuantityFormat">
           <DataField>QuantityFormat</DataField>
         </Field>
+        <Field Name="DPS_HOD_Qty">
+          <DataField>DPS_HOD_Qty</DataField>
+        </Field>
+        <Field Name="DPS_HOD_QtyFormat">
+          <DataField>DPS_HOD_QtyFormat</DataField>
+        </Field>
+        <Field Name="DPS_Req_Qty">
+          <DataField>DPS_Req_Qty</DataField>
+        </Field>
+        <Field Name="DPS_Req_QtyFormat">
+          <DataField>DPS_Req_QtyFormat</DataField>
+        </Field>
+        <Field Name="Shortage_Supplied__Quantity">
+          <DataField>Shortage_Supplied__Quantity</DataField>
+        </Field>
+        <Field Name="Shortage_Supplied__QuantityFormat">
+          <DataField>Shortage_Supplied__QuantityFormat</DataField>
+        </Field>
         <Field Name="RequsetedbyName">
           <DataField>RequsetedbyName</DataField>
         </Field>

@@ -21,7 +21,7 @@ pageextension 55000 "SaleOrder" extends "Sales Order"
             {
                 ApplicationArea = All;
             }
-            field("Shipment Month"; "Shipment Month")
+            field("Shipment Month"; rec."Shipment Month")
             {
                 ApplicationArea = All;
             }
