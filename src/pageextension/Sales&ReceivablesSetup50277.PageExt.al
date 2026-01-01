@@ -16,10 +16,6 @@ pageextension 50277 "pageextension50277" extends "Sales & Receivables Setup"
             {
                 ApplicationArea = All;
             }
-            field("Auto Post FishShop Payments";rec."Auto Post FishShop Payments")
-            {
-                ApplicationArea = All;
-            }
         }
         addafter("Freight G/L Acc. No.")
         {

@@ -24,10 +24,6 @@ pageextension 50301 "pageextension50301" extends "Misc. Article Information"
             {
                 ApplicationArea = All;
             }
-            field("Replacement Interval";Rec."Replacement Interval")
-            {
-                ApplicationArea = All;
-            }
         }
         addafter(Control1905767507)
         {

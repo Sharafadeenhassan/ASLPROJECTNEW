@@ -61,14 +61,6 @@ pageextension 50291 "pageextension50291" extends "Employee List"
         {
             StyleExpr = StyleText;
         }
-        addafter("Last Name")
-        {
-            field(Gender;rec.Gender)
-            {
-            ApplicationArea = All;
-            Editable = false;    
-            }
-        }
 
         //Unsupported feature: Property Modification (Name) on "Comment(Control 16)".
 
